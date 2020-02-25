@@ -29,6 +29,8 @@ namespace LeagueStatistics
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.SwaggerServiceExtension();
+            services.AutoMapperExtension();
+            services.InjectServiceDependencies();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

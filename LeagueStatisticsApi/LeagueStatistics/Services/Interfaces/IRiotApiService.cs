@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LeagueStatistics.Services.Interfaces
 {
-    interface IRiotApiService
+    public interface IRiotApiService
     {
     }
 }

@@ -12,3 +12,17 @@ D:\Semester project\LoLWebsiteProject\LeagueStatistics\LeagueStatistics\obj\Debu
 D:\Semester project\LoLWebsiteProject\LeagueStatistics\LeagueStatistics\bin\Debug\netcoreapp2.2\LeagueStatistics.pdb
 D:\Semester project\LoLWebsiteProject\LeagueStatistics\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.dll
 D:\Semester project\LoLWebsiteProject\LeagueStatistics\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.pdb
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp2.2\LeagueStatistics.deps.json
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp2.2\LeagueStatistics.runtimeconfig.json
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp2.2\LeagueStatistics.runtimeconfig.dev.json
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp2.2\LeagueStatistics.dll
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp2.2\LeagueStatistics.pdb
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.csprojAssemblyReference.cache
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.csproj.CoreCompileInputs.cache
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.RazorAssemblyInfo.cache
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.RazorAssemblyInfo.cs
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.AssemblyInfoInputs.cache
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.AssemblyInfo.cs
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.RazorTargetAssemblyInfo.cache
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.dll
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp2.2\LeagueStatistics.pdb
