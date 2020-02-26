@@ -12,6 +12,7 @@ namespace LeagueStatistics.Dtos.UserDtos
         public string Username { get; set; }
         public string SummonerName { get; set; }
         public string Region { get; set; }
+        public string DateOfBirth { get; set; }
         public string AboutMe { get; set; }
     }
 }

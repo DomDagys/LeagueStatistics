@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LeagueStatistics.Database.Models;
 using LeagueStatistics.Dtos.UserDtos;
+using LeagueStatistics.Repositories.Interfaces;
 using LeagueStatistics.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,23 +13,24 @@ namespace LeagueStatistics.Services
     public class UserService : IUserService
     {
         private readonly IMapper _mapper;
+        private readonly IUserRepository _repository;
 
-        public UserService(IMapper mapper)
+        public UserService(IMapper mapper, IUserRepository repository)
         {
             _mapper = mapper;
+            _repository = repository;
         }
 
         public async Task<NewUserDto> CreateUser(NewUserDto newUserDto)
         {
             //Implement validation
 
-            var newUser = _mapper.Map<User>(newUserDto);
+            var user = _mapper.Map<User>(newUserDto);
 
             //Hashing
 
-            //Adding to repo
-
-            newUserDto = _mapper.Map<NewUserDto>(newUser);
+            await _repository.Create(user);
+            newUserDto = _mapper.Map<NewUserDto>(user);
 
             return newUserDto;
         }
@@ -38,9 +40,12 @@ namespace LeagueStatistics.Services
             throw new NotImplementedException();
         }
 
-        public Task<ICollection<GetUserDto>> GetAllUsers()
+        public async Task<ICollection<GetUserDto>> GetAllUsers()
         {
-            throw new NotImplementedException();
+            var users = await _repository.GetAll();
+            var usersDto = _mapper.Map<GetUserDto[]>(users);
+
+            return usersDto;
         }
 
         public Task<GetUserDto> GetUserById(int id)

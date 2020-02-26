@@ -8,6 +8,8 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using AutoMapper;
 using LeagueStatistics.Database.Models;
+using LeagueStatistics.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace LeagueStatistics.Api_Configurations
 {
@@ -25,7 +27,8 @@ namespace LeagueStatistics.Api_Configurations
         {
             app.UseSwagger();
 
-            app.UseSwaggerUI(options => {
+            app.UseSwaggerUI(options =>
+            {
                 options.SwaggerEndpoint("/swagger/leaguestats/swagger.json", "LeagueStatistics");
                 options.RoutePrefix = "leaguestats";
             });
@@ -35,5 +38,11 @@ namespace LeagueStatistics.Api_Configurations
         {
             services.AddAutoMapper(typeof(Startup));
         }
+
+        public static void SetUpDatabase(this IServiceCollection service)
+        {
+            service.AddDbContext<LeagueStatsDbContext>(options => options.UseInMemoryDatabase("LeagueStatsDb"));
+        }
+
     }
 }

@@ -27,10 +27,12 @@ namespace LeagueStatistics.Controllers
 
         // GET: api/User
         [HttpGet]
-        [Produces(typeof(GetUserDto))]
-        public IActionResult Get()
+        [Produces(typeof(GetUserDto[]))]
+        public async Task<IActionResult> GetAll()
         {
-            return Ok();
+            var users = await _userService.GetAllUsers();
+
+            return Ok(users);
         }
 
         // GET: api/User/5

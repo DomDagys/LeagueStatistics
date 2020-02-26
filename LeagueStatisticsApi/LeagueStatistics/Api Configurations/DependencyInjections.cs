@@ -1,4 +1,7 @@
-﻿using LeagueStatistics.Services;
+﻿using LeagueStatistics.Database.Models;
+using LeagueStatistics.Repositories;
+using LeagueStatistics.Repositories.Interfaces;
+using LeagueStatistics.Services;
 using LeagueStatistics.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -10,9 +13,14 @@ namespace LeagueStatistics.Api_Configurations
 {
     public static class DependencyInjections
     {
-        public static void InjectServiceDependencies(this IServiceCollection service)
+        public static void InjectServiceDependencies(this IServiceCollection services)
         {
-            service.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
+        }
+
+        public static void InjectRepositoryDependencies(this IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
