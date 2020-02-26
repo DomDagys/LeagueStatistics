@@ -6,6 +6,7 @@ import Admin from "./components/Admin";
 import { AuthContext } from "./context/auth";
 import LoginForm from "./components/loginForm/LoginForm";
 import RegisterForm from "./components/registerForm/registerForm";
+import NavigationBar from "./components/navigation/NavigationBar";
 
 function App(props) {
   const [authTokens, setAuthTokens] = useState();
@@ -20,6 +21,7 @@ function App(props) {
       <Router>
         <div>
           <h1>{authTokens}</h1>
+          <NavigationBar/>
           <Route exact path="/" component={Home} />
           <PrivateRoute path="/admin" component={Admin} />
           <Route exact path="/login" component={LoginForm} />

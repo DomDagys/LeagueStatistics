@@ -1,0 +1,34 @@
+body {
+  font-family: "Lato";
+}
+
+.sidenav {
+  height: 100%;
+  width: 20%;
+  max-width: 250px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #555;
+  font-size: min(2vw, 20px);
+  max-font-size: 10px;
+}
+
+.sidenav a {
+  /*The CSS padding properties are used to generate
+  space around an element's content, inside of any defined borders.*/
+  padding-left: 15%;
+  display: block;
+  font-size: 1.5em;
+  color: #AAA;
+}
+
+.sidenav a:hover {
+  color: #FFF;
+}
+
+.sidenav h1 {
+  font-size: 2em;
+  padding: 5% 0% 0% 15%;
+  color: #88F;
+}
