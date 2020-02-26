@@ -1,14 +1,32 @@
-import React from 'react';
-import LoginForm from './components/loginForm/LoginForm';
-import NavigationBar from './components/navigation/NavigationBar'
+import React, { useState } from "react";
+import { BrowserRouter as Router, Link, Route } from "react-router-dom";
+import PrivateRoute from "./privateRoute";
+import Home from "./components/Home";
+import Admin from "./components/Admin";
+import { AuthContext } from "./context/auth";
+import LoginForm from "./components/loginForm/LoginForm";
+import RegisterForm from "./components/registerForm/registerForm";
 
-function App() {
+function App(props) {
+  const [authTokens, setAuthTokens] = useState();
+
+  const setTokens = data => {
+    localStorage.setItem("tokens", JSON.stringify(data));
+    setAuthTokens(data);
+  };
+
   return (
-    <div className="App">
-      <NavigationBar/>
-      <h1>Hello World!</h1>
-      <LoginForm/>
-    </div>
+    <AuthContext.Provider value={{ authTokens, setAuthTokens: setTokens }}>
+      <Router>
+        <div>
+          <h1>{authTokens}</h1>
+          <Route exact path="/" component={Home} />
+          <PrivateRoute path="/admin" component={Admin} />
+          <Route exact path="/login" component={LoginForm} />
+          <Route exact path="/signup" component={RegisterForm} />
+        </div>
+      </Router>
+    </AuthContext.Provider>
   );
 }
 
