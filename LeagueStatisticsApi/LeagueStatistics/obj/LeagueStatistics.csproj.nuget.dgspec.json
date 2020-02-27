@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj": {}
+    "C:\\Users\\admin\\Desktop\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj": {}
   },
   "projects": {
-    "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj": {
+    "C:\\Users\\admin\\Desktop\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj",
+        "projectUniqueName": "C:\\Users\\admin\\Desktop\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj",
         "projectName": "LeagueStatistics",
-        "projectPath": "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj",
-        "packagesPath": "C:\\Users\\Dominykas\\.nuget\\packages\\",
-        "outputPath": "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\obj\\",
+        "projectPath": "C:\\Users\\admin\\Desktop\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj",
+        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\admin\\Desktop\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dominykas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -61,6 +61,10 @@
               "target": "Package",
               "version": "[3.1.1, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.0.0, )"
@@ -84,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
