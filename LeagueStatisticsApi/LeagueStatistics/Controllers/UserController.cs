@@ -25,6 +25,23 @@ namespace LeagueStatistics.Controllers
             _userService = userService;
         }
 
+        [HttpPost]
+        [Route("auth")] 
+        public async Task<IActionResult> Authenticate(AuthUserDto userDto)
+        {
+            var user = await _userService.Authenticate(userDto.Username, userDto.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password was incorrect" });
+
+            return Ok(new
+            {
+                user.Id,
+                user.Username,
+                Token = "dariaus-fakejwt-token-labaiprase"
+            });
+        }
+
         // GET: api/User
         [HttpGet]
         [Produces(typeof(GetUserDto[]))]
@@ -37,15 +54,15 @@ namespace LeagueStatistics.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            return Ok();
         }
 
         // POST: api/User
         [HttpPost]
         [Produces(typeof(NewUserDto))]
-        public async Task<IActionResult> Post([FromBody] NewUserDto newUserDto)
+        public async Task<IActionResult> Post(NewUserDto newUserDto)
         {
             var createdUser = await _userService.CreateUser(newUserDto);
 
@@ -54,13 +71,13 @@ namespace LeagueStatistics.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
         }
     }

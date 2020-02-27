@@ -1,7 +1,5 @@
 D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp3.1\LeagueStatistics.csprojAssemblyReference.cache
 D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp3.1\LeagueStatistics.csproj.CoreCompileInputs.cache
-D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp3.1\LeagueStatistics.MvcApplicationPartsAssemblyInfo.cs
-D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp3.1\LeagueStatistics.MvcApplicationPartsAssemblyInfo.cache
 D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp3.1\LeagueStatistics.AssemblyInfoInputs.cache
 D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp3.1\LeagueStatistics.AssemblyInfo.cs
 D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp3.1\appsettings.Development.json
@@ -129,3 +127,5 @@ D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\De
 D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp3.1\LeagueStatistics.MvcApplicationPartsAssemblyInfo.cs
+D:\Semester project\LeagueStatistics\LeagueStatisticsApi\LeagueStatistics\obj\Debug\netcoreapp3.1\LeagueStatistics.MvcApplicationPartsAssemblyInfo.cache
