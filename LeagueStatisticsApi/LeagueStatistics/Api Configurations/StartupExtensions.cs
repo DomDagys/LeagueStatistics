@@ -39,10 +39,17 @@ namespace LeagueStatistics.Api_Configurations
             services.AddAutoMapper(typeof(Startup));
         }
 
-        public static void SetUpDatabase(this IServiceCollection service)
+        public static void SetUpDbExtension(this IServiceCollection service)
         {
             service.AddDbContext<LeagueStatsDbContext>(options => options.UseInMemoryDatabase("LeagueStatsDb"));
         }
 
+        public static void CorsConfigurationExtension(this IApplicationBuilder app)
+        {
+            app.UseCors(configurePolicy => configurePolicy
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+        }
     }
 }

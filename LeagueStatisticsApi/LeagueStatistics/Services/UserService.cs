@@ -21,13 +21,29 @@ namespace LeagueStatistics.Services
             _repository = repository;
         }
 
+        public async Task<GetUserDto> Authenticate(string username, string password)
+        {
+            var user = await _repository.GetByUsername(username);
+
+            if (user == null)
+                return null;
+            if (user.Password != password)
+                return null;
+
+            GetUserDto getUserDto = _mapper.Map<GetUserDto>(user);
+
+            return getUserDto;
+        }
+
         public async Task<NewUserDto> CreateUser(NewUserDto newUserDto)
         {
-            //Implement validation
+            //Implement validation here (check if email or username exists, if user is null)
+
+            var password = newUserDto.Password;
+            if (string.IsNullOrWhiteSpace(password))
+                throw new Exception("Password is required");
 
             var user = _mapper.Map<User>(newUserDto);
-
-            //Hashing
 
             await _repository.Create(user);
             newUserDto = _mapper.Map<NewUserDto>(user);
@@ -40,6 +56,7 @@ namespace LeagueStatistics.Services
             throw new NotImplementedException();
         }
 
+        //Veikia, nereikia implementacijos
         public async Task<ICollection<GetUserDto>> GetAllUsers()
         {
             var users = await _repository.GetAll();

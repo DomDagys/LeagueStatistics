@@ -8,7 +8,7 @@ namespace LeagueStatistics.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class ValuesController : ControllerBase          //This class is for reference :))
     {
         // GET api/values
         [HttpGet]

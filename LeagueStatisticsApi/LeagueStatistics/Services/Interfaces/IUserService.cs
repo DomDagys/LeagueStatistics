@@ -8,6 +8,7 @@ namespace LeagueStatistics.Services.Interfaces
 {
     public interface IUserService
     {
+        Task<GetUserDto> Authenticate(string username, string password);
         Task<ICollection<GetUserDto>> GetAllUsers();
         Task<GetUserDto> GetUserById(int id);
         Task<NewUserDto> CreateUser(NewUserDto newUserDto);
