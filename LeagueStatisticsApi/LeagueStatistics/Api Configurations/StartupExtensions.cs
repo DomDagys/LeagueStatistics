@@ -49,7 +49,7 @@ namespace LeagueStatistics.Api_Configurations
             app.UseCors(configurePolicy => configurePolicy
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
-                .AllowAnyMethod());
+                .AllowAnyHeader());
         }
     }
 }
