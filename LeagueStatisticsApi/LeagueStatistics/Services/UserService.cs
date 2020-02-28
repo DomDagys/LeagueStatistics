@@ -83,16 +83,13 @@ namespace LeagueStatistics.Services
 
         public async Task<UpdateUserDto> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
-            var user = await _repository.GetById(id);
-
-            if (user == null)
+            var oldUser = await _repository.GetById(id);
+            if (oldUser == null || updateUserDto == null)
                 return null;
 
-            user = _mapper.Map<User>(updateUserDto);
-
-            await _repository.Update(user);
-
-            var updatedUser = _mapper.Map<UpdateUserDto>(user);
+            var newUser = _mapper.Map(updateUserDto, oldUser);
+            await _repository.Update(newUser);
+            var updatedUser = _mapper.Map<UpdateUserDto>(newUser);
 
             return updatedUser;
         }
