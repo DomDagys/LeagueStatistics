@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using LeagueStatistics.Dtos.UserDtos;
+using LeagueStatistics.Dtos.SummonerDtos;
 using Newtonsoft;
 using Newtonsoft.Json.Linq;
 

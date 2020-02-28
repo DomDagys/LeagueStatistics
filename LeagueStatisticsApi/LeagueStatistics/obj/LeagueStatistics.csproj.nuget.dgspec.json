@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\admin\\Desktop\\C#\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj": {}
+    "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj": {}
   },
   "projects": {
-    "C:\\Users\\admin\\Desktop\\C#\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj": {
+    "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\admin\\Desktop\\C#\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj",
+        "projectUniqueName": "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj",
         "projectName": "LeagueStatistics",
-        "projectPath": "C:\\Users\\admin\\Desktop\\C#\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj",
-        "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\admin\\Desktop\\C#\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\obj\\",
+        "projectPath": "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\LeagueStatistics.csproj",
+        "packagesPath": "C:\\Users\\Dominykas\\.nuget\\packages\\",
+        "outputPath": "D:\\Semester project\\LeagueStatistics\\LeagueStatisticsApi\\LeagueStatistics\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dominykas\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
