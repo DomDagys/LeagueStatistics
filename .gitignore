@@ -4,9 +4,13 @@ LeagueStatisticsApi/.vs/LeagueStatistics/v16/.suo
 LeagueStatisticsApi/LeagueStatistics/bin/Debug/netcoreapp3.1/LeagueStatistics.dll
 LeagueStatisticsApi/LeagueStatistics/bin/Debug/netcoreapp3.1/LeagueStatistics.pdb
 LeagueStatisticsApi/LeagueStatistics/obj/Debug/netcoreapp3.1/LeagueStatistics.csprojAssemblyReference.cache
-LeagueStatisticsApi/LeagueStatistics/obj/Debug/netcoreapp3.1/LeagueStatistics.dll
 LeagueStatisticsApi/LeagueStatistics/obj/Debug/netcoreapp3.1/LeagueStatistics.pdb
 LeagueStatisticsApi/.vs/LeagueStatistics/v16/Server/sqlite3/storage.ide-shm
 LeagueStatisticsApi/.vs/LeagueStatistics/v16/Server/sqlite3/storage.ide-wal
 LeagueStatisticsApi/.vs/LeagueStatistics/DesignTimeBuild/.dtbcache
 LeagueStatisticsApi/.vs/LeagueStatistics/v16/Server/sqlite3/storage.ide
+LeagueStatisticsApi/LeagueStatistics/obj/Debug/netcoreapp3.1/LeagueStatistics.assets.cache
+LeagueStatisticsApi/LeagueStatistics/obj/LeagueStatistics.csproj.nuget.cache
+LeagueStatisticsApi/LeagueStatistics/obj/LeagueStatistics.csproj.nuget.dgspec.json
+LeagueStatisticsApi/LeagueStatistics/obj/LeagueStatistics.csproj.nuget.g.props
+LeagueStatisticsApi/LeagueStatistics/obj/project.assets.json
