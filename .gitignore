@@ -1,2 +1,5 @@
 
 LeagueStatisticsApi/LeagueStatistics/Services/RiotAPI/Key.txt
+LeagueStatisticsApi/.vs/LeagueStatistics/v16/Server/sqlite3
+LeagueStatisticsApi/.vs/LeagueStatistics/v16/.*
+LeagueStatisticsApi/LeagueStatistics/obj/Debug/netcoreapp3.1/LeagueStatistics.*
