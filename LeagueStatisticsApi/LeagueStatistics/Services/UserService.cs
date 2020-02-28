@@ -51,9 +51,15 @@ namespace LeagueStatistics.Services
             return newUserDto;
         }
 
-        public Task<bool> DeleteUser(int id)
+        public async Task<bool> DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            var user = await _repository.GetById(id);
+            if (user == null)
+                return false;
+
+            bool deleted = await _repository.Delete(user);
+
+            return deleted;
         }
 
         //Veikia, nereikia implementacijos
@@ -65,14 +71,30 @@ namespace LeagueStatistics.Services
             return usersDto;
         }
 
-        public Task<GetUserDto> GetUserById(int id)
+        public async Task<GetUserDto> GetUserById(int id)
         {
-            throw new NotImplementedException();
+            var user = await _repository.GetById(id);
+            if (user == null)
+                return null;
+            var usersDto = _mapper.Map<GetUserDto>(user);
+
+            return usersDto;
         }
 
-        public Task<UpdateUserDto> UpdateUser(int id, UpdateUserDto updateUserDto)
+        public async Task<UpdateUserDto> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
-            throw new NotImplementedException();
+            var user = await _repository.GetById(id);
+
+            if (user == null)
+                return null;
+
+            user = _mapper.Map<User>(updateUserDto);
+
+            await _repository.Update(user);
+
+            var updatedUser = _mapper.Map<UpdateUserDto>(user);
+
+            return updatedUser;
         }
     }
 }

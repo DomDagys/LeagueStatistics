@@ -54,9 +54,12 @@ namespace LeagueStatistics.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
+        [Produces(typeof(GetUserDto))]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok();
+            var userByID = await _userService.GetUserById(id);
+
+            return Ok(userByID);
         }
 
         // POST: api/User
@@ -71,14 +74,19 @@ namespace LeagueStatistics.Controllers
 
         // PUT: api/User/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] string value)
+        [Produces(typeof(UpdateUserDto))]
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateUserDto userDto)
         {
+            var updatedUser = await _userService.UpdateUser(id, userDto);
+
+            return Ok(updatedUser);
         }
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async Task Delete(int id)
+        public async void Delete(int id)
         {
+            var deletedUser = await _userService.DeleteUser(id);
         }
     }
 }
