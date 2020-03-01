@@ -8,8 +8,8 @@ import { PrivateRoute } from "../_components";
 import { HomePage } from "../HomePage";
 import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
-import NavigationBar from "../Navigation/NavigationBar";
-import { PrivateNavigation } from "../Navigation/PrivateNavigation";
+import { Header } from "../_components/Header";
+import Settings from "../AccountSettings/AccountSettings";
 // Siek tiek info:
 // PrivateRoute -
 class App extends React.Component {
@@ -25,20 +25,24 @@ class App extends React.Component {
     const { alert } = this.props;
     const { user } = this.props;
     return (
-      <div className="jumbotron">
+      <div>
+        <Header />
         <div className="container">
-          <div className="col-sm-8 col-sm-offset-2">
-            {alert.message && (
-              <div className={`alert ${alert.type}`}>{alert.message}</div>
-            )}
-            <Router history={history}>
-              <Switch>
-                <PrivateRoute exact path="/" component={HomePage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/register" component={RegisterPage} />
-                <Redirect from="*" to="/" />
-              </Switch>
-            </Router>
+          <div>
+            <div className="container">
+              {alert.message && (
+                <div className={`alert ${alert.type}`}>{alert.message}</div>
+              )}
+              <Router history={history}>
+                <Switch>
+                  <PrivateRoute exact path="/" component={HomePage} />
+                  <Route path="/login" component={LoginPage} />
+                  <Route path="/register" component={RegisterPage} />
+                  <PrivateRoute path="/settings" component={Settings} />
+                  <Redirect from="*" to="/" />
+                </Switch>
+              </Router>
+            </div>
           </div>
         </div>
       </div>
