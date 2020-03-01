@@ -33,6 +33,7 @@ namespace LeagueStatistics
             services.SetUpDbExtension();
             services.SwaggerServiceExtension();
             services.AddCors();
+            services.JwtServiceExtension(Configuration);
 
             services.InjectRepositoryDependencies();
             services.InjectServiceDependencies();
@@ -50,11 +51,14 @@ namespace LeagueStatistics
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.CorsConfigurationExtension();
             app.SwaggerConfigurationExtension();
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }

@@ -21,6 +21,10 @@ namespace LeagueStatistics.Database
             builder.Entity<User>(entity => {
                 entity.HasIndex(e => e.Email).IsUnique();
             });
+
+            builder.Entity<User>(entity => {
+                entity.HasIndex(e => e.Username).IsUnique();
+            });
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LeagueStatistics.Dtos.UserDtos
 {
-    public class AuthUserDto
+    public class LoginUserDto
     {
         public string Username { get; set; }
         public string Password { get; set; }

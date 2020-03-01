@@ -14,41 +14,50 @@ namespace LeagueStatistics.Services
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _repository;
+        private readonly IAuthService _authService;
 
-        public UserService(IMapper mapper, IUserRepository repository)
+        public UserService(IMapper mapper, IUserRepository repository, IAuthService authService)
         {
             _mapper = mapper;
             _repository = repository;
+            _authService = authService;
         }
 
-        public async Task<GetUserDto> Authenticate(string username, string password)
+        public async Task<AuthenticatedUserDto> Authenticate(string username, string password)
         {
             var user = await _repository.GetByUsername(username);
-
             if (user == null)
                 return null;
-            if (user.Password != password)
-                return null;
 
-            GetUserDto getUserDto = _mapper.Map<GetUserDto>(user);
+            string token;
+            user = _authService.Authenticate(user, username, password, out token);
+            AuthenticatedUserDto authUser = _mapper.Map<AuthenticatedUserDto>(user);
+            authUser.Token = token;
 
-            return getUserDto;
+            return authUser;
         }
 
-        public async Task<NewUserDto> CreateUser(NewUserDto newUserDto)
+        public async Task<User> CreateUser(NewUserDto newUserDto)
         {
-            //Implement validation here (check if email or username exists, if user is null)
+            var userWithEmail = await _repository.GetByEmail(newUserDto.Email);
+            var userWithUsername = await _repository.GetByUsername(newUserDto.Username);
+            if (userWithEmail != null)
+                throw new Exception("A user with the same email already exists.");
 
-            var password = newUserDto.Password;
-            if (string.IsNullOrWhiteSpace(password))
-                throw new Exception("Password is required");
+            if (userWithUsername != null)
+                throw new Exception("A user with the sama username already exits.");
+
+            byte[] passwordHash, passwordSalt;
+            _authService.CreatePasswordHash(newUserDto.Password, out passwordHash, out passwordSalt);
 
             var user = _mapper.Map<User>(newUserDto);
-
+            user.PasswordHash = passwordHash;
+            user.PasswordSalt = passwordSalt;
             await _repository.Create(user);
-            newUserDto = _mapper.Map<NewUserDto>(user);
+            //newUserDto = _mapper.Map<NewUserDto>(user);
 
-            return newUserDto;
+            //return newUserDto;
+            return user;
         }
 
         public async Task<bool> DeleteUser(int id)

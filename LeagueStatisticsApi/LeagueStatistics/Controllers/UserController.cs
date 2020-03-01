@@ -6,6 +6,7 @@ using AutoMapper;
 using LeagueStatistics.Database.Models;
 using LeagueStatistics.Dtos.UserDtos;
 using LeagueStatistics.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,18 +28,19 @@ namespace LeagueStatistics.Controllers
 
         [HttpPost]
         [Route("auth")] 
-        public async Task<IActionResult> Authenticate(AuthUserDto userDto)
+        public async Task<IActionResult> Authenticate(LoginUserDto userDto)
         {
-            var user = await _userService.Authenticate(userDto.Username, userDto.Password);
+            var authUser = await _userService.Authenticate(userDto.Username, userDto.Password);
 
-            if (user == null)
+            if (authUser == null)
                 return BadRequest(new { message = "Username or password was incorrect" });
 
             return Ok(new
             {
-                user.Id,
-                user.Username,
-                Token = "dariaus-fakejwt-token-labaiprase"
+                authUser.Id,
+                authUser.Username,
+                authUser.Email,
+                authUser.Token
             });
         }
 
@@ -54,6 +56,7 @@ namespace LeagueStatistics.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}", Name = "Get")]
+        [Authorize]
         [Produces(typeof(GetUserDto))]
         public async Task<IActionResult> Get(int id)
         {
@@ -64,7 +67,8 @@ namespace LeagueStatistics.Controllers
 
         // POST: api/User
         [HttpPost]
-        [Produces(typeof(NewUserDto))]
+        //[Produces(typeof(NewUserDto))]
+        [Produces(typeof(User))]
         public async Task<IActionResult> Post(NewUserDto newUserDto)
         {
             var createdUser = await _userService.CreateUser(newUserDto);
@@ -84,9 +88,11 @@ namespace LeagueStatistics.Controllers
 
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public async void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var deletedUser = await _userService.DeleteUser(id);
+
+            return Ok(deletedUser);
         }
     }
 }

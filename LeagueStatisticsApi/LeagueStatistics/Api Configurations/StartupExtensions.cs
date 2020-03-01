@@ -10,6 +10,12 @@ using AutoMapper;
 using LeagueStatistics.Database.Models;
 using LeagueStatistics.Database;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using LeagueStatistics.Options;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace LeagueStatistics.Api_Configurations
 {
@@ -20,6 +26,16 @@ namespace LeagueStatistics.Api_Configurations
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("leaguestats", new OpenApiInfo { Title = "LeagueStatistics", Version = "v1" });
+
+                options.OperationFilter<SecurityRequirementsOperationFilter>();
+
+                options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+                {
+                    Description = "Standard Authorization header using the Bearer scheme. Example: \"bearer {token}\"",
+                    In = ParameterLocation.Header,
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey
+                });
             });
         }
 
@@ -39,9 +55,9 @@ namespace LeagueStatistics.Api_Configurations
             services.AddAutoMapper(typeof(Startup));
         }
 
-        public static void SetUpDbExtension(this IServiceCollection service)
+        public static void SetUpDbExtension(this IServiceCollection services)
         {
-            service.AddDbContext<LeagueStatsDbContext>(options => options.UseInMemoryDatabase("LeagueStatsDb"));
+            services.AddDbContext<LeagueStatsDbContext>(options => options.UseInMemoryDatabase("LeagueStatsDb"));
         }
 
         public static void CorsConfigurationExtension(this IApplicationBuilder app)
@@ -50,6 +66,33 @@ namespace LeagueStatistics.Api_Configurations
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
+        }
+
+        public static void JwtServiceExtension(this IServiceCollection services, IConfiguration configuration)
+        {
+            var appSettingsSection = configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+            var settings = appSettingsSection.Get<AppSettings>();
+
+            var privateKey = Encoding.ASCII.GetBytes(settings.PrivateKey);
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(privateKey),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
         }
     }
 }

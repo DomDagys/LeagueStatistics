@@ -12,6 +12,9 @@ namespace LeagueStatistics.Api_Configurations
     {
         public AutoMapperProfile()
         {
+            CreateMap<AuthenticatedUserDto, User>();
+            CreateMap<User, AuthenticatedUserDto>();
+
             CreateMap<UpdateUserDto, User>();
             CreateMap<User, UpdateUserDto>();
 
