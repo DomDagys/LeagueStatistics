@@ -27,6 +27,7 @@ namespace LeagueStatistics.Controllers
         }
 
         [HttpPost]
+        [Produces(typeof(AuthenticatedUserDto))]
         [Route("auth")] 
         public async Task<IActionResult> Authenticate(LoginUserDto userDto)
         {
@@ -35,13 +36,7 @@ namespace LeagueStatistics.Controllers
             if (authUser == null)
                 return BadRequest(new { message = "Username or password was incorrect" });
 
-            return Ok(new
-            {
-                authUser.Id,
-                authUser.Username,
-                authUser.Email,
-                authUser.Token
-            });
+            return Ok(authUser);
         }
 
         // GET: api/User
