@@ -33,7 +33,7 @@ function register(user) {
   };
 
   return fetch(`${config.apiUrl}/api/User`, requestOptions).then(
-    handleResponse
+    handleRegister
   );
 }
 
@@ -55,7 +55,7 @@ function getAll() {
 
 function handleResponse(response) {
   return response.text().then(text => {
-    const data = text && JSON.parse(text);
+    const data = JSON.parse(text);
     if (!response.ok) {
       if (response.status === 401) {
         // auto logout if 401 response returned from api
@@ -64,6 +64,23 @@ function handleResponse(response) {
       }
 
       const error = (data && data.message) || response.statusText;
+      return Promise.reject(error);
+    }
+
+    return data;
+  });
+}
+
+function handleRegister(response) {
+  return response.text().then(text => {
+    const data = text;
+    if (!response.ok) {
+      if (response.status === 401) {
+        logout();
+        location.reload(true);
+      }
+
+      const error = data || response.statusText;
       return Promise.reject(error);
     }
 
