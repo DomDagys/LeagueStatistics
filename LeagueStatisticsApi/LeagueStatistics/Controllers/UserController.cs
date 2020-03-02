@@ -57,6 +57,9 @@ namespace LeagueStatistics.Controllers
         {
             var userByID = await _userService.GetUserById(id);
 
+            if (userByID == null)
+                return BadRequest(new { message = "The user with the given id doesnt exist"});
+
             return Ok(userByID);
         }
 
@@ -94,9 +97,9 @@ namespace LeagueStatistics.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var deletedUser = await _userService.DeleteUser(id);
+            var isDeleted = await _userService.DeleteUser(id);
 
-            return Ok(deletedUser);
+            return Ok(isDeleted);
         }
     }
 }

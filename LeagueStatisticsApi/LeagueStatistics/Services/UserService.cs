@@ -14,13 +14,13 @@ namespace LeagueStatistics.Services
     {
         private readonly IMapper _mapper;
         private readonly IUserRepository _repository;
-        private readonly IAuthService _authService;
+        private readonly ISecurityService _securityService;
 
-        public UserService(IMapper mapper, IUserRepository repository, IAuthService authService)
+        public UserService(IMapper mapper, IUserRepository repository, ISecurityService securityService)
         {
             _mapper = mapper;
             _repository = repository;
-            _authService = authService;
+            _securityService = securityService;
         }
 
         public async Task<AuthenticatedUserDto> Authenticate(string username, string password)
@@ -30,7 +30,7 @@ namespace LeagueStatistics.Services
                 return null;
 
             string token;
-            user = _authService.Authenticate(user, username, password, out token);
+            user = _securityService.Authenticate(user, username, password, out token);
             AuthenticatedUserDto authUser = _mapper.Map<AuthenticatedUserDto>(user);
             authUser.Token = token;
 
@@ -51,7 +51,7 @@ namespace LeagueStatistics.Services
                 if (userWithUsername != null)
                     throw new Exception("A user with the same username already exits.");
 
-                _authService.CreatePasswordHash(newUserDto.Password, out passwordHash, out passwordSalt);
+                _securityService.CreatePasswordHash(newUserDto.Password, out passwordHash, out passwordSalt);
             }
             catch (Exception ex)
             {
@@ -105,11 +105,21 @@ namespace LeagueStatistics.Services
             if (oldUser == null || updateUserDto == null)
                 return null;
 
-            var newUser = _mapper.Map(updateUserDto, oldUser);
-            await _repository.Update(newUser);
-            var updatedUser = _mapper.Map<UpdateUserDto>(newUser);
+            //byte[] passwordSalt, passwordHash;
+            //_securityService.CreatePasswordHash(updateUserDto.Password, out passwordHash, out passwordSalt);
+
+            var user = _mapper.Map(updateUserDto, oldUser);
+            //user.PasswordHash = passwordHash;
+            //user.PasswordSalt = passwordSalt;
+            await _repository.Update(user);
+            var updatedUser = _mapper.Map<UpdateUserDto>(user);
 
             return updatedUser;
+        }
+
+        private bool Validate(User user, string password)
+        {
+            return true;
         }
     }
 }

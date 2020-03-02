@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LeagueStatistics.Services.Interfaces
 {
-    public interface IAuthService
+    public interface ISecurityService
     {
         User Authenticate(User user, string username, string password, out string token);
         void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt);

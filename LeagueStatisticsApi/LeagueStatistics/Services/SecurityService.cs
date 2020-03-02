@@ -15,11 +15,11 @@ using System.Threading.Tasks;
 
 namespace LeagueStatistics.Services
 {
-    public class AuthService : IAuthService
+    public class SecurityService : ISecurityService
     {
         private readonly AppSettings _settings;
 
-        public AuthService(IOptions<AppSettings> settings)
+        public SecurityService(IOptions<AppSettings> settings)
         {
             _settings = settings.Value;
         }
@@ -32,6 +32,8 @@ namespace LeagueStatistics.Services
 
             if (VerifyPassword(password, user.PasswordHash, user.PasswordSalt))
                 token = CreateJtw(user);
+            else
+                return null;
 
             return user;
         }

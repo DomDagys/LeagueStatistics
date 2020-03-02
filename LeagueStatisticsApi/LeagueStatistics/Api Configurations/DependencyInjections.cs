@@ -16,7 +16,7 @@ namespace LeagueStatistics.Api_Configurations
         public static void InjectServiceDependencies(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>()
-                    .AddScoped<IAuthService, AuthService>();
+                    .AddScoped<ISecurityService, SecurityService>();
         }
 
         public static void InjectRepositoryDependencies(this IServiceCollection services)

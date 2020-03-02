@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LeagueStatistics.Dtos.SummonerDtos;
 using LeagueStatistics.Services.RiotAPI;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,13 +29,14 @@ namespace LeagueStatistics.Controllers
 
         // POST: api/Summoner
         [HttpPost]
-        public string Post(string value)
+        [Produces(typeof(SummonerDto))]
+        public IActionResult Post(string region, string summonerName)
         {
-            Summoner_V4 Summoner = new Summoner_V4("EUN1");
+            Summoner_V4 Summoner = new Summoner_V4(region);
 
-            var summoner = Summoner.GetSummonerByName(value);
+            var summonerInfo = Summoner.GetSummonerByName(summonerName);
             //return "PEtras";
-            return summoner.SummonerName + " " + summoner.SummonerLevel + " " + summoner.ProfileIconID;
+            return Ok(summonerInfo);
         }
 
         // PUT: api/Summoner/5
