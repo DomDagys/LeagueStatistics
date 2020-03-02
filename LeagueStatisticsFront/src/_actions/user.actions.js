@@ -7,8 +7,26 @@ export const userActions = {
   login,
   logout,
   register,
-  getAll
+  getAll,
+  update
 };
+
+function update(user) {
+  return dispatch => {
+    dispatch(request(user));
+
+    userService.update(user).then(
+      user => {
+        dispatch(success());
+        history.push("/login");
+        dispatch(alertActions.success("Summoner name success"));
+      },
+      error => {
+        console.log("UPDATO ERRORAS" + error.toString());
+      }
+    );
+  };
+}
 
 function register(user) {
   return dispatch => {
