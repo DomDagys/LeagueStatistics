@@ -58,7 +58,7 @@ namespace LeagueStatistics.Controllers
             var userByID = await _userService.GetUserById(id);
 
             if (userByID == null)
-                return BadRequest(new { message = "The user with the given id doesnt exist"});
+                return NotFound(new { message = "User with the given id was not found"});
 
             return Ok(userByID);
         }
@@ -88,7 +88,17 @@ namespace LeagueStatistics.Controllers
         [Produces(typeof(UpdateUserDto))]
         public async Task<IActionResult> Put(int id, [FromBody] UpdateUserDto userDto)
         {
-            var updatedUser = await _userService.UpdateUser(id, userDto);
+            UpdateUserDto updatedUser;
+            try
+            {
+                updatedUser = await _userService.UpdateUser(id, userDto);
+                if (updatedUser == null)
+                    throw new Exception("User with the given id was not found");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
             return Ok(updatedUser);
         }
@@ -99,7 +109,10 @@ namespace LeagueStatistics.Controllers
         {
             var isDeleted = await _userService.DeleteUser(id);
 
-            return Ok(isDeleted);
+            if (!isDeleted)
+                return NotFound(new { message = "User with the given id was not found" });
+
+            return Ok();
         }
     }
 }
