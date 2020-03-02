@@ -41,14 +41,23 @@ namespace LeagueStatistics.Services
         {
             var userWithEmail = await _repository.GetByEmail(newUserDto.Email);
             var userWithUsername = await _repository.GetByUsername(newUserDto.Username);
-            if (userWithEmail != null)
-                throw new Exception("A user with the same email already exists.");
-
-            if (userWithUsername != null)
-                throw new Exception("A user with the sama username already exits.");
-
             byte[] passwordHash, passwordSalt;
-            _authService.CreatePasswordHash(newUserDto.Password, out passwordHash, out passwordSalt);
+
+            try
+            {
+                if (userWithEmail != null)
+                    throw new Exception("A user with the same email already exists.");
+
+                if (userWithUsername != null)
+                    throw new Exception("A user with the same username already exits.");
+
+                _authService.CreatePasswordHash(newUserDto.Password, out passwordHash, out passwordSalt);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
 
             var user = _mapper.Map<User>(newUserDto);
             user.PasswordHash = passwordHash;

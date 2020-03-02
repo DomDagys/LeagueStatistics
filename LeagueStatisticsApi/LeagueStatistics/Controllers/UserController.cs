@@ -66,9 +66,18 @@ namespace LeagueStatistics.Controllers
         [Produces(typeof(User))]
         public async Task<IActionResult> Post(NewUserDto newUserDto)
         {
-            var createdUser = await _userService.CreateUser(newUserDto);
+            User createdUser;
 
-            return Ok(createdUser);
+            try
+            {
+                createdUser = await _userService.CreateUser(newUserDto);
+
+                return Ok(createdUser);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: api/User/5
