@@ -13,6 +13,8 @@ namespace LeagueStatistics.Controllers
     [ApiController]
     public class SummonerController : ControllerBase
     {
+        private readonly Summoner_V4Service Summoner = new Summoner_V4Service();
+
         // GET: api/Summoner
         [HttpGet]
         public IEnumerable<string> Get()
@@ -32,10 +34,7 @@ namespace LeagueStatistics.Controllers
         [Produces(typeof(SummonerDto))]
         public IActionResult Post(string region, string summonerName)
         {
-            Summoner_V4Service Summoner = new Summoner_V4Service(region);
-
-            var summonerInfo = Summoner.GetSummonerByName(summonerName);
-            //return "PEtras";
+            var summonerInfo = Summoner.GetSummonerByName(summonerName, region);
             return Ok(summonerInfo);
         }
 
