@@ -8,9 +8,9 @@ using Newtonsoft.Json.Linq;
 
 namespace LeagueStatistics.Services.RiotAPI
 {
-    public class Summoner_V4 : GeneralAPI
+    public class Summoner_V4Service : GeneralAPI
     {
-        public Summoner_V4(string region) : base(region)
+        public Summoner_V4Service(string region) : base(region)
         {
 
         }

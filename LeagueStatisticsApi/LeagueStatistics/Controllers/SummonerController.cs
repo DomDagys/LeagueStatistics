@@ -32,7 +32,7 @@ namespace LeagueStatistics.Controllers
         [Produces(typeof(SummonerDto))]
         public IActionResult Post(string region, string summonerName)
         {
-            Summoner_V4 Summoner = new Summoner_V4(region);
+            Summoner_V4Service Summoner = new Summoner_V4Service(region);
 
             var summonerInfo = Summoner.GetSummonerByName(summonerName);
             //return "PEtras";
