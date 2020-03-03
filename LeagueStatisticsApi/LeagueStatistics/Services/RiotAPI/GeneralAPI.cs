@@ -10,14 +10,10 @@ namespace LeagueStatistics.Services.RiotAPI
 {
     public class GeneralAPI
     {
-        //ValuesController Controller = new ValuesController();
-
         private string Key { get; set; }
-        private string Region { get; set; }
 
-        public GeneralAPI(string region)
+        public GeneralAPI()
         {
-            Region = region;
             Key = GetKey("Services/RiotAPI/Key.txt");
         }
 
@@ -38,9 +34,9 @@ namespace LeagueStatistics.Services.RiotAPI
             return reader.ReadToEnd();
         }
 
-        protected string GetURI(string path)
+        protected string GetURI(string path, string region)
         {
-            return "https://" + Region + ".api.riotgames.com/lol/" + path + "?api_key=" + Key;
+            return "https://" + region + ".api.riotgames.com/lol/" + path + "?api_key=" + Key;
         }
     }
 }
