@@ -9,7 +9,6 @@ class ModalForm extends React.Component {
     this.state = {
       email: "",
       username: "",
-      password: "",
       dateOfBirth: "",
       summonerName: "",
       region: ""
@@ -19,11 +18,20 @@ class ModalForm extends React.Component {
     this.submitForm = this.submitForm.bind(this);
   }
 
+  componentWillMount() {
+    console.log(this.props);
+    if (this.props) {
+      Object.assign(this.state, {
+        email: this.props.email,
+        username: this.props.username,
+        dateOfBirth: this.props.dateOfBirth
+      });
+    }
+  }
+
   updateState(e) {
     e.preventDefault();
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
-    console.log(this.state.summonerName);
+    console.log(this.state);
   }
 
   submitForm(e) {

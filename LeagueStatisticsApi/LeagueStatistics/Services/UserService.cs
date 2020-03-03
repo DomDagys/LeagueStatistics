@@ -31,6 +31,9 @@ namespace LeagueStatistics.Services
 
             string token;
             user = _securityService.Authenticate(user, username, password, out token);
+            if (user == null)
+                return null;
+
             AuthenticatedUserDto authUser = _mapper.Map<AuthenticatedUserDto>(user);
             authUser.Token = token;
 
@@ -50,6 +53,12 @@ namespace LeagueStatistics.Services
 
                 if (userWithUsername != null)
                     throw new Exception("A user with the same username already exits.");
+
+                if (newUserDto.Username.Length < 4)
+                    throw new Exception("Username is too short, must be more than 4 characters.");
+
+                if (!string.IsNullOrWhiteSpace(newUserDto.Password) && newUserDto.Password.Length < 4)
+                    throw new Exception("Password is too short, must be more than 4 characters.");
 
                 _securityService.CreatePasswordHash(newUserDto.Password, out passwordHash, out passwordSalt);
             }
@@ -104,22 +113,56 @@ namespace LeagueStatistics.Services
             var oldUser = await _repository.GetById(id);
             if (oldUser == null || updateUserDto == null)
                 return null;
-
-            //byte[] passwordSalt, passwordHash;
-            //_securityService.CreatePasswordHash(updateUserDto.Password, out passwordHash, out passwordSalt);
-
             var user = _mapper.Map(updateUserDto, oldUser);
-            //user.PasswordHash = passwordHash;
-            //user.PasswordSalt = passwordSalt;
+
+            var userWithEmail = await _repository.GetByEmail(user.Email);
+
+            try
+            {
+                if (userWithEmail != null && updateUserDto.Email == oldUser.Email)
+                    throw new Exception("A user with the same email already exists.");
+
+                if (!string.IsNullOrWhiteSpace(updateUserDto.Password) && updateUserDto.Password.Length < 4)
+                    throw new Exception("Password is too short, must be more than 4 characters.");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            if (!string.IsNullOrWhiteSpace(updateUserDto.Password))
+            {
+                byte[] passwordSalt, passwordHash;
+                _securityService.CreatePasswordHash(updateUserDto.Password, out passwordHash, out passwordSalt);
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
+            }
+
             await _repository.Update(user);
             var updatedUser = _mapper.Map<UpdateUserDto>(user);
 
             return updatedUser;
         }
 
-        private bool Validate(User user, string password)
-        {
-            return true;
-        }
+        //private async Task ValidateFields(User user, string password)
+        //{
+        //    var userWithEmail = await _repository.GetByEmail(user.Email);
+        //    var userWithUsername = await _repository.GetByUsername(user.Username);
+
+        //    if (userWithEmail != null && user.Email != userWithUsername.Email)
+        //        throw new Exception("A user with the same email already exists.");
+
+        //    if (userWithUsername != null && user.Username != userWithEmail.Username)
+        //        throw new Exception("A user with the same username already exits.");
+
+        //    if (user.Username.Length < 4)
+        //        throw new Exception("Username is too short, must be more than 4 characters.");
+
+        //    if (!string.IsNullOrWhiteSpace(password) && password.Length < 4)
+        //        throw new Exception("Password is too short, must be more than 4 characters.");
+
+        //    return;
+        //}
+
     }
 }
