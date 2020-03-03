@@ -3,6 +3,7 @@ using LeagueStatistics.Repositories;
 using LeagueStatistics.Repositories.Interfaces;
 using LeagueStatistics.Services;
 using LeagueStatistics.Services.Interfaces;
+using LeagueStatistics.Services.RiotAPI;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,8 @@ namespace LeagueStatistics.Api_Configurations
         public static void InjectServiceDependencies(this IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>()
-                    .AddScoped<ISecurityService, SecurityService>();
+                    .AddScoped<ISecurityService, SecurityService>()
+                    .AddScoped<ISummoner_V4Service, Summoner_V4Service>();
         }
 
         public static void InjectRepositoryDependencies(this IServiceCollection services)
