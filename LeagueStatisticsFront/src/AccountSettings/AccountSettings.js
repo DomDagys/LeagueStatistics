@@ -5,14 +5,47 @@ import { connect } from "react-redux";
 // - D.K
 
 class Settings extends React.Component {
+  handleChange(e){
+
+    console.log(e.target.value);
+  }
+
   render() {
     const { user } = this.props;
     return (
       <div>
-        <div className="container">
-          <h1>Your name: {user.username}</h1>
-          <h1>Your email: {user.email}</h1>
-        </div>
+        <form name="form">
+          <label>User Name</label>
+          <p>{user.username}</p>
+          <label>Email</label>
+          <input
+            type="text"
+            name="email"
+            value={user.email}
+          />
+          <label>Region</label>
+          <input
+            type="text"
+            name="region"
+          />
+          <label>AboutMe</label>
+          <input
+            type="text"
+            name="aboutme"
+          />
+          <label>Password</label>
+          <input
+            type="text"
+            name="password"
+            value={user.token}
+          />
+          <lable>SummonerName</lable>
+          <input
+            type="text"
+            name="summonerName"
+          />
+
+        </form>
       </div>
     );
   }
