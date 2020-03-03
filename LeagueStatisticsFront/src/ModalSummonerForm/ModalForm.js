@@ -9,13 +9,24 @@ class ModalForm extends React.Component {
     this.state = {
       email: "",
       username: "",
-      dateOfBirth: "",
       summonerName: "",
       region: ""
     };
 
-    this.updateState = this.updateState.bind(this);
-    this.submitForm = this.submitForm.bind(this);
+    this.updateState = field => ev => {
+      const state = this.state;
+      const newState = Object.assign({}, state, { [field]: ev.target.value });
+      this.setState(newState);
+      console.log(this.state);
+    };
+
+    this.submitForm = ev => {
+      ev.preventDefault();
+
+      const user = Object.assign({}, this.state);
+
+      this.props.onSubmitForm(user);
+    };
   }
 
   componentWillMount() {
@@ -23,22 +34,9 @@ class ModalForm extends React.Component {
     if (this.props) {
       Object.assign(this.state, {
         email: this.props.email,
-        username: this.props.username,
-        dateOfBirth: this.props.dateOfBirth
+        username: this.props.username
       });
     }
-  }
-
-  updateState(e) {
-    e.preventDefault();
-    console.log(this.state);
-  }
-
-  submitForm(e) {
-    e.preventDefault();
-    const user = Object.assign({}, this.state);
-
-    console.log(user);
   }
 
   render() {
@@ -56,13 +54,13 @@ class ModalForm extends React.Component {
             placeholder="Summoner Name"
             type="text"
             name="summonerName"
-            value={this.props.summonerName}
-            onChange={this.updateState}
+            value={this.state.summonerName}
+            onChange={this.updateState("summonerName")}
           ></input>
           <select
             name="region"
-            value={this.props.region}
-            onChange={this.updateState}
+            value={this.state.region}
+            onChange={this.updateState("region")}
             id="region"
           >
             <option value="eune">EUNE</option>
