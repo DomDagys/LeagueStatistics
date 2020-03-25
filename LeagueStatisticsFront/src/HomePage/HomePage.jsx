@@ -1,13 +1,26 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { userActions } from "../_actions";
-import { history } from "../_helpers";
+import { history, store } from "../_helpers";
+import { userService } from "../_services";
 import "../styles/button.css";
-import ModalForm from "../ModalSummonerForm/ModalForm";
+import { userActions } from "../_actions/user.actions";
 class HomePage extends React.Component {
-  componentDidMount() {
-    this.props.dispatch(userActions.getAll());
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {
+        username: "",
+        email: "",
+        summonerName: "",
+        region: ""
+      }
+    };
+    this.props.getUserById(this.props.user);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let new_obj = Object.assign({}, this.state.user, nextProps.users);
+    this.setState(new_obj);
   }
 
   handleLogout = () => {
@@ -16,13 +29,19 @@ class HomePage extends React.Component {
   };
 
   render() {
-    const { user, users } = this.props;
-    const doesNeedPopUp = user.summonerName;
-    if (doesNeedPopUp === null) return <ModalForm {...user} />;
+    let user = "";
+    if (this.state.items != null) {
+      user = this.state.items;
+    }
     return (
-      <div className="col-md-3 col-md-offset-3">
-        <h1>Hi {user.username}!</h1>
-        <h1>Hi</h1>
+      <div className="col-md-8 col-md-offset-3">
+        <h1>Hi {user.username} </h1>
+        <h2>
+          SummonerName: {user.summonerName}{" "}
+          <a href="/update" className="color red">
+            Want to change? Click
+          </a>
+        </h2>
         <p>LOL</p>
 
         <h3>Users are very secure ;)</h3>
@@ -32,7 +51,7 @@ class HomePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-  const { users, authentication } = state;
+  const { users, authentication, settings } = state;
   const { user } = authentication;
   return {
     user,
@@ -40,5 +59,9 @@ function mapStateToProps(state) {
   };
 }
 
-const connectedHomePage = connect(mapStateToProps)(HomePage);
+const actionCreators = {
+  getUserById: userActions.getUserById
+};
+
+const connectedHomePage = connect(mapStateToProps, actionCreators)(HomePage);
 export { connectedHomePage as HomePage };

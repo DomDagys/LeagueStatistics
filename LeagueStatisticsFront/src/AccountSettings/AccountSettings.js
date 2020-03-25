@@ -4,47 +4,40 @@ import { userActions } from "../_actions";
 // BUTU GERAI JEI KAZKAS SITA DAMUSTU NES MAN PIZDA :)
 // - D.K
 
-class Settings extends React.Component
-{
-  constructor(props)
-  {
+class Settings extends React.Component {
+  constructor(props) {
     super(props);
-    this.state =
-    {
-      email:'xxxx',
-      region:'xxxx',
-      aboutMe:'xxxx',
-      password:'xxxx',
-      summonerName:'xxxx'
-    }
+    this.state = {
+      email: "xxxx",
+      region: "xxxx",
+      aboutMe: "xxxx",
+      password: "xxxx",
+      summonerName: "xxxx"
+    };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   componentDidMount() {
-    console.log('test');
+    console.log("test");
     console.log(this.props);
     this.setState({ email: this.props.user.email });
   }
 
-  handleChange(e)
-  {
-  }
+  handleChange(e) {}
 
-  handleSubmit(e)
-  {
+  handleSubmit(e) {
     e.preventDefault();
-    console.log('Hellp me ' + this.state.email);
+    console.log("Hellp me " + this.state.email);
     const { dispatch } = this.props;
     if (true) {
-      const {user} =
-      {
+      const { user } = {
         email: "test",
         password: "test",
         summonerName: "test",
         region: "test",
-        aboutMe: "test"
+        aboutMe: "test",
+        id: 3
       };
       dispatch(userActions.update(user));
     }
@@ -64,7 +57,7 @@ class Settings extends React.Component
             value={user.email}
             onChange={this.handleChange}
           />
-          <button type='submit'>Submit changes</button>
+          <button type="submit">Submit changes</button>
         </form>
       </div>
     );

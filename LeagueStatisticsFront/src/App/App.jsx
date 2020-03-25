@@ -10,6 +10,7 @@ import { LoginPage } from "../LoginPage";
 import { RegisterPage } from "../RegisterPage";
 import { Header } from "../_components/Header";
 import Settings from "../AccountSettings/AccountSettings";
+import { ModalForm } from "../ModalSummonerForm/ModalForm";
 // Siek tiek info:
 // PrivateRoute -
 class App extends React.Component {
@@ -39,6 +40,7 @@ class App extends React.Component {
                   <Route path="/login" component={LoginPage} />
                   <Route path="/register" component={RegisterPage} />
                   <PrivateRoute path="/settings" component={Settings} />
+                  <PrivateRoute path="/update" component={ModalForm} />
                   <Redirect from="*" to="/" />
                 </Switch>
               </Router>

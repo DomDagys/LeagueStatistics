@@ -6,7 +6,8 @@ export const userService = {
   logout,
   getAll,
   register,
-  update
+  update,
+  getById
 };
 
 function login(username, password) {
@@ -33,8 +34,21 @@ function update(user) {
     body: JSON.stringify(user)
   };
 
-  return fetch(`${config.apiUrl}/api/user/1`, requestOptions).then(
+  return fetch(`${config.apiUrl}/api/User/` + user.id, requestOptions).then(
     handleRegister
+  );
+}
+
+function getById(user) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + user.token
+    }
+  };
+  return fetch(`${config.apiUrl}/api/User/` + user.id, requestOptions).then(
+    handleResponse
   );
 }
 
@@ -60,10 +74,6 @@ function getAll() {
     method: "GET",
     headers: authHeader()
   };
-
-  return fetch(`${config.apiUrl}/api/User`, requestOptions).then(
-    handleResponse
-  );
 }
 
 function handleResponse(response) {
@@ -79,7 +89,6 @@ function handleResponse(response) {
       const error = (data && data.message) || response.statusText;
       return Promise.reject(error);
     }
-
     return data;
   });
 }

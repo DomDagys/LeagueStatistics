@@ -3,44 +3,53 @@ import { ModalDialog, Modal, Button, Form } from "react-bootstrap";
 import "../styles/summonerName.css";
 import { userActions } from "../_actions";
 import { connect } from "react-redux";
+import { userService } from "../_services/user.service";
 class ModalForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      username: "",
       summonerName: "",
-      region: ""
+      region: "",
+      token: "",
+      username: "",
+      id: null
     };
 
-    this.updateState = field => ev => {
-      const state = this.state;
-      const newState = Object.assign({}, state, { [field]: ev.target.value });
-      this.setState(newState);
-      console.log(this.state);
-    };
-
-    this.submitForm = ev => {
-      ev.preventDefault();
-
-      const user = Object.assign({}, this.state);
-
-      this.props.onSubmitForm(user);
-    };
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
-    console.log(this.props);
     if (this.props) {
       Object.assign(this.state, {
-        email: this.props.email,
-        username: this.props.username
+        email: this.props.user.email,
+        id: this.props.user.id,
+        username: this.props.user.username,
+        token: this.props.user.token,
+        aboutMe: ""
       });
     }
   }
 
+  handleOnChange(e) {
+    const { name, value } = event.target;
+    const { user } = this.state;
+    console.log(this.state);
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const user = this.state;
+    this.props.update(user);
+  }
+
   render() {
-    const { user } = this.props;
+    console.log("This state" + this.state.email);
 
     return (
       <div className="col-sm-4  col-sm-offset-3 ">
@@ -55,12 +64,12 @@ class ModalForm extends React.Component {
             type="text"
             name="summonerName"
             value={this.state.summonerName}
-            onChange={this.updateState("summonerName")}
+            onChange={this.handleOnChange}
           ></input>
           <select
             name="region"
             value={this.state.region}
-            onChange={this.updateState("region")}
+            onChange={this.handleOnChange}
             id="region"
           >
             <option value="eune">EUNE</option>
@@ -75,9 +84,18 @@ class ModalForm extends React.Component {
   }
 }
 
+function mapStateToProps(state) {
+  const { users, authentication } = state;
+  const { user } = authentication;
+  return {
+    user,
+    users
+  };
+}
+
 const actionCreators = {
   update: userActions.update
 };
 
-const connectedRegisterPage = connect(actionCreators)(ModalForm);
-export default ModalForm;
+const connectedUpdatePage = connect(mapStateToProps, actionCreators)(ModalForm);
+export { connectedUpdatePage as ModalForm };

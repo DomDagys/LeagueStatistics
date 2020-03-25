@@ -1,6 +1,6 @@
-import { userConstants } from '../_constants';
+import { userConstants } from "../_constants";
 
-let user = JSON.parse(localStorage.getItem('user'));
+let user = JSON.parse(localStorage.getItem("user"));
 const initialState = user ? { loggedIn: true, user } : {};
 
 export function authentication(state = initialState, action) {
@@ -18,7 +18,16 @@ export function authentication(state = initialState, action) {
       return {};
     case userConstants.LOGOUT:
       return {};
+    case userConstants.UPDATE_SUCCESS:
+      let usera = {
+        ...state.user,
+        summonerName: action.user.summonerName
+      };
+      let result = Object.assign({}, state, user);
+      return {
+        user: usera
+      };
     default:
-      return state
+      return state;
   }
 }

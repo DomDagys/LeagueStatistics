@@ -8,24 +8,46 @@ export const userActions = {
   logout,
   register,
   getAll,
-  update
+  update,
+  getUserById
 };
 
 function update(user) {
   return dispatch => {
-    dispatch(request(user));
-
     userService.update(user).then(
       user => {
-        dispatch(success());
-        history.push("/login");
-        dispatch(alertActions.success("Summoner name success"));
+        dispatch(success(JSON.parse(user)));
+        history.push("/");
       },
       error => {
         console.log("UPDATO ERRORAS" + error.toString());
       }
     );
   };
+
+  function request(user) {
+    return { type: userConstants.UPDATE_REQUEST, user };
+  }
+  function success(user) {
+    return { type: userConstants.UPDATE_SUCCESS, user };
+  }
+}
+
+function getUserById(user) {
+  return dispatch => {
+    userService.getById(user).then(
+      user => {
+        dispatch(success(user));
+      },
+      error => {
+        console.log("getUserByIdError" + error.toString());
+      }
+    );
+  };
+
+  function success(user) {
+    return { type: userConstants.GETBYID_SUCESS, user };
+  }
 }
 
 function register(user) {

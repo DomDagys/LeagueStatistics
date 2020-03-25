@@ -15,7 +15,6 @@ class Header extends React.Component {
 }
 
 const LoggedInView = props => {
-  console.log('props ', props)
   if (props.username) {
     return (
       <div className="right">
