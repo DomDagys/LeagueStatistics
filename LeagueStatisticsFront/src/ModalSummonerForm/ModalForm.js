@@ -4,6 +4,7 @@ import "../styles/summonerName.css";
 import { userActions } from "../_actions";
 import { connect } from "react-redux";
 import { userService } from "../_services/user.service";
+import { history } from "../_helpers";
 class ModalForm extends React.Component {
   constructor(props) {
     super(props);
@@ -46,6 +47,8 @@ class ModalForm extends React.Component {
     e.preventDefault();
     const user = this.state;
     this.props.update(user);
+    history.push("/");
+    window.location.reload(true);
   }
 
   render() {

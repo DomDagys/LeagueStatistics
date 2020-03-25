@@ -8,7 +8,7 @@ export function users(state = {}, action) {
       };
     case userConstants.GETBYID_SUCESS:
       return {
-        items: action.user
+        userInfo: action.user
       };
     case userConstants.GETALL_FAILURE:
       return {

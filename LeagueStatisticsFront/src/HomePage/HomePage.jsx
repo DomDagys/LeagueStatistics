@@ -4,6 +4,8 @@ import { history, store } from "../_helpers";
 import { userService } from "../_services";
 import "../styles/button.css";
 import { userActions } from "../_actions/user.actions";
+import { ModalForm } from "../ModalSummonerForm/ModalForm";
+
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,11 @@ class HomePage extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let new_obj = Object.assign({}, this.state.user, nextProps.users);
+    let new_obj = Object.assign(
+      {},
+      ...this.state.user,
+      nextProps.users.userInfo
+    );
     this.setState(new_obj);
   }
 
@@ -29,24 +35,25 @@ class HomePage extends React.Component {
   };
 
   render() {
-    let user = "";
-    if (this.state.items != null) {
-      user = this.state.items;
-    }
-    return (
-      <div className="col-md-8 col-md-offset-3">
-        <h1>Hi {user.username} </h1>
-        <h2>
-          SummonerName: {user.summonerName}{" "}
-          <a href="/update" className="color red">
-            Want to change? Click
-          </a>
-        </h2>
-        <p>LOL</p>
+    let user = this.state;
+    if (user.summonerName != null) {
+      return (
+        <div className="col-md-8 col-md-offset-3">
+          <h1>Hi {user.username} </h1>
+          <h2>
+            SummonerName: {user.summonerName}{" "}
+            <a href="/update" className="color red">
+              Want to change? Click
+            </a>
+          </h2>
+          <p>LOL</p>
 
-        <h3>Users are very secure ;)</h3>
-      </div>
-    );
+          <h3>Users are very secure ;)</h3>
+        </div>
+      );
+    } else {
+      return <ModalForm />;
+    }
   }
 }
 
