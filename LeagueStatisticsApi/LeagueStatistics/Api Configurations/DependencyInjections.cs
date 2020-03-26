@@ -18,7 +18,8 @@ namespace LeagueStatistics.Api_Configurations
         {
             services.AddScoped<IUserService, UserService>()
                     .AddScoped<ISecurityService, SecurityService>()
-                    .AddScoped<ISummoner_V4Service, Summoner_V4Service>();
+                    .AddScoped<ISummoner_V4Service, Summoner_V4Service>()
+                    .AddScoped<IMatch_V4Service, Match_V4Service>();
         }
 
         public static void InjectRepositoryDependencies(this IServiceCollection services)
