@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using LeagueStatistics.Dtos.MatchDtos;
 using LeagueStatistics.Services.RiotAPI;
+using LeagueStatistics.Services.Interfaces;
 
 namespace LeagueStatistics.Controllers
 {
@@ -13,24 +14,43 @@ namespace LeagueStatistics.Controllers
     [ApiController]
     public class MatchController : ControllerBase
     {
-        private readonly Match_V4Service Matches = new Match_V4Service();
+        private readonly IMatch_V4Service _matchService;
+        private readonly ISummoner_V4Service _summonerService;
+
+        public MatchController(IMatch_V4Service matchService, ISummoner_V4Service summonerService)
+        {
+            _matchService = matchService;
+            _summonerService = summonerService;
+        }
 
         // POST2: api/Match/5
         [HttpGet("{id}")]// Name = "Get")]
         [Produces(typeof(MatchDto))]
         public IActionResult GetMatchInfo(string id, string region)
         {
-            var matchInfo = Matches.MatchInfoById(id, region);
+            var matchInfo = _matchService.MatchInfoById(id, region);
             return Ok(matchInfo);
         }
 
         // POST: api/Match
         [HttpGet]
         [Produces(typeof(MatchListDto))]
-        [Route("history")]
-        public IActionResult GetMatchHistory(string accountId, string region)
+        [Route("list")]
+        public IActionResult GetMatchList(string accountId, string region)
         {
-            var matchHistory = Matches.MatchHistoryById(accountId, region);
+            var matchList = _matchService.MatchListById(accountId, region);
+            return Ok(matchList);
+        }
+
+        [HttpGet]
+        [Produces(typeof(ICollection<MatchDto>))]
+        [Route("history")]
+        public IActionResult GetMatchHistory(string summonerName, string region)
+        {
+            var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
+
+            var matchHistory = _matchService.GetMatchHistory(summonerInfo.accountId, region);
+
             return Ok(matchHistory);
         }
 

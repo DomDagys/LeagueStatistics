@@ -6,6 +6,7 @@ using LeagueStatistics.Dtos.SummonerDtos;
 using LeagueStatistics.Services.RiotAPI;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using LeagueStatistics.Services.Interfaces;
 
 namespace LeagueStatistics.Controllers
 {
@@ -13,7 +14,12 @@ namespace LeagueStatistics.Controllers
     [ApiController]
     public class SummonerController : ControllerBase
     {
-        private readonly Summoner_V4Service Summoner = new Summoner_V4Service();
+        private readonly ISummoner_V4Service _summonerService;
+
+        public SummonerController(ISummoner_V4Service summonerService)
+        {
+            _summonerService = summonerService;
+        }
 
         // GET: api/Summoner
         [HttpGet]
@@ -34,7 +40,7 @@ namespace LeagueStatistics.Controllers
         [Produces(typeof(SummonerDto))]
         public IActionResult Post(string region, string summonerName)
         {
-            var summonerInfo = Summoner.GetSummonerByName(summonerName, region);
+            var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
             return Ok(summonerInfo);
         }
 
