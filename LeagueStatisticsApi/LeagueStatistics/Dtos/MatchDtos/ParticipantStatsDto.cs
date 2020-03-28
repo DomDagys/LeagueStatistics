@@ -36,6 +36,8 @@ namespace LeagueStatistics.Dtos.MatchDtos
         public int nodeCapture { get; set; }
         public int wardsPlaced { get; set; }
         public long totalDamageDealt { get; set; }
-
+        public int kills { get; set; }
+        public int assists { get; set; }
+        public Boolean win { get; set; }
     }
 }
