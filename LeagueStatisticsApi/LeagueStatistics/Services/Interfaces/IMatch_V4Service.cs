@@ -8,7 +8,9 @@ namespace LeagueStatistics.Services.Interfaces
 {
     public interface IMatch_V4Service
     {
-        MatchListDto MatchHistoryById(string accountId, string region);
+        MatchListDto MatchListById(string accountId, string region);
         MatchDto MatchInfoById(string matchId, string region);
+
+        ICollection<MatchDto> GetMatchHistory(string accountId, string region);
     }
 }

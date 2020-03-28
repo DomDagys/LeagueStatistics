@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LeagueStatistics.Services.Interfaces
 {
-    interface ISummoner_V4Service
+    public interface ISummoner_V4Service
     {
         SummonerDto GetSummonerByName(string SummonerName, string region);
     }
