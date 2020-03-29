@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LeagueStatistics.Dtos.SummonerDtos;
 using LeagueStatistics.Services.RiotAPI;
+using LeagueStatistics.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,40 +14,20 @@ namespace LeagueStatistics.Controllers
     [ApiController]
     public class QuickStatsController : ControllerBase
     {
-        // GET: api/QuickStats
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        private readonly IQuickStatsService _statisticsService;
 
-        // GET: api/QuickStats/5
-        [HttpGet("{id}")]//, Name = "Get")]
-        public string Get(int id)
+        public QuickStatsController(IQuickStatsService statisticsService)
         {
-            return "value";
+            _statisticsService = statisticsService;
         }
 
         // POST: api/Summoner
-        [HttpPost]
+        [HttpGet]
         [Produces(typeof(QuickStatsDto))]
-        public IActionResult Post(string region, string summonerName)
+        public IActionResult GetQuickStatistics(string region, string summonerName)
         {
-            QuickStatsService quick = new QuickStatsService();
-            QuickStatsDto stats = quick.QuickStatsCalculation(summonerName, region);
-            return Ok(stats);
-        }
-
-        // PUT: api/QuickStats/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            QuickStatsDto statistics = _statisticsService.QuickStatsCalculation(summonerName, region);
+            return Ok(statistics);
         }
     }
 }

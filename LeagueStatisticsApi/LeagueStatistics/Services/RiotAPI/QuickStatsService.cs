@@ -10,12 +10,19 @@ namespace LeagueStatistics.Services.RiotAPI
 {
     public class QuickStatsService : IQuickStatsService
     {
-        private readonly Summoner_V4Service Summoner = new Summoner_V4Service();
-        private readonly Match_V4Service Matches = new Match_V4Service();
+        private readonly ISummoner_V4Service _summonerService;
+        private readonly IMatch_V4Service _matchService;
+
+        public QuickStatsService(ISummoner_V4Service summonerService, IMatch_V4Service matchService)
+        {
+            _summonerService = summonerService;
+            _matchService = matchService;
+        }
+
         public QuickStatsDto QuickStatsCalculation(string summonerName, string region)
         {
-            var summonerInfo = Summoner.GetSummonerByName(summonerName, region);
-            var MatchList = Matches.MatchListById(summonerInfo.accountId, region);
+            var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
+            var MatchList = _matchService.MatchListById(summonerInfo.accountId, region);
             QuickStatsDto stats = new QuickStatsDto();
             //-----------------------------------------------------------
             List<ChampionDto> championsPlayed = new List<ChampionDto>();
@@ -27,7 +34,7 @@ namespace LeagueStatistics.Services.RiotAPI
                 roleList = AssignRoles();
                 for (int i = 0; i < MatchList.totalGames; i++)
                 {
-                    var Match = Matches.MatchInfoById(MatchList.matches[i].gameId.ToString(), region);
+                    var Match = _matchService.MatchInfoById(MatchList.matches[i].gameId.ToString(), region);
                     int id = GetParticipantBySummonerName(summonerName, Match);
                     //-------------------------------------------------------
                     //Work with roles
@@ -58,7 +65,7 @@ namespace LeagueStatistics.Services.RiotAPI
                 roleList = AssignRoles();
                 for (int i = 0; i < 10; i++)
                 {
-                    var Match = Matches.MatchInfoById(MatchList.matches[i].gameId.ToString(), region);
+                    var Match = _matchService.MatchInfoById(MatchList.matches[i].gameId.ToString(), region);
                     int id = GetParticipantBySummonerName(summonerName, Match);
                     //-------------------------------------------------------
                     //Work with roles
@@ -124,21 +131,21 @@ namespace LeagueStatistics.Services.RiotAPI
             List<ChampionDto> filteredList = new List<ChampionDto>();
             for (int i = 0; i < championIds.Count; i++)
             {
-                ChampionDto champion = new ChampionDto();
-                champion.championId = championIds[i];
-                champion.kills = championsPlayed.Where(champion => champion.championId == championIds[i])
+                ChampionDto championDto = new ChampionDto();
+                championDto.championId = championIds[i];
+                championDto.kills = championsPlayed.Where(champion => champion.championId == championIds[i])
                     .Sum(champion => champion.kills);
-                champion.assists = championsPlayed.Where(champion => champion.championId == championIds[i])
+                championDto.assists = championsPlayed.Where(champion => champion.championId == championIds[i])
                     .Sum(champion => champion.assists);
-                champion.deaths = championsPlayed.Where(champion => champion.championId == championIds[i])
+                championDto.deaths = championsPlayed.Where(champion => champion.championId == championIds[i])
                     .Sum(champion => champion.deaths);
-                champion.wins = championsPlayed.Where(champion => champion.championId == championIds[i])
+                championDto.wins = championsPlayed.Where(champion => champion.championId == championIds[i])
                     .Sum(champion => champion.wins);
-                champion.loss = championsPlayed.Where(champion => champion.championId == championIds[i])
+                championDto.loss = championsPlayed.Where(champion => champion.championId == championIds[i])
                     .Sum(champion => champion.loss);
-                champion.gamesPlayed = championsPlayed.Where(champion => champion.championId == championIds[i])
+                championDto.gamesPlayed = championsPlayed.Where(champion => champion.championId == championIds[i])
                     .Sum(champion => champion.gamesPlayed);
-                filteredList.Add(champion);
+                filteredList.Add(championDto);
             }
             filteredList = filteredList.OrderByDescending(o => o.gamesPlayed).ToList();
             return filteredList;

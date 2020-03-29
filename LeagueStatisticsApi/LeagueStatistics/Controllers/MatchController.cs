@@ -23,16 +23,17 @@ namespace LeagueStatistics.Controllers
             _summonerService = summonerService;
         }
 
-        // POST2: api/Match/5
-        [HttpGet("{id}")]// Name = "Get")]
+        // api/game
+        [HttpGet]
         [Produces(typeof(MatchDto))]
+        [Route("game")]
         public IActionResult GetMatchInfo(string id, string region)
         {
             var matchInfo = _matchService.MatchInfoById(id, region);
             return Ok(matchInfo);
         }
 
-        // POST: api/Match
+        // api/list
         [HttpGet]
         [Produces(typeof(MatchListDto))]
         [Route("list")]
@@ -42,10 +43,10 @@ namespace LeagueStatistics.Controllers
             return Ok(matchList);
         }
 
+        // api/history
         [HttpGet]
         [Produces(typeof(ICollection<MatchDto>))]
-        [Route("history")]
-        public IActionResult GetMatchHistory(string summonerName, string region)
+        public IActionResult GetHistoryBySummoner(string summonerName, string region)
         {
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
 
@@ -54,16 +55,12 @@ namespace LeagueStatistics.Controllers
             return Ok(matchHistory);
         }
 
-        // PUT: api/Match/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpGet("{accountId}")]
+        public IActionResult GetHistoryByAccountId(string accountId, string region)
         {
+            var matchHistory = _matchService.GetMatchHistory(accountId, region);
+            return Ok(matchHistory);
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }
