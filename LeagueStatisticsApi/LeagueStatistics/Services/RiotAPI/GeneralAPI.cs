@@ -38,5 +38,10 @@ namespace LeagueStatistics.Services.RiotAPI
         {
             return "https://" + region + ".api.riotgames.com/lol/" + path + "?api_key=" + Key;
         }
+
+        protected string GetURIFiltered(string path, string region)
+        {
+            return "https://" + region + ".api.riotgames.com/lol/" + path + "&api_key=" + Key;
+        }
     }
 }

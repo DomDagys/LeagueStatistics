@@ -22,7 +22,7 @@ namespace LeagueStatistics.Services.RiotAPI
         public QuickStatsDto QuickStatsCalculation(string summonerName, string region)
         {
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
-            var MatchList = _matchService.MatchListById(summonerInfo.accountId, region);
+            var MatchList = _matchService.MatchListById(summonerInfo.accountId, region, "10", "0");
             QuickStatsDto stats = new QuickStatsDto();
             //-----------------------------------------------------------
             List<ChampionDto> championsPlayed = new List<ChampionDto>();

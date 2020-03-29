@@ -9,11 +9,11 @@ namespace LeagueStatistics.Services.RiotAPI
 {
     public class Match_V4Service : GeneralAPI, IMatch_V4Service
     {
-        public MatchListDto MatchListById(string accountId, string region)
+        public MatchListDto MatchListById(string accountId, string region, string endIndex, string beginIndex)
         {
-            string path = "match/v4/matchlists/by-account/" + accountId;
+            string path = "match/v4/matchlists/by-account/" + accountId +"?endIndex="+endIndex +"&beginIndex="+beginIndex;
             
-            var response = GET(GetURI(path, region));
+            var response = GET(GetURIFiltered(path, region));
             
             string content = response.Content.ReadAsStringAsync().Result;
             
@@ -44,14 +44,14 @@ namespace LeagueStatistics.Services.RiotAPI
             }
         }
 
-        public ICollection<MatchDto> GetMatchHistory(string accountId, string region)
+        public ICollection<MatchDto> GetMatchHistory(string accountId, string region, string endIndex, string beginIndex)
         {
-            var matchList = MatchListById(accountId, region);
+            var matchList = MatchListById(accountId, region, endIndex,beginIndex);
 
             ICollection<MatchDto> matchHistory = new List<MatchDto>();
             for (int i = 0; i < 10; i++)
             {
-                var matchDto = MatchInfoById(matchList.matches[i].gameId.ToString(), region);
+                var matchDto = MatchInfoById(matchList.matches[i].gameId.ToString(),region);
                 matchHistory.Add(matchDto);
             }
 
