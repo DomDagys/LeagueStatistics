@@ -46,12 +46,12 @@ namespace LeagueStatistics.Services.RiotAPI
 
         public ICollection<MatchDto> GetMatchHistory(string accountId, string region, string endIndex, string beginIndex)
         {
-            var matchList = MatchListById(accountId, region, endIndex,beginIndex);
+            var matchList = MatchListById(accountId, region, endIndex, beginIndex);
 
             ICollection<MatchDto> matchHistory = new List<MatchDto>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < matchList.matches.Count; i++)
             {
-                var matchDto = MatchInfoById(matchList.matches[i].gameId.ToString(),region);
+                var matchDto = MatchInfoById(matchList.matches[i].gameId.ToString(), region);
                 matchHistory.Add(matchDto);
             }
 

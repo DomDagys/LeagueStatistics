@@ -1,7 +1,7 @@
 import React from "react";
 import { ModalDialog, Modal, Button, Form } from "react-bootstrap";
 import "../styles/summonerName.css";
-import { userActions } from "../_actions";
+import { userActions, summonerActions } from "../_actions";
 import { connect } from "react-redux";
 import { userService } from "../_services/user.service";
 import { history } from "../_helpers";
@@ -46,6 +46,13 @@ class ModalForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const user = this.state;
+
+    //this.props.getSummonerData(user.summonerName, 'EUW1');
+    //const summonerName = localStorage.getItem("summonerName");
+
+    //if (summonerName === null)
+    //return;
+
     this.props.update(user);
     history.push("/");
     window.location.reload(true);
@@ -92,12 +99,13 @@ function mapStateToProps(state) {
   const { user } = authentication;
   return {
     user,
-    users
+    users,
   };
 }
 
 const actionCreators = {
-  update: userActions.update
+  update: userActions.update,
+  getSummonerData: summonerActions.getSummonerData
 };
 
 const connectedUpdatePage = connect(mapStateToProps, actionCreators)(ModalForm);
