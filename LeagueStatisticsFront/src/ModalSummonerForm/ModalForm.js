@@ -47,15 +47,17 @@ class ModalForm extends React.Component {
     e.preventDefault();
     const user = this.state;
 
-    //this.props.getSummonerData(user.summonerName, 'EUW1');
-    //const summonerName = localStorage.getItem("summonerName");
+    this.props.getSummonerData(user.summonerName, "EUW1");
 
-    //if (summonerName === null)
-    //return;
+    setTimeout(() => {
+      let summonerName = localStorage.getItem("summonerName");
+      if (summonerName === "")
+        return;
 
-    this.props.update(user);
-    history.push("/");
-    window.location.reload(true);
+      this.props.update(user);
+      history.push("/");
+      window.location.reload(true);
+    }, 1000);
   }
 
   render() {

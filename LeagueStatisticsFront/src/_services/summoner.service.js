@@ -30,10 +30,7 @@ function handleResponse(response) {
                 location.reload(true);
             }
 
-            if (response.status === 500) {
-                console.log("500 error response");
-            }
-
+            localStorage.setItem("summonerName", "");
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
