@@ -71,5 +71,18 @@ namespace LeagueStatistics.Controllers
             return Ok(matchHistory);
         }
 
+        [HttpPost]
+        [Route("Ranked")]
+        [Produces(typeof(ICollection<MatchDto>))]
+        public IActionResult GetRankedHistoryByAccountId(string accountId, string region, int howMuch)
+        {
+            var filter = "?endIndex=50&beginIndex=0";
+
+            //How much is for the amount of ranked games that will be shown
+            var matchHistory = _matchService.GetRankedMatchHistoryById(accountId, region, filter, howMuch);
+
+            return Ok(matchHistory);
+        }
+
     }
 }

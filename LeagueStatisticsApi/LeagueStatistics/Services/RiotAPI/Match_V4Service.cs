@@ -49,6 +49,7 @@ namespace LeagueStatistics.Services.RiotAPI
 
             var matchList = MatchListById(accountId, region, filter);
 
+            
             ICollection<MatchDto> matchHistory = new List<MatchDto>();
             for (int i = 0; i < matchList.matches.Count; i++)
             {
@@ -56,6 +57,24 @@ namespace LeagueStatistics.Services.RiotAPI
                 matchHistory.Add(matchDto);
             }
 
+            return matchHistory;
+        }
+
+        public ICollection<MatchDto> GetRankedMatchHistoryById(string accountId, string region, string filter, int howMuch)
+        {
+            var matchList = MatchListById(accountId, region, filter);
+
+            ICollection<MatchDto> matchHistory = new List<MatchDto>();
+
+            for(int i = 0; i < matchList.matches.Count;i++)
+            {
+                var matchDto = MatchInfoById(matchList.matches[i].gameId.ToString(), region);
+
+                if(matchDto.queueId == 420 && matchHistory.Count < howMuch)
+                {
+                    matchHistory.Add(matchDto);
+                }
+            }
             return matchHistory;
         }
     }

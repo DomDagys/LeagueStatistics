@@ -12,5 +12,6 @@ namespace LeagueStatistics.Services.Interfaces
         MatchDto MatchInfoById(string matchId, string region);
 
         ICollection<MatchDto> GetMatchHistory(string accountId, string region, string filter);
+        ICollection<MatchDto> GetRankedMatchHistoryById(string accountId, string region, string filter, int howMuch);
     }
 }
