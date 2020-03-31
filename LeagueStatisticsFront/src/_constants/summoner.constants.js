@@ -1,0 +1,4 @@
+export const summonerConstants = {
+    GET_SUMMONER_SUCCESS: "GET_SUMMONER_SUCCESS",
+    GET_SUMMONER_FAILURE: "GET_SUMMONER_FAILURE",
+}

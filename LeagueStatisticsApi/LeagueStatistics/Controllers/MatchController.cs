@@ -67,6 +67,7 @@ namespace LeagueStatistics.Controllers
             var filter = "?endIndex=" + endIndex + "&beginIndex=" + beginIndex;
 
             var matchHistory = _matchService.GetMatchHistory(accountId, region, filter);
+
             return Ok(matchHistory);
         }
 
