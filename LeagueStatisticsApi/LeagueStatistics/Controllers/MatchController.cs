@@ -24,7 +24,7 @@ namespace LeagueStatistics.Controllers
         }
 
         // api/game
-        [HttpGet]
+        [HttpPost]
         [Produces(typeof(MatchDto))]
         [Route("game")]
         public IActionResult GetMatchInfo(string id, string region)
@@ -34,31 +34,39 @@ namespace LeagueStatistics.Controllers
         }
 
         // api/list
-        [HttpGet]
+        [HttpPost]
         [Produces(typeof(MatchListDto))]
         [Route("list")]
-        public IActionResult GetMatchList(string accountId, string region,string endIndex, string beginIndex)
+        public IActionResult GetMatchList(string accountId, string region, string endIndex, string beginIndex)
         {
-            var matchList = _matchService.MatchListById(accountId, region, endIndex, beginIndex);
+            var filter = "?endIndex=" + endIndex + "&beginIndex=" + beginIndex;
+
+            var matchList = _matchService.MatchListById(accountId, region,filter);
+
             return Ok(matchList);
         }
 
         // api/history
-        [HttpGet]
+        [HttpPost]
         [Produces(typeof(ICollection<MatchDto>))]
         public IActionResult GetHistoryBySummoner(string summonerName, string region, string endIndex, string beginIndex)
         {
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
 
-            var matchHistory = _matchService.GetMatchHistory(summonerInfo.accountId, region, endIndex, beginIndex);
+            var filter = "?endIndex=" + endIndex + "&beginIndex=" + beginIndex;
+
+            var matchHistory = _matchService.GetMatchHistory(summonerInfo.accountId, region, filter);
 
             return Ok(matchHistory);
         }
 
+        //api/id
         [HttpGet("{accountId}")]
         public IActionResult GetHistoryByAccountId(string accountId, string region, string endIndex, string beginIndex)
         {
-            var matchHistory = _matchService.GetMatchHistory(accountId, region, endIndex,beginIndex);
+            var filter = "?endIndex=" + endIndex + "&beginIndex=" + beginIndex;
+
+            var matchHistory = _matchService.GetMatchHistory(accountId, region, filter);
             return Ok(matchHistory);
         }
 
