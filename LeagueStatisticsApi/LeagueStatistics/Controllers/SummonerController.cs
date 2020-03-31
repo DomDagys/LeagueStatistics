@@ -26,6 +26,7 @@ namespace LeagueStatistics.Controllers
         [Produces(typeof(SummonerDto))]
         public IActionResult GetSummonerData(RequestSummonerDto summonerDto)
         {
+
             var summonerInfo = _summonerService.GetSummonerByName(summonerDto.SummonerName, summonerDto.Region);
 
             if (summonerInfo == null)

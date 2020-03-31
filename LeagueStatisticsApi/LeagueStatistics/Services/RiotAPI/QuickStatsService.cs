@@ -21,8 +21,10 @@ namespace LeagueStatistics.Services.RiotAPI
 
         public QuickStatsDto QuickStatsCalculation(string summonerName, string region)
         {
+            var filter = "?endIndex=10&beginIndex=0";
+
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
-            var MatchList = _matchService.MatchListById(summonerInfo.accountId, region, "10", "0");
+            var MatchList = _matchService.MatchListById(summonerInfo.accountId, region, filter);
             QuickStatsDto stats = new QuickStatsDto();
             //-----------------------------------------------------------
             List<ChampionDto> championsPlayed = new List<ChampionDto>();
