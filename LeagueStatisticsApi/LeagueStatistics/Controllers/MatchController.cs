@@ -72,7 +72,7 @@ namespace LeagueStatistics.Controllers
         }
 
         [HttpPost]
-        [Route("Ranked")]
+        [Route("RankedId")]
         [Produces(typeof(ICollection<MatchDto>))]
         public IActionResult GetRankedHistoryByAccountId(string accountId, string region, int howMuch)
         {
@@ -84,5 +84,18 @@ namespace LeagueStatistics.Controllers
             return Ok(matchHistory);
         }
 
+        [HttpPost]
+        [Route("RankedSummonerName")]
+        [Produces(typeof(ICollection<MatchDto>))]
+        public IActionResult GetRankedHistoryBySummonerName(string summonerName, string region, int howMuch)
+        {
+            var filter = "?endIndex=50&beginIndex=0";
+
+            var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
+
+            var matchHistory = _matchService.GetRankedMatchHistoryById(summonerInfo.accountId, region, filter, howMuch);
+
+            return Ok(matchHistory);
+        }
     }
 }
