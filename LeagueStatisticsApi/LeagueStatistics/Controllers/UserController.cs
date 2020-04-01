@@ -86,10 +86,8 @@ namespace LeagueStatistics.Controllers
         // PUT: api/User/5
         [HttpPut("{id}")]
         [Produces(typeof(UpdateUserDto))]
-        public async Task<IActionResult> Put(int id, [FromBody] string userJson)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdateUserDto userDto)
         {
-            var userDto = Newtonsoft.Json.JsonConvert.DeserializeObject<UpdateUserDto>(userJson);
-
             UpdateUserDto updatedUser;
             try
             {
