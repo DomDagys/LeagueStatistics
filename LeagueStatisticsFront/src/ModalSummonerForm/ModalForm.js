@@ -11,7 +11,7 @@ class ModalForm extends React.Component {
     this.state = {
       email: "",
       summonerName: "",
-      region: "",
+      region: "EUW1",
       token: "",
       username: "",
       id: null
@@ -46,18 +46,7 @@ class ModalForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const user = this.state;
-
-    this.props.getSummonerData(user.summonerName, "EUW1");
-
-    setTimeout(() => {
-      let summonerName = localStorage.getItem("summonerName");
-      if (summonerName === "")
-        return;
-
-      this.props.update(user);
-      history.push("/");
-      window.location.reload(true);
-    }, 1000);
+    this.props.update(user);
   }
 
   render() {
@@ -84,10 +73,10 @@ class ModalForm extends React.Component {
             onChange={this.handleOnChange}
             id="region"
           >
-            <option value="eune">EUNE</option>
-            <option value="euw">EUW</option>
-            <option value="na">NA</option>
-            <option value="kr">KR</option>
+            <option value="EUN1">EUNE</option>
+            <option value="EUW1">EUW</option>
+            <option value="NA1">NA</option>
+            <option value="KR">KR</option>
           </select>
           <input type="submit"></input>
         </form>

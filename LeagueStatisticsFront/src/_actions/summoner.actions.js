@@ -1,6 +1,6 @@
 import { summonerConstants } from "../_constants"
 import { summonerService } from "../_services"
-import { alertActions } from "../_actions"
+import { alertActions } from "./";
 
 export const summonerActions = {
     getSummonerData
@@ -13,7 +13,7 @@ function getSummonerData(summonerName, region) {
                 dispatch(success(summonerData));
             },
             error => {
-                dispatch(failure());
+                dispatch(failure(error));
                 dispatch(alertActions.error(error));
             }
         );
@@ -22,7 +22,7 @@ function getSummonerData(summonerName, region) {
     function success(summonerData) {
         return { type: summonerConstants.GET_SUMMONER_SUCCESS, summonerData };
     }
-    function failure() {
-        return { type: summonerConstants.GET_SUMMONER_FAILURE };
+    function failure(error) {
+        return { type: summonerConstants.GET_SUMMONER_FAILURE, error };
     }
 }

@@ -15,12 +15,14 @@ namespace LeagueStatistics.Services
         private readonly IMapper _mapper;
         private readonly IUserRepository _repository;
         private readonly ISecurityService _securityService;
+        private readonly ISummoner_V4Service _summonerService;
 
-        public UserService(IMapper mapper, IUserRepository repository, ISecurityService securityService)
+        public UserService(IMapper mapper, IUserRepository repository, ISecurityService securityService, ISummoner_V4Service summoner_V4Service)
         {
             _mapper = mapper;
             _repository = repository;
             _securityService = securityService;
+            _summonerService = summoner_V4Service;
         }
 
         public async Task<AuthenticatedUserDto> Authenticate(string username, string password)
@@ -119,11 +121,18 @@ namespace LeagueStatistics.Services
 
             try
             {
-                if (userWithEmail != null && updateUserDto.Email != null && updateUserDto.Email != oldUser.Email)
+                if (userWithEmail != null && !string.IsNullOrEmpty(updateUserDto.Email) && updateUserDto.Email != oldUser.Email)
                     throw new Exception("A user with the same email already exists.");
 
                 if (!string.IsNullOrWhiteSpace(updateUserDto.Password) && updateUserDto.Password.Length < 4)
                     throw new Exception("Password is too short, must be more than 4 characters.");
+
+                if (!string.IsNullOrEmpty(updateUserDto.SummonerName) && !string.IsNullOrEmpty(updateUserDto.Region))
+                {
+                    var summonerData = _summonerService.GetSummonerByName(user.SummonerName, user.Region);
+                    if (summonerData == null)
+                        throw new Exception("The user with the given summoner name does not exist.");
+                }
             }
             catch (Exception ex)
             {
@@ -143,26 +152,6 @@ namespace LeagueStatistics.Services
 
             return updatedUser;
         }
-
-        //private async Task ValidateFields(User user, string password)
-        //{
-        //    var userWithEmail = await _repository.GetByEmail(user.Email);
-        //    var userWithUsername = await _repository.GetByUsername(user.Username);
-
-        //    if (userWithEmail != null && user.Email != userWithUsername.Email)
-        //        throw new Exception("A user with the same email already exists.");
-
-        //    if (userWithUsername != null && user.Username != userWithEmail.Username)
-        //        throw new Exception("A user with the same username already exits.");
-
-        //    if (user.Username.Length < 4)
-        //        throw new Exception("Username is too short, must be more than 4 characters.");
-
-        //    if (!string.IsNullOrWhiteSpace(password) && password.Length < 4)
-        //        throw new Exception("Password is too short, must be more than 4 characters.");
-
-        //    return;
-        //}
 
     }
 }

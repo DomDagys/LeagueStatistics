@@ -14,7 +14,7 @@ function getSummonerData(summonerName, region) {
     return fetch(`${config.apiUrl}/api/Summoner`, requestOptions)
         .then(handleResponse)
         .then(summonerData => {
-            localStorage.setItem("summonerName", summonerData.name);
+            //localStorage.setItem("summonerName", summonerData.name);
 
             return summonerData;
         });
@@ -30,7 +30,7 @@ function handleResponse(response) {
                 location.reload(true);
             }
 
-            localStorage.setItem("summonerName", "");
+            //localStorage.setItem("summonerName", "");
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }

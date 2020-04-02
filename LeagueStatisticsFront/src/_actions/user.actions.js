@@ -18,9 +18,10 @@ function update(user) {
       user => {
         dispatch(success(JSON.parse(user)));
         history.push("/");
+        window.location.reload(true);
       },
       error => {
-        console.log("UPDATO ERRORAS" + error.toString());
+        dispatch(alertActions.error(error));
       }
     );
   };

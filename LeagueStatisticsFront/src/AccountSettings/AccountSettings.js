@@ -10,7 +10,7 @@ class Settings extends React.Component {
       user: {
         id: this.props.user.id,
         email: "",
-        region: "",
+        region: "EUW1",
         password: "",
         summonerName: ""
       }
@@ -93,10 +93,10 @@ class Settings extends React.Component {
           <div>
             <label htmlFor="text">Select region</label>
             <select name="region" onChange={this.handleOnChange} id="region">
-              <option value="eune">EUNE</option>
-              <option value="euw">EUW</option>
-              <option value="na">NA</option>
-              <option value="kr">KR</option>
+              <option value="EUN1">EUNE</option>
+              <option value="EUW1">EUW</option>
+              <option value="NA1">NA</option>
+              <option value="KR">KR</option>
             </select>
           </div>
           <div className="form-group">
