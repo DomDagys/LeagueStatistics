@@ -55,9 +55,11 @@ namespace LeagueStatistics.Api_Configurations
             services.AddAutoMapper(typeof(Startup));
         }
 
-        public static void SetUpDbExtension(this IServiceCollection services)
+        public static void SetUpDbExtension(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<LeagueStatsDbContext>(options => options.UseInMemoryDatabase("LeagueStatsDb"));
+            var settings = configuration.GetSection("AppSettings");
+            var connectionString = settings.GetSection("ConnectionString").Value;
+            services.AddDbContext<LeagueStatsDbContext>(options => options.UseSqlServer(connectionString));
         }
 
         public static void CorsConfigurationExtension(this IApplicationBuilder app)

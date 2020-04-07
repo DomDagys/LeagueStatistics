@@ -30,7 +30,7 @@ namespace LeagueStatistics
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AutoMapperExtension();
-            services.SetUpDbExtension();
+            services.SetUpDbExtension(Configuration);
             services.SwaggerServiceExtension();
             services.AddCors();
             services.JwtServiceExtension(Configuration);

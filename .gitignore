@@ -31,3 +31,4 @@ LeagueStatisticsApi/.vs/LeagueStatistics/config/applicationhost.config
 LeagueStatisticsApi/LeagueStatistics/bin/Debug/netcoreapp3.1/LeagueStatistics.exe
 LeagueStatisticsApi/LeagueStatistics/obj/Debug/netcoreapp3.1/LeagueStatistics.dll
 LeagueStatisticsApi/LeagueStatistics/obj/Debug/netcoreapp3.1/LeagueStatistics.exe
+LeagueStatisticsApi/LeagueStatistics/appsettings.json
