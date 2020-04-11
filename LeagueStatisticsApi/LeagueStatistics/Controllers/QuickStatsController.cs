@@ -22,7 +22,7 @@ namespace LeagueStatistics.Controllers
         }
 
         // POST: api/Summoner
-        [HttpPost]
+        [HttpGet]
         [Produces(typeof(QuickStatsDto))]
         public IActionResult GetQuickStatistics(string region, string summonerName)
         {
