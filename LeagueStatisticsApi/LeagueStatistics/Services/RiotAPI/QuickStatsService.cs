@@ -24,6 +24,8 @@ namespace LeagueStatistics.Services.RiotAPI
             var filter = "?endIndex=10&beginIndex=0";
 
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
+            if (summonerInfo == null)
+                return null;
             var MatchList = _matchService.MatchListById(summonerInfo.accountId, region, filter);
             QuickStatsDto stats = new QuickStatsDto();
             //-----------------------------------------------------------

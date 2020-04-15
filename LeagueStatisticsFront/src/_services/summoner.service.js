@@ -6,18 +6,12 @@ export const summonerService = {
 
 function getSummonerData(summonerName, region) {
     const requestOptions = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ region, summonerName })
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
     };
 
-    return fetch(`${config.apiUrl}/api/Summoner`, requestOptions)
-        .then(handleResponse)
-        .then(summonerData => {
-            //localStorage.setItem("summonerName", summonerData.name);
-
-            return summonerData;
-        });
+    return fetch(`${config.apiUrl}/api/Summoner?region=${region}&summonerName=${summonerName}`, requestOptions)
+        .then(handleResponse);
 }
 
 function handleResponse(response) {
