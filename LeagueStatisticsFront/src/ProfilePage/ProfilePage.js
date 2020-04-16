@@ -6,6 +6,7 @@ import { alertActions } from "../_actions";
 import regeneratorRuntime from "regenerator-runtime";
 import { summonerConstants } from "../_constants";
 import SummonerProfile from "../_components/SummonerProfile";
+import QuickStatistics from "../_components/QuickStatistics";
 
 
 class ProfilePage extends React.Component {
@@ -13,35 +14,71 @@ class ProfilePage extends React.Component {
         super(props);
         this.state = {
             statistics: null,
-            summonerData: null
+            summonerData: null,
+            region: "EUW1",
+            searchedSummoner: ""
         };
 
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.props.clear();
     }
 
-    componentDidMount() {
-        let summonerName = this.props.user.summonerName;
-        let region = this.props.user.region;
-
+    getProfileData(summonerName, region) {
         summonerService.getSummonerData(summonerName, region)
-            .then(summonerData => this.setState({
-                summonerData: summonerData,
-                iconLink: `http://ddragon.leagueoflegends.com/cdn/10.8.1/img/profileicon/${summonerData.profileIconId}.png`
-            }))
+            .then(summonerData => this.setState({ summonerData: summonerData }))
             .catch(message => this.props.error(message));
 
         quickstatsService.getStatistics(summonerName, region)
             .then(data => this.setState({ statistics: data }));
     }
 
+    componentDidMount() {
+        let summonerName = this.props.user.summonerName;
+        let region = this.props.user.region;
+
+        this.getProfileData(summonerName, region);
+    }
+
+    handleClick(e) {
+        this.props.clear();
+        this.setState({ statistics: null })
+        let summonerName = this.state.searchedSummoner;
+        let region = this.state.region;
+
+        this.getProfileData(summonerName, region);
+    }
+
+    handleChange(e) {
+        const { name, value } = e.target;
+        this.setState({
+            [name]: value
+        });
+    }
+
     render() {
-        console.log("Rendered")
+        console.log(this.state)
         return (<div>
             <h1>This is the profile page</h1>
+            <div className="input-group mb-3">
+                <input type="text" placeholder="Search Summoner" value={this.state.searchedSummoner}
+                    name="searchedSummoner" onChange={this.handleChange} ></input>
+                <select
+                    name="region"
+                    value={this.state.region}
+                    onChange={this.handleChange}
+                    id="region"
+                >
+                    <option value="EUN1">EUNE</option>
+                    <option value="EUW1">EUW</option>
+                    <option value="NA1">NA</option>
+                    <option value="KR">KR</option>
+                </select>
+                <button onClick={this.handleClick} className="btn btn-primary" >Search</button>
+            </div>
             {this.state.summonerData !== null && (<SummonerProfile summonerData={this.state.summonerData} />)}
-            <p>Wins: {this.state.statistics !== null && this.state.statistics.wins}</p>
-            <p>Losses: {this.state.statistics !== null && this.state.statistics.loss}</p>
+            {this.state.statistics ? (<QuickStatistics {... this.state.statistics} />) : (<p>Loading...</p>)}
         </div>);
     }
 }

@@ -10,8 +10,8 @@ class SummonerProfile extends React.Component {
 
         return (<div>
             <h2>{this.props.summonerData.name}</h2>
-            <img src={iconLink}></img>
-            <p>Level {this.props.summonerData.summonerLevel}</p>
+            <img src={iconLink} width="150px"></img>
+            <h4>Level {this.props.summonerData.summonerLevel}</h4>
         </div>);
     }
 }

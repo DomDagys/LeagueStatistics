@@ -26,6 +26,7 @@ namespace LeagueStatistics.Services.RiotAPI
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
             if (summonerInfo == null)
                 return null;
+            summonerName = summonerInfo.name;
             var MatchList = _matchService.MatchListById(summonerInfo.accountId, region, filter);
             QuickStatsDto stats = new QuickStatsDto();
             //-----------------------------------------------------------
@@ -72,7 +73,7 @@ namespace LeagueStatistics.Services.RiotAPI
                 for (int i = 0; i < 10; i++)
                 {
                     var Match = _matchService.MatchInfoById(MatchList.matches[i].gameId.ToString(), region);
-                    int id = GetParticipantBySummonerName(summonerName, Match);
+                    int id = GetParticipantBySummonerName(summonerInfo.name, Match);
                     //-------------------------------------------------------
                     //Work with roles
                     CheckForRoles(MatchList.matches[i].lane, roleList);
