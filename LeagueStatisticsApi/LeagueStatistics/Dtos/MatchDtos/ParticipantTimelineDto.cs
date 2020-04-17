@@ -10,6 +10,5 @@ namespace LeagueStatistics.Dtos.MatchDtos
         public int participantId { get; set; }
         public string role { get; set; }
         public string lane { get; set; }
-
     }
 }
