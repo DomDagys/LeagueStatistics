@@ -14,7 +14,7 @@ class ProfilePage extends React.Component {
         this.state = {
             statistics: null,
             summonerData: null,
-            region: this.props.user.region,
+            region: "EUW1",
             searchedSummoner: "",
             championData: null
         };
@@ -93,12 +93,9 @@ class ProfilePage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { users, authentication, settings } = state;
-    const { user } = settings;
-    return {
-        user,
-        users,
-    };
+    const { authentication } = state;
+    const { user } = authentication;
+    return { user };
 }
 
 const actionCreators = {

@@ -42,7 +42,7 @@ class App extends React.Component {
                   <Route path="/register" component={RegisterPage} />
                   <PrivateRoute path="/settings" component={Settings} />
                   <PrivateRoute path="/update" component={ModalForm} />
-                  <Route path="/profile" component={ProfilePage} />
+                  <PrivateRoute path="/profile" component={ProfilePage} />
                   <Redirect from="*" to="/" />
                 </Switch>
               </Router>
