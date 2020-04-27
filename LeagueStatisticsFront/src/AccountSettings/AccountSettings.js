@@ -104,7 +104,7 @@ class Settings extends React.Component {
               Submit changes
             </button>
 
-            <Link to="/login" className="btn btn-link">
+            <Link to="/" className="btn btn-link">
               Cancel
             </Link>
           </div>

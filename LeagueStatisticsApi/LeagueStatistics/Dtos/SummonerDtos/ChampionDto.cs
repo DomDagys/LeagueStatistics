@@ -8,6 +8,7 @@ namespace LeagueStatistics.Dtos.SummonerDtos
     public class ChampionDto
     {
         public int championId { get; set; }
+        public string championName { get; set; }
         public int kills { get; set; }
         public int assists { get; set; }
         public int deaths { get; set; }

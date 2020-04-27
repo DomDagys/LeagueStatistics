@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import config from "config";
 import { quickstatsService, summonerService } from "../_services"
 import { alertActions } from "../_actions";
-import regeneratorRuntime from "regenerator-runtime";
 import { summonerConstants } from "../_constants";
 import SummonerProfile from "../_components/SummonerProfile";
 import QuickStatistics from "../_components/QuickStatistics";
@@ -15,8 +14,9 @@ class ProfilePage extends React.Component {
         this.state = {
             statistics: null,
             summonerData: null,
-            region: "EUW1",
-            searchedSummoner: ""
+            region: this.props.user.region,
+            searchedSummoner: "",
+            championData: null
         };
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -39,6 +39,14 @@ class ProfilePage extends React.Component {
         let region = this.props.user.region;
 
         this.getProfileData(summonerName, region);
+
+        fetch("http://ddragon.leagueoflegends.com/cdn/10.8.1/data/en_US/champion.json")
+            .then(response => response.json())
+            .then(championObject => {
+                let championData = Object.entries(championObject.data);
+                this.setState({ championData: championData });
+            });
+
     }
 
     handleClick(e) {
@@ -70,15 +78,16 @@ class ProfilePage extends React.Component {
                     onChange={this.handleChange}
                     id="region"
                 >
-                    <option value="EUN1">EUNE</option>
                     <option value="EUW1">EUW</option>
+                    <option value="EUN1">EUNE</option>
                     <option value="NA1">NA</option>
                     <option value="KR">KR</option>
                 </select>
                 <button onClick={this.handleClick} className="btn btn-primary" >Search</button>
             </div>
             {this.state.summonerData !== null && (<SummonerProfile summonerData={this.state.summonerData} />)}
-            {this.state.statistics ? (<QuickStatistics {... this.state.statistics} />) : (<p>Loading...</p>)}
+            {this.state.statistics ? (<QuickStatistics {... this.state.statistics}
+                championData={this.state.championData} />) : (<p>Loading...</p>)}
         </div>);
     }
 }
