@@ -24,6 +24,9 @@ namespace LeagueStatistics.Services.RiotAPI
             var filter = "?endIndex=10&beginIndex=0";
 
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
+            if (summonerInfo == null)
+                return null;
+            summonerName = summonerInfo.name;
             var MatchList = _matchService.MatchListById(summonerInfo.accountId, region, filter);
             QuickStatsDto stats = new QuickStatsDto();
             //-----------------------------------------------------------
@@ -46,17 +49,19 @@ namespace LeagueStatistics.Services.RiotAPI
                     StatsCalculations(stats, Match, id, championIds, championsPlayed);
                 }
                 List<ChampionDto> filteredList = FilterChampionList(championsPlayed, championIds);
-                stats.favoriteChampions = filteredList.GetRange(0, 3);
-                filteredList = filteredList.GetRange(0, 3);
+                if (filteredList.Count < 3)
+                    stats.favoriteChampions = filteredList.GetRange(0, filteredList.Count);
+                else
+                    stats.favoriteChampions = filteredList.GetRange(0, 3);
                 stats.favoriteRoles = roleList;
                 stats.gamesPlayed = MatchList.totalGames;
 
-                if (stats.deaths != 0) 
+                if (stats.deaths != 0)
                     stats.kda = Math.Round(((double)(stats.kills + stats.assists) / stats.deaths), 2);
                 else stats.kda = Math.Round((double)(stats.kills + stats.assists), 2);
-                for (int i = 0; i < filteredList.Count; i++)
+                for (int i = 0; i < stats.favoriteChampions.Count; i++)
                 {
-                    if(stats.favoriteChampions[i].deaths != 0)
+                    if (stats.favoriteChampions[i].deaths != 0)
                         stats.favoriteChampions[i].kda = Math.Round((double)(stats.favoriteChampions[i].kills + stats.favoriteChampions[i].assists)
                         / stats.favoriteChampions[i].deaths, 2);
                     else stats.favoriteChampions[i].kda = Math.Round((double)(stats.favoriteChampions[i].kills + stats.favoriteChampions[i].assists), 2);
@@ -68,7 +73,7 @@ namespace LeagueStatistics.Services.RiotAPI
                 for (int i = 0; i < 10; i++)
                 {
                     var Match = _matchService.MatchInfoById(MatchList.matches[i].gameId.ToString(), region);
-                    int id = GetParticipantBySummonerName(summonerName, Match);
+                    int id = GetParticipantBySummonerName(summonerInfo.name, Match);
                     //-------------------------------------------------------
                     //Work with roles
                     CheckForRoles(MatchList.matches[i].lane, roleList);
@@ -77,15 +82,17 @@ namespace LeagueStatistics.Services.RiotAPI
                     StatsCalculations(stats, Match, id, championIds, championsPlayed);
                 }
                 List<ChampionDto> filteredList = FilterChampionList(championsPlayed, championIds);
-                stats.favoriteChampions = filteredList.GetRange(0, 3);
-                filteredList = filteredList.GetRange(0, 3);
+                if (filteredList.Count < 3)
+                    stats.favoriteChampions = filteredList.GetRange(0, filteredList.Count);
+                else
+                    stats.favoriteChampions = filteredList.GetRange(0, 3);
                 stats.favoriteRoles = roleList;
                 stats.gamesPlayed = 10;
 
                 if (stats.deaths != 0)
                     stats.kda = Math.Round(((double)(stats.kills + stats.assists) / stats.deaths), 2);
                 else stats.kda = Math.Round((double)(stats.kills + stats.assists), 2);
-                for (int i = 0; i < filteredList.Count; i++)
+                for (int i = 0; i < stats.favoriteChampions.Count; i++)
                 {
                     if (stats.favoriteChampions[i].deaths != 0)
                         stats.favoriteChampions[i].kda = Math.Round((double)(stats.favoriteChampions[i].kills + stats.favoriteChampions[i].assists)

@@ -18,7 +18,7 @@ function update(user) {
       user => {
         dispatch(success(JSON.parse(user)));
         history.push("/");
-        window.location.reload(true);
+        //window.location.reload(true);
       },
       error => {
         dispatch(alertActions.error(error));
@@ -87,7 +87,7 @@ function login(username, password) {
       user => {
         dispatch(success(user));
         history.push("/");
-        window.location.reload(true);
+        //window.location.reload(true);
       },
       error => {
         dispatch(failure(error));

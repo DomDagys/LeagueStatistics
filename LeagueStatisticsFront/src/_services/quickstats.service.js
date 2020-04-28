@@ -1,16 +1,17 @@
 import config from "config";
+//import regeneratorRuntime from "regenerator-runtime";
 
-export const summonerService = {
-    getSummonerData
+export const quickstatsService = {
+    getStatistics
 }
 
-function getSummonerData(summonerName, region) {
+function getStatistics(summonerName, region) {
     const requestOptions = {
         method: "GET",
         headers: { "Content-Type": "application/json" }
-    };
+    }
 
-    return fetch(`${config.apiUrl}/api/Summoner?region=${region}&summonerName=${summonerName}`, requestOptions)
+    return fetch(`${config.apiUrl}/api/QuickStats?region=${region}&summonerName=${summonerName}`, requestOptions)
         .then(handleResponse);
 }
 
@@ -22,7 +23,6 @@ function handleResponse(response) {
                 location.reload(true);
             }
 
-            //localStorage.setItem("summonerName", "");
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }

@@ -22,12 +22,12 @@ namespace LeagueStatistics.Controllers
         }
 
         // POST: api/Summoner
-        [HttpPost]
+        [HttpGet]
         [Produces(typeof(SummonerDto))]
-        public IActionResult GetSummonerData(RequestSummonerDto summonerDto)
+        public IActionResult GetSummonerData(string region, string summonerName)
         {
 
-            var summonerInfo = _summonerService.GetSummonerByName(summonerDto.SummonerName, summonerDto.Region);
+            var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
 
             if (summonerInfo == null)
                 return BadRequest(new { message = "Could not find a summoner with this name"});

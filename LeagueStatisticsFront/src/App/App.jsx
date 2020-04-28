@@ -11,6 +11,7 @@ import { RegisterPage } from "../RegisterPage";
 import { Header } from "../_components/Header";
 import Settings from "../AccountSettings/AccountSettings";
 import { ModalForm } from "../ModalSummonerForm/ModalForm";
+import { ProfilePage } from "../ProfilePage/ProfilePage";
 // Siek tiek info:
 // PrivateRoute -
 class App extends React.Component {
@@ -41,6 +42,7 @@ class App extends React.Component {
                   <Route path="/register" component={RegisterPage} />
                   <PrivateRoute path="/settings" component={Settings} />
                   <PrivateRoute path="/update" component={ModalForm} />
+                  <PrivateRoute path="/profile" component={ProfilePage} />
                   <Redirect from="*" to="/" />
                 </Switch>
               </Router>

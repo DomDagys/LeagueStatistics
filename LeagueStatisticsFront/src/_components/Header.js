@@ -28,7 +28,7 @@ const LoggedInView = props => {
             <a href="/settings">Account settings</a>
           </li>
           <li>
-            <a href="#profile">Profile</a>
+            {props.summonerName ? <a href="/profile">Profile</a> : ""}
           </li>
           <li>
             <button

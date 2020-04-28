@@ -22,11 +22,14 @@ namespace LeagueStatistics.Controllers
         }
 
         // POST: api/Summoner
-        [HttpPost]
+        [HttpGet]
         [Produces(typeof(QuickStatsDto))]
         public IActionResult GetQuickStatistics(string region, string summonerName)
         {
             QuickStatsDto statistics = _statisticsService.QuickStatsCalculation(summonerName, region);
+            if (statistics == null)
+                return BadRequest(new { message = "Error, could not load recent game statistics" });
+
             return Ok(statistics);
         }
     }

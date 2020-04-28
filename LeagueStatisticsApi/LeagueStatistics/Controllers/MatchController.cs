@@ -24,7 +24,7 @@ namespace LeagueStatistics.Controllers
         }
 
         // api/game
-        [HttpPost]
+        [HttpGet]
         [Produces(typeof(MatchDto))]
         [Route("game")]
         public IActionResult GetMatchInfo(string id, string region)
@@ -34,7 +34,7 @@ namespace LeagueStatistics.Controllers
         }
 
         // api/list
-        [HttpPost]
+        [HttpGet]
         [Produces(typeof(MatchListDto))]
         [Route("list")]
         public IActionResult GetMatchList(string accountId, string region, string endIndex, string beginIndex)
@@ -47,7 +47,7 @@ namespace LeagueStatistics.Controllers
         }
 
         // api/history
-        [HttpPost]
+        [HttpGet]
         [Produces(typeof(ICollection<MatchDto>))]
         public IActionResult GetHistoryBySummoner(string summonerName, string region, string endIndex, string beginIndex)
         {
@@ -71,8 +71,8 @@ namespace LeagueStatistics.Controllers
             return Ok(matchHistory);
         }
 
-        [HttpPost]
-        [Route("RankedId")]
+        [HttpGet]
+        [Route("rankedId")]
         [Produces(typeof(ICollection<MatchDto>))]
         public IActionResult GetRankedHistoryByAccountId(string accountId, string region, int howMuch)
         {
@@ -84,7 +84,7 @@ namespace LeagueStatistics.Controllers
             return Ok(matchHistory);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("RankedSummonerName")]
         [Produces(typeof(ICollection<MatchDto>))]
         public IActionResult GetRankedHistoryBySummonerName(string summonerName, string region, int howMuch)
