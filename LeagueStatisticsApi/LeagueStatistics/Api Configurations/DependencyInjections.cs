@@ -20,7 +20,8 @@ namespace LeagueStatistics.Api_Configurations
                     .AddScoped<ISecurityService, SecurityService>()
                     .AddScoped<ISummoner_V4Service, Summoner_V4Service>()
                     .AddScoped<IMatch_V4Service, Match_V4Service>()
-                    .AddScoped<IQuickStatsService, QuickStatsService>();
+                    .AddScoped<IQuickStatsService, QuickStatsService>()
+                    .AddScoped<ILeague_V4Service, League_V4Service>();
         }
 
         public static void InjectRepositoryDependencies(this IServiceCollection services)
