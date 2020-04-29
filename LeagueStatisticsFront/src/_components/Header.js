@@ -30,6 +30,7 @@ const LoggedInView = props => {
           <li>
             {props.summonerName ? <a href="/profile">Profile</a> : ""}
           </li>
+          <li>{props.summonerName ? <a href="/match_history">Match History</a>:""}</li>
           <li>
             <button
               className="button-for-logout button"
