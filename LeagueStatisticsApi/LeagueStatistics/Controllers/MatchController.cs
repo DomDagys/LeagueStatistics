@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using LeagueStatistics.Dtos.MatchDtos;
 using LeagueStatistics.Services.RiotAPI;
 using LeagueStatistics.Services.Interfaces;
+using LeagueStatistics.Dtos.SummonerDtos;
 
 namespace LeagueStatistics.Controllers
 {
@@ -96,6 +97,15 @@ namespace LeagueStatistics.Controllers
             var matchHistory = _matchService.GetRankedMatchHistoryById(summonerInfo.accountId, region, filter, howMuch);
 
             return Ok(matchHistory);
+        }
+
+        [HttpGet]
+        [Route("FavoriteChampions")]
+        [Produces(typeof(List<ChampionDto>))]
+        public IActionResult GetLeagueInformation(string region, string summonerName, string queueID)
+        {
+            List<ChampionDto> statistics = _matchService.GetSummonerChampionList(summonerName, region, queueID);
+            return Ok(statistics);
         }
     }
 }

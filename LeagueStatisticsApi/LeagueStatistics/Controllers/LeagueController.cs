@@ -22,7 +22,7 @@ namespace LeagueStatistics.Controllers
         }
 
         // POST: api/Summoner
-        [HttpPost]
+        [HttpGet]
         [Produces(typeof(List<LeagueEntryDto>))]
         public IActionResult GetLeagueInformation(string region, string summonerName)
         {

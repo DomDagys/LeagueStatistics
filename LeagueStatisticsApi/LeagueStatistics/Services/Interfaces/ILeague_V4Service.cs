@@ -8,6 +8,6 @@ namespace LeagueStatistics.Services.Interfaces
 {
     public interface ILeague_V4Service
     {
-        public List<LeagueEntryDto> GetQueueInfoByName(string SummonerName, string region);
+        List<LeagueEntryDto> GetQueueInfoByName(string SummonerName, string region);
     }
 }

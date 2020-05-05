@@ -6,6 +6,8 @@ import { alertActions } from "../_actions";
 import { summonerConstants } from "../_constants";
 import SummonerProfile from "../_components/SummonerProfile";
 import QuickStatistics from "../_components/QuickStatistics";
+import { leagueService } from "../_services/league.service";
+import LeagueRanks from "../_components/LeagueRanks";
 
 
 class ProfilePage extends React.Component {
@@ -14,6 +16,7 @@ class ProfilePage extends React.Component {
         this.state = {
             statistics: null,
             summonerData: null,
+            leagueData: null,
             region: "EUW1",
             searchedSummoner: "",
             championData: null
@@ -30,6 +33,9 @@ class ProfilePage extends React.Component {
             .then(summonerData => this.setState({ summonerData: summonerData }))
             .catch(message => this.props.error(message));
 
+        leagueService.getRankedStats(summonerName, region)
+            .then(leagueData => this.setState({ leagueData: leagueData}));
+        
         quickstatsService.getStatistics(summonerName, region)
             .then(data => this.setState({ statistics: data }));
     }
@@ -52,6 +58,7 @@ class ProfilePage extends React.Component {
     handleClick(e) {
         this.props.clear();
         this.setState({ statistics: null })
+        this.setState({ leagueData: null })
         let summonerName = this.state.searchedSummoner;
         let region = this.state.region;
 
@@ -86,6 +93,7 @@ class ProfilePage extends React.Component {
                 <button onClick={this.handleClick} className="btn btn-primary" >Search</button>
             </div>
             {this.state.summonerData !== null && (<SummonerProfile summonerData={this.state.summonerData} />)}
+            {this.state.leagueData !== null && (<LeagueRanks leagueData={this.state.leagueData} />)}
             {this.state.statistics ? (<QuickStatistics {... this.state.statistics}
                 championData={this.state.championData} />) : (<p>Loading...</p>)}
         </div>);
