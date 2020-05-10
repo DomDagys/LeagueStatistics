@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import config from "config";
-import { quickstatsService, summonerService } from "../_services"
+import { quickstatsService, summonerService, matchService } from "../_services"
 import { alertActions } from "../_actions";
 import { summonerConstants } from "../_constants";
 import SummonerProfile from "../_components/SummonerProfile";
@@ -19,7 +19,9 @@ class ProfilePage extends React.Component {
             leagueData: null,
             region: "EUW1",
             searchedSummoner: "",
-            championData: null
+            championData: null,
+            soloqChampions: null,
+            flexChampions: null
         };
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -34,8 +36,14 @@ class ProfilePage extends React.Component {
             .catch(message => this.props.error(message));
 
         leagueService.getRankedStats(summonerName, region)
-            .then(leagueData => this.setState({ leagueData: leagueData}));
-        
+            .then(leagueData => this.setState({ leagueData: leagueData }));
+
+        matchService.getRankedChampions(summonerName, region, 420)
+            .then(rankedChampions => this.setState({ soloqChampions: rankedChampions }));
+
+        matchService.getRankedChampions(summonerName, region, 440)
+            .then(rankedChampions => this.setState({ flexChampions: rankedChampions }));
+
         quickstatsService.getStatistics(summonerName, region)
             .then(data => this.setState({ statistics: data }));
     }
@@ -93,7 +101,10 @@ class ProfilePage extends React.Component {
                 <button onClick={this.handleClick} className="btn btn-primary" >Search</button>
             </div>
             {this.state.summonerData !== null && (<SummonerProfile summonerData={this.state.summonerData} />)}
-            {this.state.leagueData !== null && (<LeagueRanks leagueData={this.state.leagueData} />)}
+            {this.state.leagueData !== null && this.state.soloqChampions !== null
+                && this.state.flexChampions !== null && this.state.championData !== null &&
+                (<LeagueRanks leagueData={this.state.leagueData} soloqChampions={this.state.soloqChampions}
+                    flexChampions={this.state.flexChampions} championData={this.state.championData} />)}
             {this.state.statistics ? (<QuickStatistics {... this.state.statistics}
                 championData={this.state.championData} />) : (<p>Loading...</p>)}
         </div>);

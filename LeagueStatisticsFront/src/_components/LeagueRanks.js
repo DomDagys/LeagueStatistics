@@ -3,7 +3,23 @@ import React from 'react';
 class LeagueRanks extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {selectedQueue: null}
+        this.state = { selectedQueue: null }
+
+        this.props.soloqChampions.forEach(playedChamp => {
+            this.props.championData.forEach(champion => {
+                if (playedChamp.championId == champion[1].key) {
+                    playedChamp.championName = champion[0];
+                }
+            })
+        });
+
+        this.props.flexChampions.forEach(playedChamp => {
+            this.props.championData.forEach(champion => {
+                if (playedChamp.championId == champion[1].key) {
+                    playedChamp.championName = champion[0];
+                }
+            })
+        });
 
         this.componentDidMount = this.componentDidMount.bind(this);
         this.handleRankedSoloClick = this.handleRankedSoloClick.bind(this);
@@ -11,7 +27,7 @@ class LeagueRanks extends React.Component {
     }
     render() {
         //console.log(this.props.leagueData.length);
-        
+
         console.log(this.state);
         console.log(this.props.leagueData);
         //const iconLink = "src/leagueIcons/Emblem_Challenger.png";
@@ -22,41 +38,44 @@ class LeagueRanks extends React.Component {
             {this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} LP:{this.state.selectedQueue.leaguePoints}</p> : null}
             <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>
             <button onClick={this.handleFlexClick} className="btn btn-primary" >Flex stats</button>
+            {this.props.soloqChampions.map(champ => {
+                return <p key={champ.championId}>{champ.championName}</p>
+            })}
         </div>);
     }
 
-    handleRankedSoloClick(e){
+    handleRankedSoloClick(e) {
         let queueData = null;
         this.props.leagueData.map(entryDto => {
-            if(entryDto.queueType == "RANKED_SOLO_5x5"){
+            if (entryDto.queueType == "RANKED_SOLO_5x5") {
                 queueData = entryDto;
             }
         });
-    
-        this.setState({selectedQueue: queueData});
+
+        this.setState({ selectedQueue: queueData });
     }
 
-    handleFlexClick(e){
+    handleFlexClick(e) {
         let queueData = null;
         this.props.leagueData.map(entryDto => {
-            if(entryDto.queueType == "RANKED_FLEX_SR"){
+            if (entryDto.queueType == "RANKED_FLEX_SR") {
                 queueData = entryDto;
             }
         });
-    
-        this.setState({selectedQueue: queueData});
+
+        this.setState({ selectedQueue: queueData });
     }
 
-    componentDidMount(){
-        if(this.state.selectedQueue == null){
+    componentDidMount() {
+        if (this.state.selectedQueue == null) {
             let queueData = null;
             console.log(this.props.leagueData);
             //this.props.leagueData.foreach()
             this.props.leagueData.map(entryDto => {
                 //console.log(entryDto);
-                if(entryDto.queueType == "RANKED_SOLO_5x5"){
+                if (entryDto.queueType == "RANKED_SOLO_5x5") {
                     queueData = entryDto;
-                    this.setState({selectedQueue: queueData})
+                    this.setState({ selectedQueue: queueData })
                 }
             });
         }
