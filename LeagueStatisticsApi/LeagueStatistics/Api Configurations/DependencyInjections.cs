@@ -22,7 +22,8 @@ namespace LeagueStatistics.Api_Configurations
                     .AddScoped<IMatch_V4Service, Match_V4Service>()
                     .AddScoped<IQuickStatsService, QuickStatsService>()
                     .AddScoped<ILeague_V4Service, League_V4Service>()
-                    .AddScoped<ILiveGame_V4Service, LiveGameV4_Service>();
+                    .AddScoped<ILiveGame_V4Service, LiveGameV4_Service>()
+                    .AddScoped<IChampionMastery_V4Service, ChampionMastery_V4Service>();
         }
 
         public static void InjectRepositoryDependencies(this IServiceCollection services)
