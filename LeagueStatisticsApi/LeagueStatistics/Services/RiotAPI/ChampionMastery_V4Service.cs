@@ -9,7 +9,7 @@ namespace LeagueStatistics.Services.RiotAPI
 {
     public class ChampionMastery_V4Service : GeneralAPI, IChampionMastery_V4Service
     {
-        public List<ChampionMasteryListDto> ChampionMasteryBySummonerId(string summonerId, string region)
+        public List<ChampionMasteryDto> ChampionMasteryBySummonerId(string summonerId, string region)
         {
             var path = "champion-mastery/v4/champion-masteries/by-summoner/" + summonerId;
 
@@ -19,7 +19,7 @@ namespace LeagueStatistics.Services.RiotAPI
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<ChampionMasteryListDto>>(content);
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<List<ChampionMasteryDto>>(content);
             }
             else
             {

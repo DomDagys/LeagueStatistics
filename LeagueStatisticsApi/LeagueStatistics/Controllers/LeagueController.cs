@@ -27,6 +27,10 @@ namespace LeagueStatistics.Controllers
         public IActionResult GetLeagueInformation(string region, string summonerName)
         {
             List<LeagueEntryDto> statistics = _leagueService.GetQueueInfoByName(summonerName, region);
+
+            if (statistics == null)
+                return BadRequest("User does not exist or has no ranked games");
+
             return Ok(statistics);
         }
     }

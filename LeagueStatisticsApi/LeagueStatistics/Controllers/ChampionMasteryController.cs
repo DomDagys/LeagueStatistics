@@ -21,10 +21,10 @@ namespace LeagueStatistics.Controllers
 
         // Get: api/ChampionMastery
         [HttpGet]
-        [Produces(typeof(List<ChampionMasteryListDto>))]
+        [Produces(typeof(List<ChampionMasteryDto>))]
         public IActionResult ChampionMasteryBySummonerId(string summonerId, string region)
         {
-            List<ChampionMasteryListDto> championMastery = _championMasteryService.ChampionMasteryBySummonerId(summonerId, region);
+            List<ChampionMasteryDto> championMastery = _championMasteryService.ChampionMasteryBySummonerId(summonerId, region);
 
             return Ok(championMastery);
         }

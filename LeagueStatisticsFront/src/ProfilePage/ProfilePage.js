@@ -21,7 +21,8 @@ class ProfilePage extends React.Component {
             searchedSummoner: "",
             championData: null,
             soloqChampions: null,
-            flexChampions: null
+            flexChampions: null,
+            championMastery: null
         };
 
         this.componentDidMount = this.componentDidMount.bind(this);
@@ -32,7 +33,11 @@ class ProfilePage extends React.Component {
 
     getProfileData(summonerName, region) {
         summonerService.getSummonerData(summonerName, region)
-            .then(summonerData => this.setState({ summonerData: summonerData }))
+            .then(summonerData => {
+                this.setState({ summonerData: summonerData });
+                summonerService.getChampionMastery(summonerData.id, region)
+                    .then(championMastery => this.setState({ championMastery: championMastery }));
+            })
             .catch(message => this.props.error(message));
 
         leagueService.getRankedStats(summonerName, region)
@@ -104,9 +109,10 @@ class ProfilePage extends React.Component {
             </div>
             {this.state.summonerData !== null && (<SummonerProfile summonerData={this.state.summonerData} />)}
             {this.state.leagueData !== null && this.state.soloqChampions !== null
-                && this.state.flexChampions !== null && this.state.championData !== null &&
+                && this.state.flexChampions !== null && this.state.championData !== null
+                && this.state.championMastery !== null &&
                 (<LeagueRanks leagueData={this.state.leagueData} soloqChampions={this.state.soloqChampions}
-                    flexChampions={this.state.flexChampions} championData={this.state.championData} />)}
+                    flexChampions={this.state.flexChampions} championData={this.state.championData} championMastery={this.state.championMastery} />)}
             {this.state.statistics && this.state.championData ? (<QuickStatistics {... this.state.statistics}
                 championData={this.state.championData} />) : (<p>Loading...</p>)}
         </div>);

@@ -25,6 +25,24 @@ class LeagueRanks extends React.Component {
             })
         });
 
+        this.props.soloqChampions.forEach(playedChamp => {
+            this.props.championMastery.forEach(mastery => {
+                if (playedChamp.championId == mastery.championId) {
+                    playedChamp.championLevel = mastery.championLevel;
+                    playedChamp.championPoints = mastery.championPoints;
+                }
+            })
+        });
+
+        this.props.flexChampions.forEach(playedChamp => {
+            this.props.championMastery.forEach(mastery => {
+                if (playedChamp.championId == mastery.championId) {
+                    playedChamp.championLevel = mastery.championLevel;
+                    playedChamp.championPoints = mastery.championPoints;
+                }
+            })
+        });
+
         this.componentDidMount = this.componentDidMount.bind(this);
         this.handleRankedSoloClick = this.handleRankedSoloClick.bind(this);
         this.handleFlexClick = this.handleFlexClick.bind(this);
@@ -38,7 +56,7 @@ class LeagueRanks extends React.Component {
         //this.props
         return (<div>
             {this.state.selectedQueue ? <h5>{this.state.selectedQueue.queueType}</h5> : <h5>Unranked</h5>}
-            {this.state.selectedQueue ? <img src={`src/leagueIcons/Emblem_${this.state.selectedQueue.tier}.png`} width="150px"></img> : <img src={`src/leagueIcons/Emblem_Unranked.png`} width="150px"></img>}
+            {this.state.selectedQueue ? <img src={`src/assets/leagueIcons/Emblem_${this.state.selectedQueue.tier}.png`} width="150px"></img> : <img src={`src/leagueIcons/Emblem_Unranked.png`} width="150px"></img>}
             {this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} LP:{this.state.selectedQueue.leaguePoints}</p> : null}
             <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>
             <button onClick={this.handleFlexClick} className="btn btn-primary" >Flex stats</button>
@@ -48,6 +66,8 @@ class LeagueRanks extends React.Component {
                     return <div>
                         <img key={champion.championId} src={champIcon}></img>
                         <label>{champion.championName} game count: {champion.gamesPlayed}</label>
+                        <img src={`src/assets/masteryIcons/Level_${champion.championLevel}.png`}></img>
+                        <label>points: {champion.championPoints}</label>
                     </div>;
                 }) : ""}
             </div>

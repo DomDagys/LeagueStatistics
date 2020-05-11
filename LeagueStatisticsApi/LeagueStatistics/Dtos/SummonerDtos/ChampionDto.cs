@@ -16,5 +16,7 @@ namespace LeagueStatistics.Dtos.SummonerDtos
         public int loss { get; set; }
         public int gamesPlayed { get; set; }
         public double kda { get; set; }
+        public int championLevel { get; set; }
+        public string championPoints { get; set; }
     }
 }

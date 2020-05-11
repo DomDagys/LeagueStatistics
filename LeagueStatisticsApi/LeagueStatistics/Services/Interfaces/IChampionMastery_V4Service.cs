@@ -8,6 +8,6 @@ namespace LeagueStatistics.Services.Interfaces
 {
     public interface IChampionMastery_V4Service
     {
-        List<ChampionMasteryListDto> ChampionMasteryBySummonerId(string summonerId, string region);
+        List<ChampionMasteryDto> ChampionMasteryBySummonerId(string summonerId, string region);
     }
 }
