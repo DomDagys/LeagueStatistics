@@ -29,7 +29,7 @@ class QuickStatistics extends React.Component {
                 <div>
                     {this.props.favoriteChampions.map(champion => {
                         const champIcon = `http://ddragon.leagueoflegends.com/cdn/10.8.1/img/champion/${champion.championName}.png`;
-                        return <img key={champion.championId} src={champIcon}></img>;
+                        return <img key={champion.championName} src={champIcon}></img>;
                     })}
                     <p>
                         {this.props.favoriteChampions.map(champion => {

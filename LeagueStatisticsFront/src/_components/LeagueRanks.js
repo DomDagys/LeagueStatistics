@@ -3,7 +3,11 @@ import React from 'react';
 class LeagueRanks extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { selectedQueue: null }
+        this.state =
+        {
+            selectedQueue: null,
+            queueChampions: null
+        }
 
         this.props.soloqChampions.forEach(playedChamp => {
             this.props.championData.forEach(champion => {
@@ -38,9 +42,15 @@ class LeagueRanks extends React.Component {
             {this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} LP:{this.state.selectedQueue.leaguePoints}</p> : null}
             <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>
             <button onClick={this.handleFlexClick} className="btn btn-primary" >Flex stats</button>
-            {this.props.soloqChampions.map(champ => {
-                return <p key={champ.championId}>{champ.championName}</p>
-            })}
+            <div>
+                {this.state.queueChampions ? this.state.queueChampions.map(champion => {
+                    const champIcon = `http://ddragon.leagueoflegends.com/cdn/10.8.1/img/champion/${champion.championName}.png`;
+                    return <div>
+                        <img key={champion.championId} src={champIcon}></img>
+                        <label>{champion.championName} game count: {champion.gamesPlayed}</label>
+                    </div>;
+                }) : ""}
+            </div>
         </div>);
     }
 
@@ -53,6 +63,7 @@ class LeagueRanks extends React.Component {
         });
 
         this.setState({ selectedQueue: queueData });
+        this.setState({ queueChampions: this.props.soloqChampions });
     }
 
     handleFlexClick(e) {
@@ -64,6 +75,7 @@ class LeagueRanks extends React.Component {
         });
 
         this.setState({ selectedQueue: queueData });
+        this.setState({ queueChampions: this.props.flexChampions });
     }
 
     componentDidMount() {
@@ -78,6 +90,9 @@ class LeagueRanks extends React.Component {
                     this.setState({ selectedQueue: queueData })
                 }
             });
+        }
+        if (this.state.queueChampions == null) {
+            this.setState({ queueChampions: this.props.soloqChampions });
         }
     }
 }

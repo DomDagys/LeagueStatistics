@@ -39,10 +39,12 @@ class ProfilePage extends React.Component {
             .then(leagueData => this.setState({ leagueData: leagueData }));
 
         matchService.getRankedChampions(summonerName, region, 420)
-            .then(rankedChampions => this.setState({ soloqChampions: rankedChampions }));
+            .then(rankedChampions => this.setState({ soloqChampions: rankedChampions }))
+            .catch(this.setState({ soloqChampions: null }));
 
         matchService.getRankedChampions(summonerName, region, 440)
-            .then(rankedChampions => this.setState({ flexChampions: rankedChampions }));
+            .then(rankedChampions => this.setState({ flexChampions: rankedChampions }))
+            .catch(this.setState({ flexChampions: null }));
 
         quickstatsService.getStatistics(summonerName, region)
             .then(data => this.setState({ statistics: data }));
@@ -105,7 +107,7 @@ class ProfilePage extends React.Component {
                 && this.state.flexChampions !== null && this.state.championData !== null &&
                 (<LeagueRanks leagueData={this.state.leagueData} soloqChampions={this.state.soloqChampions}
                     flexChampions={this.state.flexChampions} championData={this.state.championData} />)}
-            {this.state.statistics ? (<QuickStatistics {... this.state.statistics}
+            {this.state.statistics && this.state.championData ? (<QuickStatistics {... this.state.statistics}
                 championData={this.state.championData} />) : (<p>Loading...</p>)}
         </div>);
     }
