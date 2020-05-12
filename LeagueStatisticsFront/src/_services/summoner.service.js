@@ -1,7 +1,8 @@
 import config from "config";
 
 export const summonerService = {
-    getSummonerData
+    getSummonerData,
+    getChampionMastery
 }
 
 function getSummonerData(summonerName, region) {
@@ -11,6 +12,16 @@ function getSummonerData(summonerName, region) {
     };
 
     return fetch(`${config.apiUrl}/api/Summoner?region=${region}&summonerName=${summonerName}`, requestOptions)
+        .then(handleResponse);
+}
+
+function getChampionMastery(summonerId, region) {
+    const requestOptions = {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+    };
+
+    return fetch(`${config.apiUrl}/api/ChampionMastery?summonerId=${summonerId}&region=${region}`)
         .then(handleResponse);
 }
 

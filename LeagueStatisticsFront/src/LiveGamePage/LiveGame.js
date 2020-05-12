@@ -24,10 +24,3 @@ export function getImageUrl(data, key) {
   }
   return "";
 }
-
-export function getTierUrl(summonerName, region) {
-  let arr = [];
-  leagueService.getRankedStats(summonerName, region).then((leagueData) => {
-    return leagueData.map((x) => arr.push(x));
-  });
-}

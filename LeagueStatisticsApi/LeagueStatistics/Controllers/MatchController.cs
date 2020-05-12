@@ -105,6 +105,10 @@ namespace LeagueStatistics.Controllers
         public IActionResult GetLeagueInformation(string region, string summonerName, string queueID)
         {
             List<ChampionDto> statistics = _matchService.GetSummonerChampionList(summonerName, region, queueID);
+
+            if (statistics == null)
+                return NotFound(new { message = "No ranked games were found." });
+
             return Ok(statistics);
         }
     }

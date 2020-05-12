@@ -15,17 +15,7 @@ class Player extends React.Component {
     //console.log(this.state);
     //console.log(this.state.data.Aatrox.key)
   }
-  componentDidMount() {
-    leagueService
-      .getRankedStats(this.state.searchedSummoner.name, this.state.region)
-      .then((leagueData) => {
-        if (leagueData != null) {
-          this.setState({ arr: leagueData });
-        }
-      });
-
-    console.log(this.state.arr);
-  }
+  componentDidMount() {}
 
   render() {
     return (
