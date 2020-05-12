@@ -1,4 +1,5 @@
 import React from 'react';
+import "../styles/LeagueRanks.css";
 
 class LeagueRanks extends React.Component {
     constructor(props) {
@@ -55,12 +56,14 @@ class LeagueRanks extends React.Component {
         //const iconLink = "src/leagueIcons/Emblem_Challenger.png";
         //this.props
         return (<div>
-            {this.state.selectedQueue ? <h5>{this.state.selectedQueue.queueType}</h5> : <h5>Unranked</h5>}
-            {this.state.selectedQueue ? <img src={`src/assets/leagueIcons/Emblem_${this.state.selectedQueue.tier}.png`} width="150px"></img> : <img src={`src/leagueIcons/Emblem_Unranked.png`} width="150px"></img>}
-            {this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} LP:{this.state.selectedQueue.leaguePoints}</p> : null}
-            <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>
-            <button onClick={this.handleFlexClick} className="btn btn-primary" >Flex stats</button>
-            <div>
+            <div className="rankBox">
+                {this.state.selectedQueue ? <h5>{this.state.selectedQueue.queueType}</h5> : <h5>Unranked</h5>}
+                {this.state.selectedQueue ? <img src={`src/assets/leagueIcons/Emblem_${this.state.selectedQueue.tier}.png`} width="150px"></img> : <img src={`src/leagueIcons/Emblem_Unranked.png`} width="150px"></img>}
+                {this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} LP:{this.state.selectedQueue.leaguePoints}</p> : null}
+            </div>
+            <div className="rankedChampions">
+                <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>
+                <button onClick={this.handleFlexClick} className="btn btn-primary" >Flex stats</button>
                 {this.state.queueChampions ? this.state.queueChampions.map(champion => {
                     const champIcon = `http://ddragon.leagueoflegends.com/cdn/10.8.1/img/champion/${champion.championName}.png`;
                     return <div>

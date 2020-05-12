@@ -1,0 +1,10 @@
+.rankBox{
+    position: absolute;
+    top: 500px;
+}
+
+.rankedChampions{
+    position: relative;
+    left: 350px;
+    bottom: 100px;
+}

@@ -8,7 +8,7 @@ import SummonerProfile from "../_components/SummonerProfile";
 import QuickStatistics from "../_components/QuickStatistics";
 import { leagueService } from "../_services/league.service";
 import LeagueRanks from "../_components/LeagueRanks";
-
+import "../styles/ProfilePage.css";
 
 class ProfilePage extends React.Component {
     constructor(props) {
@@ -90,11 +90,11 @@ class ProfilePage extends React.Component {
     render() {
         console.log(this.state)
         return (<div>
-            <h1>This is the profile page</h1>
-            <div className="input-group mb-3">
-                <input type="text" placeholder="Search Summoner" value={this.state.searchedSummoner}
+            <div className="summonerSearchBox">
+                <h1>League statistics</h1>
+                <input className="searchBar" type="text" placeholder="Search Summoner" value={this.state.searchedSummoner}
                     name="searchedSummoner" onChange={this.handleChange} ></input>
-                <select
+                <select className="regionList"
                     name="region"
                     value={this.state.region}
                     onChange={this.handleChange}
@@ -108,13 +108,15 @@ class ProfilePage extends React.Component {
                 <button onClick={this.handleClick} className="btn btn-primary" >Search</button>
             </div>
             {this.state.summonerData !== null && (<SummonerProfile summonerData={this.state.summonerData} />)}
+            <div className="quickStats">
+                {this.state.statistics && this.state.championData ? (<QuickStatistics {... this.state.statistics}
+                    championData={this.state.championData} />) : (<p>Loading...</p>)}
+            </div>
             {this.state.leagueData !== null && this.state.soloqChampions !== null
                 && this.state.flexChampions !== null && this.state.championData !== null
                 && this.state.championMastery !== null &&
                 (<LeagueRanks leagueData={this.state.leagueData} soloqChampions={this.state.soloqChampions}
                     flexChampions={this.state.flexChampions} championData={this.state.championData} championMastery={this.state.championMastery} />)}
-            {this.state.statistics && this.state.championData ? (<QuickStatistics {... this.state.statistics}
-                championData={this.state.championData} />) : (<p>Loading...</p>)}
         </div>);
     }
 }
