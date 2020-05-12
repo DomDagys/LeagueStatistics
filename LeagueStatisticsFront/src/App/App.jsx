@@ -13,6 +13,7 @@ import Settings from "../AccountSettings/AccountSettings";
 import { ModalForm } from "../ModalSummonerForm/ModalForm";
 import { ProfilePage } from "../ProfilePage/ProfilePage";
 import { MatchHistoryPage } from "../MatchHistoryPage/MatchHistoryPage";
+import LiveGamePage from "../LiveGamePage/LiveGamePage";
 // Siek tiek info:
 // PrivateRoute -
 class App extends React.Component {
@@ -44,7 +45,11 @@ class App extends React.Component {
                   <PrivateRoute path="/settings" component={Settings} />
                   <PrivateRoute path="/update" component={ModalForm} />
                   <PrivateRoute path="/profile" component={ProfilePage} />
-                  <PrivateRoute path="/match_history" component={MatchHistoryPage} />
+                  <PrivateRoute
+                    path="/match_history"
+                    component={MatchHistoryPage}
+                  />
+                  <PrivateRoute path="/livegame" component={LiveGamePage} />
                   <Redirect from="*" to="/" />
                 </Switch>
               </Router>
@@ -62,7 +67,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
-  clearAlerts: alertActions.clear
+  clearAlerts: alertActions.clear,
 };
 
 const connectedApp = connect(mapState, actionCreators)(App);
