@@ -15,4 +15,3 @@ render(
   </Provider>,
   document.getElementById("app")
 );
-console.log("PARDOTUVE" + JSON.stringify(store.getState()));
