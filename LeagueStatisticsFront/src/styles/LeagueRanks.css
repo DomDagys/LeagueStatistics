@@ -5,6 +5,10 @@
 
 .rankedChampions{
     position: relative;
-    left: 350px;
+    left: 320px;
     bottom: 100px;
+    background-color: lightblue;
+    padding: 2.5%;
+    border: solid;
+    width: 60%;
 }
