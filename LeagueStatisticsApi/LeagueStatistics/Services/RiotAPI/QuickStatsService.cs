@@ -1,6 +1,7 @@
 ﻿using LeagueStatistics.Dtos.MatchDtos;
 using LeagueStatistics.Dtos.SummonerDtos;
 using LeagueStatistics.Services.Interfaces;
+using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace LeagueStatistics.Services.RiotAPI
 
         public QuickStatsDto QuickStatsCalculation(string summonerName, string region)
         {
-            var filter = "?endIndex=10&beginIndex=0";
+            var filter = "?endIndex=10&beginIndex=0&queue=400&queue=420&queue=430&queue=440";
 
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
             if (summonerInfo == null)
@@ -34,7 +35,18 @@ namespace LeagueStatistics.Services.RiotAPI
             List<int> championIds = new List<int>();
             List<RoleDto> roleList = new List<RoleDto>();
             //-----------------------------------------------------------
-            if (MatchList.totalGames < 10)
+            //Variables for tips
+            int deathCount = 0;
+            long visionScore = 0;
+            double creepScore = 0; int times = 0;
+            double xpScore = 0; int xptimes = 0;
+            double xpDiffScore = 0; int xptimes1 = 0;
+            //-----------------------------------------------------------
+            if (MatchList == null)
+            {
+                return null;
+            }
+            else if (MatchList.totalGames < 10)
             {
                 roleList = AssignRoles();
                 for (int i = 0; i < MatchList.totalGames; i++)
@@ -47,6 +59,33 @@ namespace LeagueStatistics.Services.RiotAPI
                     //-------------------------------------------------------
                     //Work with Summoner stats and Champion stats
                     StatsCalculations(stats, Match, id, championIds, championsPlayed);
+                    //Calculations for tips
+                    deathCount += Match.participants[id - 1].stats.deaths;
+                    visionScore += Match.participants[id - 1].stats.visionScore;
+                    if (Match.participants[id - 1].timeline.creepsPerMinDeltas != null)
+                    {
+                        foreach (KeyValuePair<string, double> entry in Match.participants[id - 1].timeline.creepsPerMinDeltas)
+                        {
+                            creepScore += entry.Value;
+                            times++;
+                        }
+                    }
+                    if (Match.participants[id - 1].timeline.xpPerMinDeltas != null)
+                    {
+                        foreach (KeyValuePair<string, double> entry in Match.participants[id - 1].timeline.xpPerMinDeltas)
+                        {
+                            xpScore += entry.Value;
+                            xptimes++;
+                        }
+                    }
+                    if (Match.participants[id - 1].timeline.xpDiffPerMinDeltas != null)
+                    {
+                        foreach (KeyValuePair<string, double> entry in Match.participants[id - 1].timeline.xpDiffPerMinDeltas)
+                        {
+                            xpDiffScore += entry.Value;
+                            xptimes1++;
+                        }
+                    }
                 }
                 List<ChampionDto> filteredList = FilterChampionList(championsPlayed, championIds);
                 if (filteredList.Count < 3)
@@ -66,6 +105,25 @@ namespace LeagueStatistics.Services.RiotAPI
                         / stats.favoriteChampions[i].deaths, 2);
                     else stats.favoriteChampions[i].kda = Math.Round((double)(stats.favoriteChampions[i].kills + stats.favoriteChampions[i].assists), 2);
                 }
+                //-------------------------------------
+                //Tips section
+                List<string> positiveList = new List<string>();
+                List<string> negativeList = new List<string>();
+                if (deathCount / MatchList.totalGames > 10) negativeList.Add("Die less"); //stats.tips += "Die less, ";
+                else if (deathCount / MatchList.totalGames < 4) positiveList.Add("Your death count in games is quite low");
+                if (visionScore / MatchList.totalGames < 20) negativeList.Add("You should place more wards"); // stats.tips += "You should place more wards, ";
+                else if (visionScore / MatchList.totalGames > 40) positiveList.Add("The amount of wards you place is very good");
+                if (stats.kda < 3) negativeList.Add("Your overall kda is lacking"); //stats.tips += "Your kda is lacking";
+                else if (stats.kda > 5) positiveList.Add("Your overall kda is very good");
+                if (creepScore / times < 4) negativeList.Add("Your average creepScore " + Math.Round(creepScore / times, 2) + " is pretty bad");
+                else if (creepScore / times > 6) positiveList.Add("Youre creepScore " + Math.Round(creepScore / times, 2) + " is very good");
+                if (xpScore / xptimes < 300) negativeList.Add("You should try to gain levels faster");
+                else if (xpScore / xptimes > 400) positiveList.Add("Keep up the leveling, it is good");
+                if (xpDiffScore / xptimes1 < -50) negativeList.Add("Your enemy laner is usually outleveling you by quite a bit");
+                else if (xpDiffScore / xptimes1 > 0) positiveList.Add("On average you are outleveling your enemy, good job!");
+                //stats.tips = tempList;
+                stats.positiveTips = positiveList;
+                stats.negativeTips = negativeList;
             }
             else
             {
@@ -80,6 +138,33 @@ namespace LeagueStatistics.Services.RiotAPI
                     //-------------------------------------------------------
                     //Work with Summoner stats and Champion stats
                     StatsCalculations(stats, Match, id, championIds, championsPlayed);
+                    //Calculations for tips
+                    deathCount += Match.participants[id - 1].stats.deaths;
+                    visionScore += Match.participants[id - 1].stats.visionScore;
+                    if (Match.participants[id - 1].timeline.creepsPerMinDeltas != null)
+                    {
+                        foreach (KeyValuePair<string, double> entry in Match.participants[id - 1].timeline.creepsPerMinDeltas)
+                        {
+                            creepScore += entry.Value;
+                            times++;
+                        }
+                    }
+                    if (Match.participants[id - 1].timeline.xpPerMinDeltas != null)
+                    {
+                        foreach (KeyValuePair<string, double> entry in Match.participants[id - 1].timeline.xpPerMinDeltas)
+                        {
+                            xpScore += entry.Value;
+                            xptimes++;
+                        }
+                    }
+                    if (Match.participants[id - 1].timeline.xpDiffPerMinDeltas != null)
+                    {
+                        foreach (KeyValuePair<string, double> entry in Match.participants[id - 1].timeline.xpDiffPerMinDeltas)
+                        {
+                            xpDiffScore += entry.Value;
+                            xptimes1++;
+                        }
+                    }
                 }
                 List<ChampionDto> filteredList = FilterChampionList(championsPlayed, championIds);
                 if (filteredList.Count < 3)
@@ -99,6 +184,26 @@ namespace LeagueStatistics.Services.RiotAPI
                         / stats.favoriteChampions[i].deaths, 2);
                     else stats.favoriteChampions[i].kda = Math.Round((double)(stats.favoriteChampions[i].kills + stats.favoriteChampions[i].assists));
                 }
+                //-------------------------------------
+                //Tips section
+                //List<string> tempList = new List<string>();
+                List<string> positiveList = new List<string>();
+                List<string> negativeList = new List<string>();
+                if (deathCount / MatchList.totalGames > 10) negativeList.Add("Die less"); //stats.tips += "Die less, ";
+                else if (deathCount / MatchList.totalGames < 4) positiveList.Add("Your death count in games is quite low");
+                if (visionScore / MatchList.totalGames < 20) negativeList.Add("You should place more wards"); // stats.tips += "You should place more wards, ";
+                else if (visionScore / MatchList.totalGames > 40) positiveList.Add("The amount of wards you place is very good");
+                if (stats.kda < 3) negativeList.Add("Your overall kda is lacking"); //stats.tips += "Your kda is lacking";
+                else if (stats.kda > 5) positiveList.Add("Your overall kda is very good");
+                if (creepScore / times < 4) negativeList.Add("Your average creepScore " + Math.Round(creepScore / times, 2) + " is pretty bad");
+                else if (creepScore / times > 6) positiveList.Add("Youre creepScore " + Math.Round(creepScore / times, 2) + " is very good");
+                if (xpScore / xptimes < 300) negativeList.Add("You should try to gain levels faster");
+                else if (xpScore / xptimes > 400) positiveList.Add("Keep up the leveling, it is good");
+                if (xpDiffScore / xptimes1 < -50) negativeList.Add("Your enemy laner is usually outleveling you by quite a bit");
+                else if (xpDiffScore / xptimes1 > 0) positiveList.Add("On average you are outleveling your enemy, good job!");
+                //stats.tips = tempList;
+                stats.positiveTips = positiveList;
+                stats.negativeTips = negativeList;
             }
             return stats;
         }
