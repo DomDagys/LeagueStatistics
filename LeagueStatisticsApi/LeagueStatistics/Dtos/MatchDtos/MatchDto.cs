@@ -17,5 +17,7 @@ namespace LeagueStatistics.Dtos.MatchDtos
         public List<ParticipantIdentityDto> participantIdentities { get; set; }
         public List<TeamStatsDto> teams { get; set; }
         public List<ParticipantDto> participants { get; set; }
+        public List<string> positiveTips { get; set; }
+        public List<string> negativeTips { get; set; }
     }
 }
