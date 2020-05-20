@@ -37,6 +37,16 @@ class MatchHistoryPage extends React.Component {
         data: data.data
       });
     });
+
+    var url = "http://ddragon.leagueoflegends.com/cdn/10.10.3208608/data/en_US/summoner.json";
+    var promise2 = fetch(url);
+    promise2.then(response => response.json())
+    .then(data => {
+      this.setState({
+        ... this.state,
+        data1: data.data
+      });
+    });
   }
 
   handleChange(e) {
@@ -89,7 +99,7 @@ class MatchHistoryPage extends React.Component {
         <div>
           {
             this.state.matches.map(match => (
-              <div className="match"><MatchHistoryItem match={match} key={match.gameId} data={this.state.data}/></div>
+              <div className="match"><MatchHistoryItem match={match} key={match.gameId} data={this.state.data} data1={this.state.data1}/></div>
             ))
           }
         </div>

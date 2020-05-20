@@ -1,5 +1,5 @@
 export function procesMatchData(matchData) {
-  //console.log(matchData);
+  console.log(matchData);
   var match = {
     timeMin: Math.floor(matchData.gameDuration / 60),
     timeSec: matchData.gameDuration % 60,
@@ -48,6 +48,24 @@ export function getImageUrl(data, key) {
     if (data[i].key == key) {
       return (
         "http://ddragon.leagueoflegends.com/cdn/10.8.1/img/champion/" +
+        i +
+        ".png"
+      );
+    }
+  }
+  return "";
+}
+
+export function getItemImageUrl(id) {
+  if(id == 0) return "http://ddragon.leagueoflegends.com/cdn/5.5.1/img/ui/items.png";
+  return "http://ddragon.leagueoflegends.com/cdn/10.10.3208608/img/item/" + id + ".png";
+}
+
+export function getSpelImageUrl(data, key){
+  for (var i in data) {
+    if (data[i].key == key) {
+      return (
+        "http://ddragon.leagueoflegends.com/cdn/10.8.1/img/spell/" +
         i +
         ".png"
       );

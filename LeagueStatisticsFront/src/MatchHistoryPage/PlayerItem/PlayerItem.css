@@ -1,0 +1,62 @@
+.player{
+    font-size: 1em;
+    overflow: hidden;
+    padding: 0.1em;
+}
+.champ{
+    font-size: 1em;
+    height: 1em;
+    position: relative;
+    float: left;
+}
+.champ img{
+    vertical-align: top;
+    height: 1em;
+    width: 1em;
+    border-radius: 100%;
+}
+.champ_lvl{
+    font-size: 0.2em;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    background-color: lightgray;
+    color: rgb(66, 66, 66);
+    border-radius: 1em;
+}
+.spells{
+    font-size: 1em;
+    height: 1em;
+    float: left;
+}
+.spells img{
+    vertical-align: top;
+    height: 0.5em;
+    width: 0.5em;
+    border-radius: 25%;
+    float: left;
+}
+.name{
+    float: left;
+    height: 1em;
+    width: 2em;
+    text-align: center;
+    color: rgb(66, 66, 66);
+}
+.kda{
+    float: left;
+    height: 1em;
+    width: 1em;
+    text-align: center;
+    color: rgb(66, 66, 66);
+}
+.cs{
+    float: left;
+    height: 1em;
+    width: 1em;
+    text-align: center;
+    color: rgb(66, 66, 66);
+}
+.text{
+    font-size: 0.3em;
+}
