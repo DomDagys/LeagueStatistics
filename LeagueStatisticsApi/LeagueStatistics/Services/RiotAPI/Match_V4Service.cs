@@ -102,7 +102,7 @@ namespace LeagueStatistics.Services.RiotAPI
             }
             BestAndWorst(positiveList, negativeList, Match, id);
             if (creepScore / times < 4 && Match.participants[id - 1].timeline.role != "DUO_SUPPORT") negativeList.Add("Your average creepScore " + Math.Round(creepScore / times, 2) + " is pretty bad");
-            else if (creepScore / times > 6) positiveList.Add("Youre creepScore " + Math.Round(creepScore / times, 2) + " is very good");
+            else if (creepScore / times > 6) positiveList.Add("Your creepScore " + Math.Round(creepScore / times, 2) + " is very good");
             if (xpScore / xptimes < 300) negativeList.Add("You should try to gain levels faster");
             else if (xpScore / xptimes > 400) positiveList.Add("Keep up the leveling, it is good");
             if (xpDiffScore / xptimes1 < -50) negativeList.Add("Your enemy laner is usually outleveling you by quite a bit");

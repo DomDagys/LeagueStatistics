@@ -61,3 +61,43 @@
   float: left;
   overflow: hidden;
 }
+.tipsButton{
+  width: 5%;
+  float: right;
+  clear: both;
+  margin-top: 1%;
+  margin-left: 1%;
+  padding: 1%;
+  background-color: lightblue;
+  height: 1%;
+  width: 12%;
+}
+.Performance{
+  display: none;
+  clear: both;
+}
+.PositiveTip{
+  float: left;
+  width: 48%;
+  margin-left: 1%;
+  margin-right: 1%;
+  padding: 1%;
+  overflow: hidden;
+  background-color: rgb(170, 235, 173);
+  border-radius: 1%;
+  font-variant-ligatures: normal;
+}
+.NegativeTip{
+  float: right;
+  width: 48%;
+  margin-left: -50px;
+  padding: 1%;
+  overflow: hidden;
+  background-color: rgb(231, 164, 164);
+  border-color: black;
+  border-radius: 1%;
+}
+.EmptyTip{
+  overflow: hidden;
+  background-color: grey;
+}
