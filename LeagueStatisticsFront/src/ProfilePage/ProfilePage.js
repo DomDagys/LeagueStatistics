@@ -9,6 +9,8 @@ import QuickStatistics from "../_components/QuickStatistics";
 import { leagueService } from "../_services/league.service";
 import LeagueRanks from "../_components/LeagueRanks";
 import "../styles/ProfilePage.css";
+import ProfilePageView from "./ProfilePageView";
+import queryString from 'query-string';
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -56,10 +58,9 @@ class ProfilePage extends React.Component {
   }
 
   componentDidMount() {
-    let summonerName = this.props.user.summonerName;
-    let region = this.props.user.region;
+    const queryParams = queryString.parse(this.props.location.search);
 
-    this.getProfileData(summonerName, region);
+    this.getProfileData(queryParams.summoner, queryParams.region);
 
     fetch("http://ddragon.leagueoflegends.com/cdn/10.8.1/data/en_US/champion.json")
       .then(response => response.json())
@@ -93,38 +94,15 @@ class ProfilePage extends React.Component {
 
   render() {
     console.log(this.state)
-    return (<div>
-      <div className="summonerSearchBox">
-        <h1>League statistics</h1>
-        <input className="searchBar" type="text" placeholder="Search Summoner" value={this.state.searchedSummoner}
-          name="searchedSummoner" onChange={this.handleChange} ></input>
-        <select className="regionList"
-          name="region"
-          value={this.state.region}
-          onChange={this.handleChange}
-          id="region"
-        >
-          <option value="EUW1">EUW</option>
-          <option value="EUN1">EUNE</option>
-          <option value="NA1">NA</option>
-          <option value="KR">KR</option>
-        </select>
-        <button onClick={this.handleClick} className="btn btn-primary" >Search</button>
-        <button onClick={this.handleLive} className="btn btn-success">Live Game</button>
-      </div>
-      <div >
-        {this.state.summonerData !== null && (<SummonerProfile summonerData={this.state.summonerData} />)}
-      </div>
-      <div className={this.state.statistics && this.state.championData ? "quickStats" : ""}>
-        {this.state.statistics && this.state.championData ? (<QuickStatistics {... this.state.statistics}
-          championData={this.state.championData} />) : (<p>Loading...</p>)}
-      </div>
-      {this.state.leagueData !== null && this.state.soloqChampions !== null
-        && this.state.flexChampions !== null && this.state.championData !== null
-        && this.state.championMastery !== null &&
-        (<LeagueRanks leagueData={this.state.leagueData} soloqChampions={this.state.soloqChampions}
-          flexChampions={this.state.flexChampions} championData={this.state.championData} championMastery={this.state.championMastery} />)}
-    </div>);
+    return (
+      <div>
+        <ProfilePageView {...this.state}
+          handleChange={this.handleChange}
+          handleClick={this.handleClick}
+          handleLive={this.handleLive}>
+
+        </ProfilePageView>
+      </div>);
   }
 }
 

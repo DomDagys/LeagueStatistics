@@ -28,9 +28,9 @@ const LoggedInView = props => {
             <a href="/settings">Account settings</a>
           </li>
           <li>
-            {props.summonerName ? <a href="/profile">Profile</a> : ""}
+            {props.summonerName ? <a href={`/profile?summoner=${props.summonerName}&region=${props.region}`}>Profile</a> : ""}
           </li>
-          <li>{props.summonerName ? <a href="/match_history">Match History</a>:""}</li>
+          <li>{props.summonerName ? <a href="/match_history">Match History</a> : ""}</li>
           <li>
             <button
               className="button-for-logout button"
