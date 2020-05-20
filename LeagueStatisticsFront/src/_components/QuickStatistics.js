@@ -20,6 +20,13 @@ class QuickStatistics extends React.Component {
         return (
             <div>
                 <h3>Recent games statistics</h3>
+                <label>Performance: </label>
+                {this.props.negativeTips.map(tips => {
+                    return <p>{tips}</p>
+                })}
+                {this.props.positiveTips.map(tips => {
+                    return <p>{tips}</p>
+                })}
                 <p>From games: {gameCount}, Wins: {this.props.wins}, Losses: {this.props.loss} <br />
                 Roles played: {this.props.favoriteRoles.map(role => { return role.gameCount ? `Role:${role.role} Count:${role.gameCount}, ` : "" })}
                 </p>

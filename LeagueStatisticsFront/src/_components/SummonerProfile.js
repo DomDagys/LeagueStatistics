@@ -6,7 +6,7 @@ class SummonerProfile extends React.Component {
         this.state = {}
     }
     render() {
-        const iconLink = `http://ddragon.leagueoflegends.com/cdn/10.8.1/img/profileicon/${this.props.summonerData.profileIconId}.png`;
+        const iconLink = `http://ddragon.leagueoflegends.com/cdn/10.10.3216176/img/profileicon/${this.props.summonerData.profileIconId}.png`
 
         return (<div>
             <h2>{this.props.summonerData.name}</h2>
