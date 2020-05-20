@@ -9,6 +9,7 @@ class MatchHistoryItem extends React.Component {
     this.state = {
       match: procesMatchData(this.props.match),
       data: this.props.data,
+      data1: this.props.data1,
     };
     //procesMatchData(this.props.match);
     //console.log("STATE", this.state);
@@ -38,24 +39,24 @@ class MatchHistoryItem extends React.Component {
       </div>
     )*/
     return (
-      //console.log(this.state),
+      console.log("From match history item", this.state),
       <div>
         <div>
-          {this.state.match.timeMin} {this.state.match.timeSec}s
+          {this.state.match.timeMin}min {this.state.match.timeSec}s
         </div>
         <div
           className={
             this.state.match.teamBlue.win == "Win" ? "teamWin" : "teamLost"
           }
         >
-          <TeamItem team={this.state.match.teamBlue} data={this.state.data} />
+          <TeamItem team={this.state.match.teamBlue} data={this.state.data} data1={this.state.data1}/>
         </div>
         <div
           className={
             this.state.match.teamRed.win == "Win" ? "teamWin" : "teamLost"
           }
         >
-          <TeamItem team={this.state.match.teamRed} data={this.state.data} />
+          <TeamItem team={this.state.match.teamRed} data={this.state.data} data1={this.state.data1}/>
         </div>
       </div>
     );
