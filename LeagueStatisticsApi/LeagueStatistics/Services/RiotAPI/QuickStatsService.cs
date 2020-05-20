@@ -20,6 +20,11 @@ namespace LeagueStatistics.Services.RiotAPI
             _matchService = matchService;
         }
 
+        public QuickStatsService()
+        {
+
+        }
+
         public QuickStatsDto QuickStatsCalculation(string summonerName, string region)
         {
             var filter = "?endIndex=10&beginIndex=0&queue=400&queue=420&queue=430&queue=440";
@@ -186,7 +191,6 @@ namespace LeagueStatistics.Services.RiotAPI
                 }
                 //-------------------------------------
                 //Tips section
-                //List<string> tempList = new List<string>();
                 List<string> positiveList = new List<string>();
                 List<string> negativeList = new List<string>();
                 if (deathCount / MatchList.totalGames > 10) negativeList.Add("Die less"); //stats.tips += "Die less, ";
@@ -201,7 +205,6 @@ namespace LeagueStatistics.Services.RiotAPI
                 else if (xpScore / xptimes > 400) positiveList.Add("Keep up the leveling, it is good");
                 if (xpDiffScore / xptimes1 < -50) negativeList.Add("Your enemy laner is usually outleveling you by quite a bit");
                 else if (xpDiffScore / xptimes1 > 0) positiveList.Add("On average you are outleveling your enemy, good job!");
-                //stats.tips = tempList;
                 stats.positiveTips = positiveList;
                 stats.negativeTips = negativeList;
             }
@@ -247,18 +250,20 @@ namespace LeagueStatistics.Services.RiotAPI
             {
                 ChampionDto championDto = new ChampionDto();
                 championDto.championId = championIds[i];
-                championDto.kills = championsPlayed.Where(champion => champion.championId == championIds[i])
-                    .Sum(champion => champion.kills);
-                championDto.assists = championsPlayed.Where(champion => champion.championId == championIds[i])
-                    .Sum(champion => champion.assists);
-                championDto.deaths = championsPlayed.Where(champion => champion.championId == championIds[i])
-                    .Sum(champion => champion.deaths);
-                championDto.wins = championsPlayed.Where(champion => champion.championId == championIds[i])
-                    .Sum(champion => champion.wins);
-                championDto.loss = championsPlayed.Where(champion => champion.championId == championIds[i])
-                    .Sum(champion => champion.loss);
-                championDto.gamesPlayed = championsPlayed.Where(champion => champion.championId == championIds[i])
-                    .Sum(champion => champion.gamesPlayed);
+
+                foreach(var champion in championsPlayed)
+                {
+                    if (champion.championId == championIds[i])
+                    {
+                        championDto.kills += champion.kills;
+                        championDto.assists += champion.assists;
+                        championDto.deaths += champion.deaths;
+                        championDto.wins += champion.wins;
+                        championDto.loss += champion.loss;
+                        championDto.gamesPlayed += champion.gamesPlayed;
+                    }
+                    else continue;
+                }
                 filteredList.Add(championDto);
             }
             filteredList = filteredList.OrderByDescending(o => o.gamesPlayed).ToList();

@@ -16,7 +16,6 @@ namespace LeagueStatistics.Dtos.SummonerDtos
         public int deaths { get; set; }
         public int assists { get; set; }
         public double kda { get; set; }
-        public List<string> tips { get; set; }
         public List<string> positiveTips { get; set; }
         public List<string> negativeTips { get; set; }
     }
