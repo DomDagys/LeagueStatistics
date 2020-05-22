@@ -35,3 +35,20 @@ li a:hover:not(.active) {
   padding: 0px;
   color: white;
 }
+.loginPage{
+  position: relative;
+  top:100px;
+  background-color: lightblue;
+  padding: 5%;
+}
+.loginPage h1{
+  text-align: center;
+  font-weight: bold;
+}
+
+.registerPage{
+  position: relative;
+  top:100px;
+  background-color: lightblue;
+  padding: 5%;
+}

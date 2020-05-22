@@ -15,7 +15,8 @@ namespace LeagueStatistics.Database.Models
         public byte[] PasswordSalt { get; set; }
         public string SummonerName { get; set; }
         public string Region { get; set; }
-        public string DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string AboutMe { get; set; }
+        public ICollection<FollowedPlayer> FollowedPlayers { get; set; }
     }
 }

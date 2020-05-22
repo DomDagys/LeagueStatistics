@@ -10,6 +10,6 @@ namespace LeagueStatistics.Dtos.UserDtos
         public string Email { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public string DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

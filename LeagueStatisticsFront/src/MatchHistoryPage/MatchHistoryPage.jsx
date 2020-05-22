@@ -1,17 +1,20 @@
 import React from 'react';
 import { matchService } from "../_services/match.service";
 import { MatchHistoryItem } from "./MatchHistoryItem";
-import "./MatchHistoryPage.css"
+import "./MatchHistoryPage.css";
+import "../styles/ProfilePage.css";
 import { store } from "../_helpers";
 import { summonerService } from "../_services"
+import { alertActions } from '../_actions/alert.actions';
+import { connect } from 'react-redux';
 
 class MatchHistoryPage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      matches:[],
-      data:{
-        data:[]
+      matches: [],
+      data: {
+        data: []
       },
       searchedSummoner: store.getState().authentication.user.summonerName,
       region: store.getState().authentication.user.region,
@@ -20,39 +23,40 @@ class MatchHistoryPage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.props.clear();
   }
 
-  componentDidMount(){
+  componentDidMount() {
     var promise0 = matchService.getMatches(this.state.searchedSummoner, this.state.region, 10, 0);
     promise0.then(response => response.json())
-    .then(data => {
-      this.setState({matches: data});
-    });
+      .then(data => {
+        this.setState({ matches: data });
+      });
     var url = "http://ddragon.leagueoflegends.com/cdn/10.8.1/data/en_US/champion.json";
     var promise1 = fetch(url);
     promise1.then(response => response.json())
-    .then(data => {
-      this.setState({
-        ... this.state,
-        data: data.data
+      .then(data => {
+        this.setState({
+          ... this.state,
+          data: data.data
+        });
       });
-    });
 
     var url = "http://ddragon.leagueoflegends.com/cdn/10.10.3208608/data/en_US/summoner.json";
     var promise2 = fetch(url);
     promise2.then(response => response.json())
-    .then(data => {
-      this.setState({
-        ... this.state,
-        data1: data.data
+      .then(data => {
+        this.setState({
+          ... this.state,
+          data1: data.data
+        });
       });
-    });
   }
 
   handleChange(e) {
     const { name, value } = e.target;
     this.setState({
-        [name]: value
+      [name]: value
     });
   }
 
@@ -61,29 +65,30 @@ class MatchHistoryPage extends React.Component {
     let region = this.state.region;
 
     summonerService.getSummonerData(summonerName, region)
-        .catch(message => this.props.error(message))
-        .then(x=>{
-          console.log("TEST");
-          var promise0 = matchService.getMatches(this.state.searchedSummoner, this.state.region, 10, 0);
-          promise0
-            .then(response => response.json())
-            .then(data => {
-              this.setState({matches: data});
-              console.log(this.state);
+      .catch(message => this.props.error(message))
+      .then(x => {
+        console.log("TEST");
+        var promise0 = matchService.getMatches(this.state.searchedSummoner, this.state.region, 10, 0);
+        promise0
+          .then(response => response.json())
+          .then(data => {
+            this.setState({ matches: data });
+            console.log(this.state);
           });
-        })
+      })
   }
 
 
   render() {
     return (
       <div>
-        <div className="input-group mb-3">
-          <input 
-            type="text" placeholder="Search Summoner" value={this.state.searchedSummoner} 
-            name="searchedSummoner" onChange={this.handleChange}
+        <div className="summonerSearchBox">
+          <h1>League statistics</h1>
+          <input
+            type="text" placeholder="Search Summoner" value={this.state.searchedSummoner}
+            name="searchedSummoner" onChange={this.handleChange} className="searchBar"
           ></input>
-          <select
+          <select className="regionList"
             name="region"
             value={this.state.region}
             onChange={this.handleChange}
@@ -99,7 +104,7 @@ class MatchHistoryPage extends React.Component {
         <div>
           {
             this.state.matches.map(match => (
-              <div className="match"><MatchHistoryItem match={match} key={match.gameId} data={this.state.data} data1={this.state.data1}/></div>
+              <div className="match"><MatchHistoryItem match={match} key={match.gameId} data={this.state.data} data1={this.state.data1} /></div>
             ))
           }
         </div>
@@ -108,4 +113,13 @@ class MatchHistoryPage extends React.Component {
   }
 }
 
-export { MatchHistoryPage };
+function mapStateToProps(state) {
+  return {};
+}
+
+const actionCreators = {
+  clear: alertActions.clear,
+};
+
+const connectedMatchHistoryPage = connect(mapStateToProps, actionCreators)(MatchHistoryPage);
+export { connectedMatchHistoryPage as MatchHistoryPage };

@@ -6,6 +6,7 @@ using LeagueStatistics.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace LeagueStatistics.Services
@@ -63,10 +64,22 @@ namespace LeagueStatistics.Services
                     throw new Exception("Password is too short, must be more than 4 characters.");
 
                 _securityService.CreatePasswordHash(newUserDto.Password, out passwordHash, out passwordSalt);
+
+                var address = new MailAddress(newUserDto.Email).Address;
+
+                Console.WriteLine(newUserDto.DateOfBirth);
+                var curDate = DateTime.Now;
+                var minDate = new DateTime(curDate.Year - 8, curDate.Month, curDate.Day);
+                var maxDate = new DateTime(curDate.Year - 100, curDate.Month, curDate.Day);
+                if (newUserDto.DateOfBirth > minDate || newUserDto.DateOfBirth < maxDate)
+                    throw new Exception("Invalid date of birth");
+            }
+            catch (FormatException)
+            {
+                throw new Exception("Incorrect email format");
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
 
@@ -82,7 +95,7 @@ namespace LeagueStatistics.Services
 
         public async Task<bool> DeleteUser(int id)
         {
-            var user = await _repository.GetById(id);
+            var user = await _repository.GetUserById(id);
             if (user == null)
                 return false;
 
@@ -94,7 +107,7 @@ namespace LeagueStatistics.Services
         //Veikia, nereikia implementacijos
         public async Task<ICollection<GetUserDto>> GetAllUsers()
         {
-            var users = await _repository.GetAll();
+            var users = await _repository.GetAllUsers();
             var usersDto = _mapper.Map<GetUserDto[]>(users);
 
             return usersDto;
@@ -102,7 +115,7 @@ namespace LeagueStatistics.Services
 
         public async Task<GetUserDto> GetUserById(int id)
         {
-            var user = await _repository.GetById(id);
+            var user = await _repository.GetUserById(id);
             if (user == null)
                 return null;
             var usersDto = _mapper.Map<GetUserDto>(user);
@@ -112,7 +125,7 @@ namespace LeagueStatistics.Services
 
         public async Task<UpdateUserDto> UpdateUser(int id, UpdateUserDto updateUserDto)
         {
-            var oldUser = await _repository.GetById(id);
+            var oldUser = await _repository.GetUserById(id);
             if (oldUser == null || updateUserDto == null)
                 return null;
             var user = _mapper.Map(updateUserDto, oldUser);
@@ -124,6 +137,10 @@ namespace LeagueStatistics.Services
                 if (userWithEmail != null && !string.IsNullOrEmpty(updateUserDto.Email) && updateUserDto.Email != oldUser.Email)
                     throw new Exception("A user with the same email already exists.");
 
+                string address;
+                if (!string.IsNullOrEmpty(updateUserDto.Email))
+                    address = new MailAddress(updateUserDto.Email).Address;
+
                 if (!string.IsNullOrWhiteSpace(updateUserDto.Password) && updateUserDto.Password.Length < 4)
                     throw new Exception("Password is too short, must be more than 4 characters.");
 
@@ -133,6 +150,10 @@ namespace LeagueStatistics.Services
                     if (summonerData == null)
                         throw new Exception("The user with the given summoner name does not exist.");
                 }
+            }
+            catch (FormatException)
+            {
+                throw new Exception("Incorrect email format");
             }
             catch (Exception ex)
             {

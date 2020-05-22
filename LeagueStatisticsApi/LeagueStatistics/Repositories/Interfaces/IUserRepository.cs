@@ -10,5 +10,7 @@ namespace LeagueStatistics.Repositories.Interfaces
     {
         Task<User> GetByEmail(string email);
         Task<User> GetByUsername(string username);
+        Task<ICollection<User>> GetAllUsers();
+        Task<User> GetUserById(int id);
     }
 }

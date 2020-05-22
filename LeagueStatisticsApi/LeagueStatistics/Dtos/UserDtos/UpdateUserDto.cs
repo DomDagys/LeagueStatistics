@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LeagueStatistics.Database.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,5 +13,6 @@ namespace LeagueStatistics.Dtos.UserDtos
         public string SummonerName { get; set; }
         public string Region { get; set; }
         public string AboutMe { get; set; }
+        public ICollection<FollowedPlayer> FollowedPlayers { get; set; }
     }
 }

@@ -3,9 +3,12 @@ import { connect } from "react-redux";
 import { history, store } from "../_helpers";
 import { userService } from "../_services";
 import "../styles/button.css";
+import '../styles/FollowedPlayer.css';
 import { userActions } from "../_actions/user.actions";
 import { ModalForm } from "../ModalSummonerForm/ModalForm";
 import { Link } from "react-router-dom";
+import { alertActions } from "../_actions";
+import FollowedPlayerItem from "../_components/FollowedPlayerItem";
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -18,6 +21,7 @@ class HomePage extends React.Component {
         region: ""
       }
     };
+    this.props.clear();
     this.props.getUserById(this.props.user);
   }
 
@@ -31,6 +35,10 @@ class HomePage extends React.Component {
       nextProps.users.userInfo
     );
     this.setState(new_obj);
+  }
+
+  handleRemove(e) {
+
   }
 
   handleLogout = () => {
@@ -50,9 +58,17 @@ class HomePage extends React.Component {
             Want to change? Click
             </Link>
         </h2>
-        <p>LOL</p>
-
-        <h3>Users are very secure ;)</h3>
+        <div className="followedList">
+          <h3>Followed Players</h3>
+          {this.props.user.followedPlayers.map(player => {
+            return (<div className="followedPlayerItem" >
+              <FollowedPlayerItem
+                {...player}
+                user={this.props.user}
+                update={this.props.update}></FollowedPlayerItem>
+            </div>)
+          })}
+        </div>
       </div>
     );
   }
@@ -68,7 +84,9 @@ function mapStateToProps(state) {
 }
 
 const actionCreators = {
-  getUserById: userActions.getUserById
+  getUserById: userActions.getUserById,
+  clear: alertActions.clear,
+  update: userActions.update
 };
 
 const connectedHomePage = connect(mapStateToProps, actionCreators)(HomePage);

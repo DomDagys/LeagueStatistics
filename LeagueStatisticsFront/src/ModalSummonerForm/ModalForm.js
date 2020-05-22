@@ -5,6 +5,8 @@ import { userActions, summonerActions } from "../_actions";
 import { connect } from "react-redux";
 import { userService } from "../_services/user.service";
 import { history } from "../_helpers";
+import { alertActions } from "../_actions";
+
 class ModalForm extends React.Component {
   constructor(props) {
     super(props);
@@ -20,6 +22,7 @@ class ModalForm extends React.Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.componentWillMount = this.componentWillMount.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.props.clear();
   }
 
   componentWillMount() {
@@ -46,7 +49,7 @@ class ModalForm extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const user = this.state;
-    this.props.update(user);
+    this.props.update(user, true);
   }
 
   render() {
@@ -96,7 +99,8 @@ function mapStateToProps(state) {
 
 const actionCreators = {
   update: userActions.update,
-  getSummonerData: summonerActions.getSummonerData
+  getSummonerData: summonerActions.getSummonerData,
+  clear: alertActions.clear
 };
 
 const connectedUpdatePage = connect(mapStateToProps, actionCreators)(ModalForm);

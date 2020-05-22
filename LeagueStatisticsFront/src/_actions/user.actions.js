@@ -12,12 +12,13 @@ export const userActions = {
   getUserById
 };
 
-function update(user) {
+function update(user, reload) {
   return dispatch => {
     userService.update(user).then(
       user => {
         dispatch(success(JSON.parse(user)));
-        history.push("/");
+        if (reload)
+          history.push("/");
         //window.location.reload(true);
       },
       error => {

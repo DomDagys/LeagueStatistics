@@ -150,7 +150,7 @@ namespace LeagueStatistics.Services.RiotAPI
         {
             for (int i = 0; i < 10; i++)
             {
-                if (Match.participantIdentities[i].player.accountId.ToString() == accountId)
+                if (Match.participantIdentities[i].player.currentAccountId.ToString() == accountId)
                     return Match.participantIdentities[i].participantId;
             }
             return 0;

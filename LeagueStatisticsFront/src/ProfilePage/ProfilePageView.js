@@ -20,16 +20,17 @@ class ProfilePageView extends Component {
                     onChange={this.props.handleChange}
                     id="region"
                 >
-                    <option value="EUW1">EUW</option>
-                    <option value="EUN1">EUNE</option>
-                    <option value="NA1">NA</option>
-                    <option value="KR">KR</option>
+                    <option selected={this.props.region == "EUW1" ? "selected" : ""} value="EUW1">EUW</option>
+                    <option selected={this.props.region == "EUN1" ? "selected" : ""} value="EUN1">EUNE</option>
+                    <option selected={this.props.region == "NA1" ? "selected" : ""} value="NA1">NA</option>
+                    <option selected={this.props.region == "KR" ? "selected" : ""} value="KR">KR</option>
                 </select>
                 <button onClick={this.props.handleClick} className="btn btn-primary" >Search</button>
                 <button onClick={this.props.handleLive} className="btn btn-success">Live Game</button>
             </div>
             <div >
-                {this.props.summonerData !== null && (<SummonerProfile summonerData={this.props.summonerData} />)}
+                {this.props.summonerData !== null && (<SummonerProfile summonerData={this.props.summonerData} handleFollowClick={this.props.handleFollowClick}
+                    isFollowed={this.props.isFollowed} />)}
             </div>
             <div className={this.props.statistics && this.props.championData ? "quickStats" : ""}>
                 {this.props.statistics && this.props.championData ? (<QuickStatistics {... this.props.statistics}

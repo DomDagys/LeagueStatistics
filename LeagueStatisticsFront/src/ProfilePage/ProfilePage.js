@@ -11,6 +11,7 @@ import LeagueRanks from "../_components/LeagueRanks";
 import "../styles/ProfilePage.css";
 import ProfilePageView from "./ProfilePageView";
 import queryString from 'query-string';
+import { userActions } from "../_actions";
 
 class ProfilePage extends React.Component {
   constructor(props) {
@@ -24,12 +25,14 @@ class ProfilePage extends React.Component {
       championData: null,
       soloqChampions: null,
       flexChampions: null,
-      championMastery: null
+      championMastery: null,
+      isFollowed: false
     };
 
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleFollowClick = this.handleFollowClick.bind(this);
     this.props.clear();
   }
 
@@ -69,16 +72,18 @@ class ProfilePage extends React.Component {
         this.setState({ championData: championData });
       });
 
+    this.props.user.followedPlayers.forEach(player => {
+      if (player.summonerName == queryParams.summoner)
+        this.setState({ isFollowed: true });
+    });
   }
 
   handleClick(e) {
     this.props.clear();
-    this.setState({ statistics: null })
-    this.setState({ leagueData: null })
     let summonerName = this.state.searchedSummoner;
     let region = this.state.region;
 
-    this.getProfileData(summonerName, region);
+    this.props.history.push(`/profile?summoner=${summonerName}&region=${region}`);
   }
 
   handleChange(e) {
@@ -88,19 +93,51 @@ class ProfilePage extends React.Component {
     });
   }
 
+  handleFollowClick(e) {
+    const queryParams = queryString.parse(this.props.location.search);
+    let exists = false;
+    this.props.user.followedPlayers.forEach(player => {
+      if (player.summonerName == queryParams.summoner)
+        exists = true;
+    });
+
+    if (exists) {
+      console.log("JAU YRA TOKS ZAIDEJAS");
+      return;
+    }
+
+    const followedPlayer = {
+      summonerName: queryParams.summoner,
+      region: queryParams.region,
+      level: 0,
+      iconId: 0,
+      rank: "",
+      tier: "",
+      leaguePoints: 0
+    }
+
+    const followedPlayers = [...this.props.user.followedPlayers, followedPlayer]
+    this.props.user.followedPlayers = followedPlayers;
+    this.props.update({ id: this.props.user.id, followedPlayers }, false);
+    this.setState({ isFollowed: true })
+  }
+
   handleLive = () => {
-    this.props.history.push("/livegame", this.state);
+    const queryParams = queryString.parse(this.props.location.search);
+    this.props.history.push(`/livegame?summoner=${queryParams.summoner}&region=${queryParams.region}`, this.state);
   };
 
   render() {
     console.log(this.state)
+    const queryParams = queryString.parse(this.props.location.search);
     return (
       <div>
         <ProfilePageView {...this.state}
           handleChange={this.handleChange}
           handleClick={this.handleClick}
-          handleLive={this.handleLive}>
-
+          handleLive={this.handleLive}
+          handleFollowClick={this.handleFollowClick}
+          region={queryParams.region}>
         </ProfilePageView>
       </div>);
   }
@@ -114,7 +151,9 @@ function mapStateToProps(state) {
 
 const actionCreators = {
   error: alertActions.error,
-  clear: alertActions.clear
+  clear: alertActions.clear,
+  success: alertActions.success,
+  update: userActions.update
 };
 
 const connectedProfilePage = connect(mapStateToProps, actionCreators)(ProfilePage);

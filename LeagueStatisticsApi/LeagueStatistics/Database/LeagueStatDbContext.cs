@@ -10,6 +10,7 @@ namespace LeagueStatistics.Database
     public class LeagueStatsDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<FollowedPlayer> FollowedPlayers { get; set; }
 
         public LeagueStatsDbContext(DbContextOptions options) : base(options)
         {

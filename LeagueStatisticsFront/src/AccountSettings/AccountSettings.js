@@ -1,6 +1,6 @@
 import React from "React";
 import { connect } from "react-redux";
-import { userActions } from "../_actions";
+import { userActions, alertActions } from "../_actions";
 import { Link } from "react-router-dom";
 
 class Settings extends React.Component {
@@ -10,13 +10,14 @@ class Settings extends React.Component {
       user: {
         id: this.props.user.id,
         email: "",
-        region: "EUW1",
+        region: this.props.user.region,
         password: "",
         summonerName: ""
       }
     };
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.props.clear();
   }
 
   handleOnChange(e) {
@@ -36,7 +37,7 @@ class Settings extends React.Component {
     e.preventDefault();
     const { user } = this.state;
 
-    this.props.update(user);
+    this.props.update(user, true);
     console.log("AA");
   }
 
@@ -93,10 +94,10 @@ class Settings extends React.Component {
           <div>
             <label htmlFor="text">Select region</label>
             <select name="region" onChange={this.handleOnChange} id="region">
-              <option value="EUN1">EUNE</option>
-              <option value="EUW1">EUW</option>
-              <option value="NA1">NA</option>
-              <option value="KR">KR</option>
+              <option selected={this.props.user.region == "EUW1" ? "selected" : ""} value="EUW1">EUW</option>
+              <option selected={this.props.user.region == "EUN1" ? "selected" : ""} value="EUN1">EUNE</option>
+              <option selected={this.props.user.region == "NA1" ? "selected" : ""} value="NA1">NA</option>
+              <option selected={this.props.user.region == "KR" ? "selected" : ""} value="KR">KR</option>
             </select>
           </div>
           <div className="form-group">
@@ -124,7 +125,8 @@ function mapStateToProps(state) {
 }
 
 const actionCreators = {
-  update: userActions.update
+  update: userActions.update,
+  clear: alertActions.clear
 };
 
 const SettingsConnect = connect(mapStateToProps, actionCreators)(Settings);

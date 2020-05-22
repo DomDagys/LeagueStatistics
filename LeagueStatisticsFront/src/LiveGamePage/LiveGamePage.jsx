@@ -5,13 +5,15 @@ import { store } from "../_helpers";
 import { matchService } from "../_services/match.service";
 import LiveGameItem from "./LiveGameItem";
 import { leagueService } from "../_services";
+import queryString from 'query-string';
 
 class LiveGamePage extends React.Component {
   constructor(props) {
     super(props);
+    const queryParams = queryString.parse(this.props.location.search);
     this.state = {
       searchedSummoner: this.props.location.state.summonerData,
-      region: this.props.location.state.region,
+      region: queryParams.region,
       match: [],
       data: [],
       matchParticipants: new Array(),
