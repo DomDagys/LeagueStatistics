@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import LeagueRanks from "../_components/LeagueRanks";
 import SummonerProfile from "../_components/SummonerProfile";
 import QuickStatistics from "../_components/QuickStatistics";
+import "../styles/ProfilePage.css";
 
 class ProfilePageView extends Component {
     constructor(props) {
@@ -25,16 +26,18 @@ class ProfilePageView extends Component {
                     <option selected={this.props.region == "NA1" ? "selected" : ""} value="NA1">NA</option>
                     <option selected={this.props.region == "KR" ? "selected" : ""} value="KR">KR</option>
                 </select>
-                <button onClick={this.props.handleClick} className="btn btn-primary" >Search</button>
-                <button onClick={this.props.handleLive} className="btn btn-success">Live Game</button>
+                <span className="buttonSpacing">
+                    <button onClick={this.props.handleClick} className="btn btn-primary" >Search</button>
+                    <button onClick={this.props.handleLive} className="btn btn-success">Live Game</button>
+                </span>
             </div>
-            <div >
+            <div className={this.props.summonerData ? "summonerProfile" : ""}>
                 {this.props.summonerData !== null && (<SummonerProfile summonerData={this.props.summonerData} handleFollowClick={this.props.handleFollowClick}
                     isFollowed={this.props.isFollowed} />)}
             </div>
             <div className={this.props.statistics && this.props.championData ? "quickStats" : ""}>
                 {this.props.statistics && this.props.championData ? (<QuickStatistics {... this.props.statistics}
-                    championData={this.props.championData} />) : (<p>Loading...</p>)}
+                    championData={this.props.championData} handlePerformance={this.props.handlePerformance} />) : ""}
             </div>
             {this.props.leagueData !== null && this.props.soloqChampions !== null
                 && this.props.flexChampions !== null && this.props.championData !== null

@@ -48,6 +48,17 @@ class LeagueRanks extends React.Component {
         this.handleRankedSoloClick = this.handleRankedSoloClick.bind(this);
         this.handleFlexClick = this.handleFlexClick.bind(this);
     }
+
+    getQeueuType(queueType) {
+        if (queueType == "RANKED_SOLO_5x5")
+            return "Ranked Solo";
+
+        if (queueType == "RANKED_FLEX_SR")
+            return "Flex Queue";
+
+        return "Unranked";
+    }
+
     render() {
         //console.log(this.props.leagueData.length);
 
@@ -57,22 +68,31 @@ class LeagueRanks extends React.Component {
         //this.props
         return (<div>
             <div className="rankBox">
-                {this.state.selectedQueue ? <h5>{this.state.selectedQueue.queueType}</h5> : <h5>Unranked</h5>}
+                {this.state.selectedQueue ? <h3>{this.getQeueuType(this.state.selectedQueue.queueType)}</h3> : <h3>Unranked</h3>}
                 {this.state.selectedQueue ? <img src={`src/assets/leagueIcons/Emblem_${this.state.selectedQueue.tier}.png`} width="150px"></img> : <img src={`src/leagueIcons/Emblem_Unranked.png`} width="150px"></img>}
-                {this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} LP:{this.state.selectedQueue.leaguePoints}</p> : null}
+                <span className="rankedPoints">{this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} <br /> LP:{this.state.selectedQueue.leaguePoints}</p> : null}</span>
             </div>
-            <div className="rankedChampions">
-                <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>
-                <button onClick={this.handleFlexClick} className="btn btn-primary" >Flex stats</button>
+            <div className="rankedChampList">
+                <div className="buttonSpacing">
+                    <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>
+                    <button onClick={this.handleFlexClick} className="btn btn-primary" >Flex stats</button>
+                </div>
                 {this.state.queueChampions ? this.state.queueChampions.map(champion => {
                     const champIcon = `http://ddragon.leagueoflegends.com/cdn/10.8.1/img/champion/${champion.championName}.png`;
-                    return <div>
+                    return <div className="rankedChampion">
                         <img key={champion.championId} src={champIcon}></img>
-                        <label>{champion.championName} game count: {champion.gamesPlayed}</label>
-                        <img src={`src/assets/masteryIcons/Level_${champion.championLevel}.png`}></img>
-                        <label>points: {champion.championPoints}</label>
+                        <label className="rankedChampionInfo">{champion.championName}</label>
+                        <label className="rankedChampionInfo">Game count: {champion.gamesPlayed}</label>
                     </div>;
                 }) : ""}
+                <div className="masteryList">
+                    {this.state.queueChampions ? this.state.queueChampions.map(champion => {
+                        return <div className="masteryItem">
+                            <img className="masteryIcon" src={`src/assets/masteryIcons/Level_${champion.championLevel}.png`}></img>
+                            <label>Points: {champion.championPoints}</label>
+                        </div>;
+                    }) : ""}
+                </div>
             </div>
         </div>);
     }

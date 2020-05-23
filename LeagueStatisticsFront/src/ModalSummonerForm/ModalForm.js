@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { userService } from "../_services/user.service";
 import { history } from "../_helpers";
 import { alertActions } from "../_actions";
+import "../styles/App.css";
 
 class ModalForm extends React.Component {
   constructor(props) {
@@ -57,32 +58,34 @@ class ModalForm extends React.Component {
 
     return (
       <div className="col-sm-4  col-sm-offset-3 ">
-        <p>
-          Before you can access our website specify your League's Summoner name
-          and Region!
+        <div className="modalForm">
+          <p>
+            Before you can access our website specify your League's Summoner name
+            and Region!
         </p>
-        <form onSubmit={this.handleSubmit} name="form">
-          <input
-            className="inputas"
-            placeholder="Summoner Name"
-            type="text"
-            name="summonerName"
-            value={this.state.summonerName}
-            onChange={this.handleOnChange}
-          ></input>
-          <select
-            name="region"
-            value={this.state.region}
-            onChange={this.handleOnChange}
-            id="region"
-          >
-            <option value="EUN1">EUNE</option>
-            <option value="EUW1">EUW</option>
-            <option value="NA1">NA</option>
-            <option value="KR">KR</option>
-          </select>
-          <input type="submit"></input>
-        </form>
+          <form onSubmit={this.handleSubmit} name="form">
+            <input
+              className="inputas"
+              placeholder="Summoner Name"
+              type="text"
+              name="summonerName"
+              value={this.state.summonerName}
+              onChange={this.handleOnChange}
+            ></input>
+            <select
+              name="region"
+              value={this.state.region}
+              onChange={this.handleOnChange}
+              id="region"
+            >
+              <option value="EUN1">EUNE</option>
+              <option value="EUW1">EUW</option>
+              <option value="NA1">NA</option>
+              <option value="KR">KR</option>
+            </select>
+            <input type="submit"></input>
+          </form>
+        </div>
       </div>
     );
   }

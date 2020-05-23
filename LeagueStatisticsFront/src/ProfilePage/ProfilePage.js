@@ -127,6 +127,11 @@ class ProfilePage extends React.Component {
     this.props.history.push(`/livegame?summoner=${queryParams.summoner}&region=${queryParams.region}`, this.state);
   };
 
+  handlePerformance() {
+    var performanceDiv = document.getElementById("performanceTips");
+    performanceDiv.hidden = !performanceDiv.hidden;
+  }
+
   render() {
     console.log(this.state)
     const queryParams = queryString.parse(this.props.location.search);
@@ -137,7 +142,8 @@ class ProfilePage extends React.Component {
           handleClick={this.handleClick}
           handleLive={this.handleLive}
           handleFollowClick={this.handleFollowClick}
-          region={queryParams.region}>
+          region={queryParams.region}
+          handlePerformance={this.handlePerformance}>
         </ProfilePageView>
       </div>);
   }

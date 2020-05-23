@@ -85,13 +85,13 @@ class QuickStatistics extends React.Component {
                     return <p>{tips}</p>
                 }) : ""} */}
                 <div className="roleBox">
-                    <p><h3><b>Roles played</b></h3>
-                        {this.props.favoriteRoles.map(role => {
-                            return <div>
-                                <img className="roleIcon" src={`src/assets/roleIcons/${role.role}.png`}></img>
-                                <label>Game count: {role.gameCount}</label>
-                            </div>
-                        })}</p>
+                    <h3><b>Roles played</b></h3>
+                    {this.props.favoriteRoles.map(role => {
+                        return <div>
+                            <img className="roleIcon" src={`src/assets/roleIcons/${role.role}.png`}></img>
+                            <label>Game count: {role.gameCount}</label>
+                        </div>
+                    })}
                 </div>
                 <p className="gameInfo">From games: {gameCount} &emsp; &emsp;
                                         Wins: <span className={this.renderWinsLosses(this.props.wins)}>{this.props.wins}</span> &emsp; &emsp;
@@ -123,6 +123,17 @@ class QuickStatistics extends React.Component {
                             </p>
                         </div>;
                     })}
+                </div>
+                <button className="performanceBtn" onClick={this.props.handlePerformance}>Performance</button>
+                <div className="performanceTips" id="performanceTips" hidden={true}>
+                    <h3>Recent games statistics</h3>
+                    <label>Performance: </label>
+                    {this.props.negativeTips ? this.props.negativeTips.map(tips => {
+                        return <p>{tips}</p>
+                    }) : ""}
+                    {this.props.positiveTips ? this.props.positiveTips.map(tips => {
+                        return <p>{tips}</p>
+                    }) : ""}
                 </div>
             </div>);
     }

@@ -1,14 +1,57 @@
 .rankBox{
     position: absolute;
-    top: 500px;
+    top: 520px;
+    background-color: lightgreen;
+    width: 250px;
+    border-radius: 20px;
+    padding: 2.5%;
 }
 
-.rankedChampions{
+.rankBox h3{
+    font-weight: bold;
+}
+
+.rankedChampList{
     position: relative;
     left: 320px;
-    bottom: 100px;
+    bottom: 200px;
     background-color: lightblue;
     padding: 2.5%;
-    border: solid;
+    border: none;
+    border-radius: 20px;
     width: 70%;
+}
+
+.rankedChampion{
+    margin: 2%;
+}
+
+.rankedChampionInfo{
+    font-size: 16px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.masteryList{
+    position: absolute;
+    margin-bottom: 30px;
+    left: 400px;
+    bottom: 10px;
+}
+
+.masteryItem{
+    position: relative;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.rankedPoints{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.buttonSpacing button{
+    position: relative;
+    margin-right: 15px;
+    left: 12px;
 }

@@ -52,3 +52,9 @@ li a:hover:not(.active) {
   background-color: lightblue;
   padding: 5%;
 }
+
+.modalForm{
+  position: relative;
+  top:50px;
+  left: 50px
+}

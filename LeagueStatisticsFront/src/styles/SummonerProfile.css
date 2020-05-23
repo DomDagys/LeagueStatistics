@@ -1,0 +1,17 @@
+.summonerIcon{
+    position: relative;
+    left: 20px;
+    border-radius: 50%;
+    width: 150px;
+}
+
+.profileComponents h3{
+    font-weight: bold;
+    text-align: center;
+}
+
+.profileComponents h4{
+    position: relative;
+    font-weight: bold;
+    left: 50px;
+}

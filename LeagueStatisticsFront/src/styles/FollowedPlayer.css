@@ -1,9 +1,9 @@
 .followedList{
-
     margin-top: 40px;
     padding: 5%;
     position: relative;
-    background-color: lightgreen
+    background-color: lightgreen;
+    width: 600px;
 }
 
 .followedList h3{
