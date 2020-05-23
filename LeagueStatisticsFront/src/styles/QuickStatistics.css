@@ -1,0 +1,53 @@
+.gameInfo{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.championIcon{
+    position: relative;
+    margin-right: 20px;
+}
+
+.recentChampInfo1{
+    font-weight: bold;
+    position: absolute;
+}
+
+.recentChampInfo2{
+    font-weight: bold;
+    position: absolute;
+    left: 170px;
+}
+
+.recentChampInfo3{
+    font-weight: bold;
+    position: absolute;
+    left: 315px;
+}
+
+.roleBox{
+    position: absolute;
+    left: 480px;
+    bottom: 120px;
+}
+
+.roleIcon{
+    width: 50px;
+    margin-right: 10px;
+}
+
+.excellent{
+    color: #da920d;
+}
+
+.positive{
+    color: green;
+}
+
+.negative{
+    color: red;
+}
+
+.normal{
+    color: grey
+}

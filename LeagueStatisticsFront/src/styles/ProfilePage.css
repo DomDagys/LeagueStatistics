@@ -27,6 +27,8 @@
     bottom: 200px;
     padding: 2.5%;
     background-color: lightblue;
-    border: solid;
-    width: 60%;
+    border: none;
+    border-radius: 20px;
+    height: 450px;
+    width: 70%;
 }
