@@ -7,6 +7,7 @@ import { store } from "../_helpers";
 import { summonerService } from "../_services"
 import { alertActions } from '../_actions/alert.actions';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 class MatchHistoryPage extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class MatchHistoryPage extends React.Component {
       region: store.getState().authentication.user.region,
       error: ""
     };
+    
     this.handleChange = this.handleChange.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -27,6 +29,10 @@ class MatchHistoryPage extends React.Component {
   }
 
   componentDidMount() {
+    const queryParams = queryString.parse(this.props.location.search);
+
+    this.state.searchedSummoner = queryParams.summoner;
+    this.state.region = queryParams.region;
     var promise0 = matchService.getMatches(this.state.searchedSummoner, this.state.region, 10, 0);
     promise0.then(response => response.json())
       .then(data => {
@@ -63,7 +69,7 @@ class MatchHistoryPage extends React.Component {
   handleClick(e) {
     let summonerName = this.state.searchedSummoner;
     let region = this.state.region;
-
+    this.props.history.push(`/match_history?summoner=${summonerName}&region=${region}`);
     summonerService.getSummonerData(summonerName, region)
       .catch(message => this.props.error(message))
       .then(x => {
@@ -80,6 +86,7 @@ class MatchHistoryPage extends React.Component {
 
 
   render() {
+    console.log("From MHP",this.state.matches.length);
     return (
       <div>
         <div className="summonerSearchBox">
@@ -101,6 +108,9 @@ class MatchHistoryPage extends React.Component {
           </select>
           <button onClick={this.handleClick} className="btn btn-primary" >Search</button>
         </div>
+
+                {this.state.matches.length == 0 ? <div className="Loading">Loading...</div> : ""}
+
         <div>
           {
             this.state.matches.map(match => (
