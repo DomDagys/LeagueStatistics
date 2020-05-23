@@ -35,7 +35,7 @@ class ProfilePageView extends Component {
                 {this.props.summonerData !== null && (<SummonerProfile summonerData={this.props.summonerData} handleFollowClick={this.props.handleFollowClick}
                     isFollowed={this.props.isFollowed} />)}
             </div>
-            <div className={this.props.statistics && this.props.championData ? "quickStats" : ""}>
+            <div id="quickStatsDiv" className={this.props.statistics && this.props.championData ? "quickStats" : ""}>
                 {this.props.statistics && this.props.championData ? (<QuickStatistics {... this.props.statistics}
                     championData={this.props.championData} handlePerformance={this.props.handlePerformance} />) : ""}
             </div>

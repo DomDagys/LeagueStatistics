@@ -129,7 +129,15 @@ class ProfilePage extends React.Component {
 
   handlePerformance() {
     var performanceDiv = document.getElementById("performanceTips");
-    performanceDiv.hidden = !performanceDiv.hidden;
+    var quickStatsDiv = document.getElementById("quickStatsDiv");
+    if(performanceDiv.style.display === "block") {
+      performanceDiv.style.display = "none";
+      quickStatsDiv.style.height = "450px";
+    } else {
+      performanceDiv.style.display = "block";
+      quickStatsDiv.style.height = "650px";
+    }
+    //performanceDiv.hidden = !performanceDiv.hidden;
   }
 
   render() {
