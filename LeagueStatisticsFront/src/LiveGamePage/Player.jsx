@@ -1,5 +1,6 @@
 import React from "react";
 import "../MatchHistoryPage/MatchHistoryPage.css";
+import "../MatchHistoryPage/PlayerItem/PlayerItem.css";
 import { getImageUrl, getTierUrl } from "./LiveGame";
 import { leagueService } from "../_services";
 class Player extends React.Component {
@@ -21,10 +22,10 @@ class Player extends React.Component {
     return (
       <div>
         <div className="participant">
-          <div className="item">{this.state.participant.summonerName}</div>
-          <div className="item">
+          <div className="name"><div className="text">{this.state.participant.summonerName}</div></div>
+          <div className="champ">
             <img
-              className="image"
+              className="img"
               src={getImageUrl(
                 this.state.data,
                 this.state.participant.championId
