@@ -187,7 +187,7 @@ namespace LeagueStatistics.Services.RiotAPI
             Dictionary<int, int> championsPlayed = new Dictionary<int, int>();
             List<int> championIds = new List<int>();
             int beginCounter = 100, endCounter = 200;
-            while (MatchList.matches.Count != 0)
+            while (MatchList != null && MatchList.matches.Count != 0)
             {
                 for (int i = 0; i < MatchList.matches.Count; i++)
                 {

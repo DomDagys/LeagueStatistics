@@ -136,6 +136,8 @@ namespace LeagueStatistics.Services.RiotAPI
                 for (int i = 0; i < 10; i++)
                 {
                     var Match = _matchService.MatchInfoById(MatchList.matches[i].gameId.ToString(), region);
+                    if (Match == null)
+                        return null;
                     int id = GetParticipantBySummonerName(summonerInfo.name, Match);
                     //-------------------------------------------------------
                     //Work with roles

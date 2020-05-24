@@ -14,7 +14,7 @@
 .rankedChampList{
     position: relative;
     left: 320px;
-    bottom: 200px;
+    bottom: 750px;
     background-color: lightblue;
     padding: 2.5%;
     border: none;
@@ -35,7 +35,7 @@
 .masteryList{
     position: absolute;
     margin-bottom: 30px;
-    left: 400px;
+    left: 440px;
     bottom: 10px;
 }
 

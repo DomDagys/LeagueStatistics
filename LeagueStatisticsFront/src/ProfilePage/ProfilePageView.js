@@ -7,33 +7,17 @@ import "../styles/ProfilePage.css";
 class ProfilePageView extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+
+        }
     }
     render() {
         return (<div>
-            <div className="summonerSearchBox">
-                <h1>League statistics</h1>
-                <input className="searchBar" type="text" placeholder="Search Summoner" value={this.props.searchedSummoner}
-                    name="searchedSummoner" onChange={this.props.handleChange} ></input>
-                <select className="regionList"
-                    name="region"
-                    value={this.props.region}
-                    onChange={this.props.handleChange}
-                    id="region"
-                >
-                    <option selected={this.props.region == "EUW1" ? "selected" : ""} value="EUW1">EUW</option>
-                    <option selected={this.props.region == "EUN1" ? "selected" : ""} value="EUN1">EUNE</option>
-                    <option selected={this.props.region == "NA1" ? "selected" : ""} value="NA1">NA</option>
-                    <option selected={this.props.region == "KR" ? "selected" : ""} value="KR">KR</option>
-                </select>
-                <span className="buttonSpacing">
-                    <button onClick={this.props.handleClick} className="btn btn-primary" >Search</button>
-                    <button onClick={this.props.handleLive} className="btn btn-success">Live Game</button>
-                </span>
-            </div>
             <div className={this.props.summonerData ? "summonerProfile" : ""}>
-                {this.props.summonerData !== null && (<SummonerProfile summonerData={this.props.summonerData} handleFollowClick={this.props.handleFollowClick}
-                    isFollowed={this.props.isFollowed} />)}
+                {this.props.summonerData !== null && this.props.leagueData != null && (<SummonerProfile summonerData={this.props.summonerData}
+                    handleFollowClick={this.props.handleFollowClick}
+                    isFollowed={this.props.isFollowed}
+                    leagueData={this.props.leagueData} />)}
             </div>
             <div id="quickStatsDiv" className={this.props.statistics && this.props.championData ? "quickStats" : ""}>
                 {this.props.statistics && this.props.championData ? (<QuickStatistics {... this.props.statistics}

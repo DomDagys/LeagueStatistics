@@ -12,7 +12,8 @@ class Settings extends React.Component {
         email: "",
         region: this.props.user.region,
         password: "",
-        summonerName: ""
+        summonerName: "",
+        followedPlayers: null
       }
     };
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -36,6 +37,7 @@ class Settings extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     const { user } = this.state;
+    user.followedPlayers = this.props.user.followedPlayers;
 
     this.props.update(user, true);
     console.log("AA");

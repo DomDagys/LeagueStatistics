@@ -57,7 +57,8 @@ class ProfilePage extends React.Component {
       .catch(this.setState({ flexChampions: null }));
 
     quickstatsService.getStatistics(summonerName, region)
-      .then(data => this.setState({ statistics: data }));
+      .then(data => this.setState({ statistics: data }))
+      .catch(message => this.props.error(message));
   }
 
   componentDidMount() {
@@ -130,12 +131,12 @@ class ProfilePage extends React.Component {
   handlePerformance() {
     var performanceDiv = document.getElementById("performanceTips");
     var quickStatsDiv = document.getElementById("quickStatsDiv");
-    if(performanceDiv.style.display === "block") {
+    if (performanceDiv.style.display === "block") {
       performanceDiv.style.display = "none";
       quickStatsDiv.style.height = "450px";
     } else {
       performanceDiv.style.display = "block";
-      quickStatsDiv.style.height = "650px";
+      quickStatsDiv.style.height = "700px";
     }
     //performanceDiv.hidden = !performanceDiv.hidden;
   }
@@ -145,10 +146,27 @@ class ProfilePage extends React.Component {
     const queryParams = queryString.parse(this.props.location.search);
     return (
       <div>
+        <div className="summonerSearchBox">
+          <h1>League statistics</h1>
+          <input className="searchBar" type="text" placeholder="Search Summoner" value={this.props.searchedSummoner}
+            name="searchedSummoner" onChange={this.handleChange} ></input>
+          <select className="regionList"
+            name="region"
+            value={this.region}
+            onChange={this.handleChange}
+            id="region"
+          >
+            <option selected={this.state.region == "EUW1" ? "selected" : ""} value="EUW1">EUW</option>
+            <option selected={this.state.region == "EUN1" ? "selected" : ""} value="EUN1">EUNE</option>
+            <option selected={this.state.region == "NA1" ? "selected" : ""} value="NA1">NA</option>
+            <option selected={this.state.region == "KR" ? "selected" : ""} value="KR">KR</option>
+          </select>
+          <span className="buttonSpacing">
+            <button onClick={this.handleClick} className="btn btn-primary" >Search</button>
+            <button onClick={this.handleLive} className="btn btn-success">Live Game</button>
+          </span>
+        </div>
         <ProfilePageView {...this.state}
-          handleChange={this.handleChange}
-          handleClick={this.handleClick}
-          handleLive={this.handleLive}
           handleFollowClick={this.handleFollowClick}
           region={queryParams.region}
           handlePerformance={this.handlePerformance}>

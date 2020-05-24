@@ -67,11 +67,11 @@ class LeagueRanks extends React.Component {
         //const iconLink = "src/leagueIcons/Emblem_Challenger.png";
         //this.props
         return (<div>
-            <div className="rankBox">
+            {/* <div className="rankBox">
                 {this.state.selectedQueue ? <h3>{this.getQeueuType(this.state.selectedQueue.queueType)}</h3> : <h3>Unranked</h3>}
-                {this.state.selectedQueue ? <img src={`src/assets/leagueIcons/Emblem_${this.state.selectedQueue.tier}.png`} width="150px"></img> : <img src={`src/leagueIcons/Emblem_Unranked.png`} width="150px"></img>}
+                {this.state.selectedQueue ? <img src={`src/assets/leagueIcons/Emblem_${this.state.selectedQueue.tier}.png`} width="150px"></img> : <img src={`src/assets/leagueIcons/Emblem_Unranked.png`} width="150px"></img>}
                 <span className="rankedPoints">{this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} <br /> LP:{this.state.selectedQueue.leaguePoints}</p> : null}</span>
-            </div>
+            </div> */}
             <div className="rankedChampList">
                 <div className="buttonSpacing">
                     <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>

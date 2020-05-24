@@ -6,6 +6,7 @@ import { matchService } from "../_services/match.service";
 import LiveGameItem from "./LiveGameItem";
 import { leagueService } from "../_services";
 import queryString from 'query-string';
+import "../styles/App.css";
 
 class LiveGamePage extends React.Component {
   constructor(props) {
@@ -73,7 +74,7 @@ class LiveGamePage extends React.Component {
     //console.log(this.state.matchParticipants);
     return (
       (this.state.matchParticipants && this.state.found && (
-        <div>
+        <div className="liveGamePage">
           <LiveGameItem
             match={this.state.matchParticipants}
             data={this.state.data}
@@ -82,7 +83,7 @@ class LiveGamePage extends React.Component {
           />
         </div>
       )) || (
-        <h1>
+        <h1 className="liveGamePage">
           Summoner {this.state.searchedSummoner.name} is not playing right now
         </h1>
       )

@@ -58,3 +58,8 @@ li a:hover:not(.active) {
   top:50px;
   left: 50px
 }
+
+.liveGamePage{
+  position: relative;
+  top: 100px;
+}

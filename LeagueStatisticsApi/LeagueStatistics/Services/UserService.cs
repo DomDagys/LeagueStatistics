@@ -134,7 +134,7 @@ namespace LeagueStatistics.Services
 
             try
             {
-                if (userWithEmail != null && !string.IsNullOrEmpty(updateUserDto.Email) && updateUserDto.Email != oldUser.Email)
+                if (userWithEmail != null && !string.IsNullOrEmpty(updateUserDto.Email) && user.Username != userWithEmail.Username)
                     throw new Exception("A user with the same email already exists.");
 
                 string address;

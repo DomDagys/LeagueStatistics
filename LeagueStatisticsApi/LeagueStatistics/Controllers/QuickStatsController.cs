@@ -28,7 +28,7 @@ namespace LeagueStatistics.Controllers
         {
             QuickStatsDto statistics = _statisticsService.QuickStatsCalculation(summonerName, region);
             if (statistics == null)
-                return BadRequest(new { message = "Error, could not load recent game statistics" });
+                return BadRequest(new { message = "Error, could not load recent game statistics, the player might be missing matches." });
 
             return Ok(statistics);
         }
