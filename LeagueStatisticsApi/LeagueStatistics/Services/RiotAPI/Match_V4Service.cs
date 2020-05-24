@@ -55,7 +55,8 @@ namespace LeagueStatistics.Services.RiotAPI
         {
 
             var matchList = MatchListById(accountId, region, filter);
-
+            if (matchList == null)
+                return null;
             //Sitas daro dalykus match history page, ne pagal id
             ICollection<MatchDto> matchHistory = new List<MatchDto>();
             for (int i = 0; i < matchList.matches.Count; i++)

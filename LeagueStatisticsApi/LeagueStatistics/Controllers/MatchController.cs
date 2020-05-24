@@ -53,10 +53,14 @@ namespace LeagueStatistics.Controllers
         public IActionResult GetHistoryBySummoner(string summonerName, string region, string endIndex, string beginIndex)
         {
             var summonerInfo = _summonerService.GetSummonerByName(summonerName, region);
+            if (summonerInfo == null)
+                return BadRequest(new { message = "Could not find a summoner with this name" });
 
             var filter = "?endIndex=" + endIndex + "&beginIndex=" + beginIndex;
 
             var matchHistory = _matchService.GetMatchHistory(summonerInfo.accountId, region, filter);
+            if (matchHistory == null)
+                return NotFound(new { message = "No games for this player was found." });
 
             return Ok(matchHistory);
         }
