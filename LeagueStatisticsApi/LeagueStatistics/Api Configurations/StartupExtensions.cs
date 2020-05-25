@@ -59,7 +59,7 @@ namespace LeagueStatistics.Api_Configurations
         {
             var settings = configuration.GetSection("AppSettings");
             var connectionString = settings.GetSection("ConnectionString").Value;
-            services.AddDbContext<LeagueStatsDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<LeagueStatsDbContext>(options => options.UseInMemoryDatabase("LeagueStatistics"));
         }
 
         public static void CorsConfigurationExtension(this IApplicationBuilder app)

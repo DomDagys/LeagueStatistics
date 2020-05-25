@@ -5,9 +5,9 @@ import { store } from "../_helpers";
 import { matchService } from "../_services/match.service";
 import LiveGameItem from "./LiveGameItem";
 import { leagueService } from "../_services";
-import queryString from 'query-string';
+import queryString from "query-string";
 import "../styles/App.css";
-
+import "../styles/SpectatorError.css";
 class LiveGamePage extends React.Component {
   constructor(props) {
     super(props);
@@ -83,9 +83,14 @@ class LiveGamePage extends React.Component {
           />
         </div>
       )) || (
-        <h1 className="liveGamePage">
-          Summoner {this.state.searchedSummoner.name} is not playing right now
-        </h1>
+        <div>
+          <div className="divas">
+            <h2>
+              Summoner {this.state.searchedSummoner.name} is not playing right
+              now
+            </h2>
+          </div>
+        </div>
       )
     );
   }

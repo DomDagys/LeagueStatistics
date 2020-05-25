@@ -37,6 +37,7 @@ namespace LeagueStatistics
 
             services.InjectRepositoryDependencies();
             services.InjectServiceDependencies();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

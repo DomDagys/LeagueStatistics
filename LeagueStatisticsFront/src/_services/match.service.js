@@ -3,7 +3,7 @@ import config from "config";
 export const matchService = {
   getMatches,
   getRankedChampions,
-  getLiveGame
+  getLiveGame,
 };
 
 function getRankedChampions(summonerName, region, queueId) {
@@ -24,7 +24,7 @@ function getMatches(summonerName, region, endIndex, beginIndex) {
 }
 
 function getLiveGame(summonerId, region) {
-  const url = `${config.apiUrl}/api/LiveGame?summonerId=${summonerId}&region=${region}`
+  const url = `${config.apiUrl}/api/LiveGame?summonerId=${summonerId}&region=${region}`;
   const promise = fetch(url);
   return promise;
 }
