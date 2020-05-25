@@ -102,8 +102,8 @@ namespace LeagueStatistics.Services.RiotAPI
                 }
             }
             BestAndWorst(positiveList, negativeList, Match, id);
-            if (creepScore / times < 4 && Match.participants[id - 1].timeline.role != "DUO_SUPPORT") negativeList.Add("Your average creepScore " + Math.Round(creepScore / times, 2) + " is pretty bad");
-            else if (creepScore / times > 6) positiveList.Add("Your creepScore " + Math.Round(creepScore / times, 2) + " is very good");
+            if (creepScore / times < 4 && Match.participants[id - 1].timeline.role != "DUO_SUPPORT") negativeList.Add("Your average creep Score " + Math.Round(creepScore / times, 2) + " is pretty bad");
+            else if (creepScore / times > 6) positiveList.Add("Your creep Score " + Math.Round(creepScore / times, 2) + " is very good");
             if (xpScore / xptimes < 300) negativeList.Add("You should try to gain levels faster");
             else if (xpScore / xptimes > 400) positiveList.Add("Keep up the leveling, it is good");
             if (xpDiffScore / xptimes1 < -50) negativeList.Add("Your enemy laner is usually outleveling you by quite a bit");
@@ -143,8 +143,8 @@ namespace LeagueStatistics.Services.RiotAPI
             if (summonerKDA == worstKDAscore) negativeTips.Add("You had the worst KDA in the game, try better next time!");
             if (Match.participants[id - 1].stats.deaths == bestDeathscore) positiveTips.Add("You died the least in the game, keep that up");
             if (Match.participants[id - 1].stats.deaths == worstDeathscore) negativeTips.Add("Your death rate was the worst(or one of the worst) in the game, try not dying :)");
-            if (Match.participants[id - 1].stats.visionScore == bestVisionscore) positiveTips.Add("You had the most vision in the game! keep updating your team with vision");
-            if (Match.participants[id - 1].stats.visionScore == worstVisionscore) negativeTips.Add("Your vision score was the lowest in the game, try placing more wards");
+            if (Match.participants[id - 1].stats.visionScore == bestVisionscore && Match.participants[id - 1].stats.visionScore != 0) positiveTips.Add("You had the most vision in the game! keep updating your team with vision");
+            if (Match.participants[id - 1].stats.visionScore == worstVisionscore && Match.participants[id - 1].stats.visionScore != 0) negativeTips.Add("Your vision score was the lowest in the game, try placing more wards");
         }
 
         private int GetParticipantById(string accountId, MatchDto Match)
