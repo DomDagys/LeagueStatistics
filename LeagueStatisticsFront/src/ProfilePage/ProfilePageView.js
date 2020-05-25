@@ -23,8 +23,9 @@ class ProfilePageView extends Component {
                 {this.props.statistics && this.props.championData ? (<QuickStatistics {... this.props.statistics}
                     championData={this.props.championData} handlePerformance={this.props.handlePerformance} />) : ""}
             </div>
-            {this.props.leagueData !== null && this.props.soloqChampions !== null
-                && this.props.flexChampions !== null && this.props.championData !== null
+            {this.props.leagueData !== null &&
+                (this.props.soloqChampions !== null || this.props.flexChampions !== null)
+                && this.props.championData !== null
                 && this.props.championMastery !== null &&
                 (<LeagueRanks leagueData={this.props.leagueData} soloqChampions={this.props.soloqChampions}
                     flexChampions={this.props.flexChampions} championData={this.props.championData} championMastery={this.props.championMastery} />)}

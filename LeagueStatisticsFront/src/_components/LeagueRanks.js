@@ -6,47 +6,47 @@ class LeagueRanks extends React.Component {
         super(props);
         this.state =
         {
-            selectedQueue: null,
-            queueChampions: null
+            queueChampions: null,
+            queueName: ""
         }
-
-        this.props.soloqChampions.forEach(playedChamp => {
-            this.props.championData.forEach(champion => {
-                if (playedChamp.championId == champion[1].key) {
-                    playedChamp.championName = champion[0];
-                }
-            })
-        });
-
-        this.props.flexChampions.forEach(playedChamp => {
-            this.props.championData.forEach(champion => {
-                if (playedChamp.championId == champion[1].key) {
-                    playedChamp.championName = champion[0];
-                }
-            })
-        });
-
-        this.props.soloqChampions.forEach(playedChamp => {
-            this.props.championMastery.forEach(mastery => {
-                if (playedChamp.championId == mastery.championId) {
-                    playedChamp.championLevel = mastery.championLevel;
-                    playedChamp.championPoints = mastery.championPoints;
-                }
-            })
-        });
-
-        this.props.flexChampions.forEach(playedChamp => {
-            this.props.championMastery.forEach(mastery => {
-                if (playedChamp.championId == mastery.championId) {
-                    playedChamp.championLevel = mastery.championLevel;
-                    playedChamp.championPoints = mastery.championPoints;
-                }
-            })
-        });
 
         this.componentDidMount = this.componentDidMount.bind(this);
         this.handleRankedSoloClick = this.handleRankedSoloClick.bind(this);
         this.handleFlexClick = this.handleFlexClick.bind(this);
+
+        this.getChampionName = this.getChampionName.bind(this);
+        this.getChampionLevel = this.getChampionLevel.bind(this);
+        this.getChampionPoints = this.getChampionPoints.bind(this);
+    }
+
+    getChampionName(championId) {
+        let name = "";
+        this.props.championData.forEach(champion => {
+            if (championId == champion[1].key) {
+                name = champion[0];
+            }
+        })
+        return name;
+    }
+
+    getChampionLevel(championId) {
+        let championLevel = "";
+        this.props.championMastery.forEach(champion => {
+            if (championId == champion.championId) {
+                championLevel = champion.championLevel;
+            }
+        })
+        return championLevel;
+    }
+
+    getChampionPoints(championId) {
+        let championPoints = "";
+        this.props.championMastery.forEach(champion => {
+            if (championId == champion.championId) {
+                championPoints = champion.championPoints;
+            }
+        })
+        return championPoints;
     }
 
     getQeueuType(queueType) {
@@ -60,25 +60,15 @@ class LeagueRanks extends React.Component {
     }
 
     render() {
-        //console.log(this.props.leagueData.length);
-
-        console.log(this.state);
-        console.log(this.props.leagueData);
-        //const iconLink = "src/leagueIcons/Emblem_Challenger.png";
-        //this.props
         return (<div>
-            {/* <div className="rankBox">
-                {this.state.selectedQueue ? <h3>{this.getQeueuType(this.state.selectedQueue.queueType)}</h3> : <h3>Unranked</h3>}
-                {this.state.selectedQueue ? <img src={`src/assets/leagueIcons/Emblem_${this.state.selectedQueue.tier}.png`} width="150px"></img> : <img src={`src/assets/leagueIcons/Emblem_Unranked.png`} width="150px"></img>}
-                <span className="rankedPoints">{this.state.selectedQueue ? <p>{this.state.selectedQueue.tier} {this.state.selectedQueue.rank} <br /> LP:{this.state.selectedQueue.leaguePoints}</p> : null}</span>
-            </div> */}
             <div className="rankedChampList">
                 <div className="buttonSpacing">
+                <label className="queueName">{this.state.queueName}</label>
                     <button onClick={this.handleRankedSoloClick} className="btn btn-primary" >SoloQ stats</button>
                     <button onClick={this.handleFlexClick} className="btn btn-primary" >Flex stats</button>
                 </div>
                 {this.state.queueChampions ? this.state.queueChampions.map(champion => {
-                    const champIcon = `http://ddragon.leagueoflegends.com/cdn/10.8.1/img/champion/${champion.championName}.png`;
+                    const champIcon = `http://ddragon.leagueoflegends.com/cdn/10.8.1/img/champion/${this.getChampionName(champion.championId)}.png`;
                     return <div className="rankedChampion">
                         <img key={champion.championId} src={champIcon}></img>
                         <label className="rankedChampionInfo">{champion.championName}</label>
@@ -88,8 +78,8 @@ class LeagueRanks extends React.Component {
                 <div className="masteryList">
                     {this.state.queueChampions ? this.state.queueChampions.map(champion => {
                         return <div className="masteryItem">
-                            <img className="masteryIcon" src={`src/assets/masteryIcons/Level_${champion.championLevel}.png`}></img>
-                            <label>Points: {champion.championPoints}</label>
+                            <img className="masteryIcon" src={`src/assets/masteryIcons/Level_${this.getChampionLevel(champion.championId)}.png`}></img>
+                            <label>Points: {this.getChampionPoints(champion.championId)}</label>
                         </div>;
                     }) : ""}
                 </div>
@@ -105,8 +95,8 @@ class LeagueRanks extends React.Component {
             }
         });
 
-        this.setState({ selectedQueue: queueData });
         this.setState({ queueChampions: this.props.soloqChampions });
+        this.setState({ queueName: "Ranked Solo" });
     }
 
     handleFlexClick(e) {
@@ -116,26 +106,20 @@ class LeagueRanks extends React.Component {
                 queueData = entryDto;
             }
         });
-
-        this.setState({ selectedQueue: queueData });
         this.setState({ queueChampions: this.props.flexChampions });
+        this.setState({ queueName: "Ranked Flex" });
     }
 
     componentDidMount() {
-        if (this.state.selectedQueue == null) {
-            let queueData = null;
-            console.log(this.props.leagueData);
-            //this.props.leagueData.foreach()
-            this.props.leagueData.map(entryDto => {
-                //console.log(entryDto);
-                if (entryDto.queueType == "RANKED_SOLO_5x5") {
-                    queueData = entryDto;
-                    this.setState({ selectedQueue: queueData })
-                }
-            });
-        }
         if (this.state.queueChampions == null) {
-            this.setState({ queueChampions: this.props.soloqChampions });
+            if(this.props.soloqChampions != null){
+                this.setState({ queueChampions: this.props.soloqChampions });
+                this.setState({ queueName: "Ranked Solo" });
+            }
+            else if(this.props.flexChampions != null){
+                this.setState({ queueChampions: this.props.flexChampions });
+                this.setState({ queueName: "Ranked Flex" });
+            }
         }
     }
 }

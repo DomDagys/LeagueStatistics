@@ -1,0 +1,32 @@
+.participant {
+    font-size: 50px;
+    margin: 1%;
+    padding: 0%;
+    background-color: rgb(246, 255, 228);
+    border-radius: 1%;
+    overflow: auto;
+  }
+
+  .text{
+    font-size: 0.3em;
+}
+.name{
+    float: left;
+    height: 1em;
+    width: 2em;
+    text-align: center;
+    color: rgb(66, 66, 66);
+    margin-left: 1em;
+}
+.champ{
+    font-size: 1em;
+    height: 1em;
+    position: relative;
+    float: left;
+}
+.champ img{
+    vertical-align: top;
+    height: 1em;
+    width: 1em;
+    border-radius: 100%;
+}

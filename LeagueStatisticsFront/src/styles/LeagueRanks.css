@@ -55,3 +55,7 @@
     margin-right: 15px;
     left: 12px;
 }
+.queueName{
+    font-weight: bold;
+    font-size: 20px;
+}
